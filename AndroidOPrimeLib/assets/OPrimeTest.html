@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test OPrime HTML5 Experimentation Library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- Stylesheets -->
+<link rel="stylesheet" type="text/css" href="oprime.css">
+<!-- END Stylesheets -->
+
+</head>
+<body>
+
+	Show a Picture:
+	<img src="oprime128.png" />
+
+	<hr />
+
+	<button id="test_take_picture_button">Take a picture</button>
+
+	<img id="result_image" src="" />
+
+	<hr />
+
+
+	<button id="test_record_audio_button">Record audio</button>
+  <button id="test_recorded_audio_button">Play Recorded audio</button>
+
+	<audio controls="controls" id="result_audio">
+		<source src=""></source>
+	</audio>
+
+	<hr />
+
+	Test callbacks and default action for links
+
+	<a href="non_existant_page.html" id="test_prevent_default">Prevent
+		Default</a>
+
+
+	<hr />
+	Various statements of audio tag
+
+
+	<hr />
+
+	<button id="test_play_audio_button">Play audio source tag
+		(Doesn't work in Android)</button>
+
+	<audio controls="controls" id="test_play_audio">
+		<source src="chime.mp3" type="audio/mp3"></source>
+	</audio>
+
+	<hr />
+
+	<span class="text_grid"> 
+	no <input  class="syllable" min=0.00 max=0.26 id="no_syllable" value="no"></input>
+  qata  <input class="syllable" min=0.26 max=0.70 id="qata_syllable" value="qata"></input>
+  tusu  <input class="syllable" min=0.69 max=1.04 id="tusu_syllable" value="tusu"></input>
+  wan  <input class="syllable" min=1.64 max=1.99 id="wan_syllable" value="wan"></input>
+	</span>
+	<button id="test_play_audio_src_button">Play audio src
+		attribute</button>
+	<button id="test_stop_audio_src_button">Stop audio src
+		attribute</button>
+	<audio  id="test_audio_no_source"
+		src="noqata_tusunayawami.wav">
+	</audio>
+
+	<hr />
+
+	<button id="test_play_audio_in_video_button">Play audio in
+		video tag workaround</button>
+
+	<video controls="controls" id="test_video_tag" src="ploep.wav">
+	</video>
+
+	<hr />
+
+	<script src="OPrime.js"></script>
+	<script src="OPrimeTest.js"></script>
+
+
+</body>
+</html>
