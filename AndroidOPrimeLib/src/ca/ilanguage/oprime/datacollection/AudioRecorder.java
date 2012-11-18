@@ -23,7 +23,7 @@ import ca.ilanguage.oprime.R;
 @SuppressLint({ "NewApi" })
 public class AudioRecorder extends Service {
 	
-	protected static String TAG = "AudioRecorder";
+	protected static String TAG = "OPrime";
 	private NotificationManager mNM;
 	private Notification mNotification;
 	private int NOTIFICATION = 7029;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OPrime</string>
+    <string name="experiment_title">Experience example</string>
+    <string name="experiment_ready_message">L\'expérience est prête</string>
+    <string name="experiment_start_instructions">Touchez Commencer</string>
+    
+</resources>

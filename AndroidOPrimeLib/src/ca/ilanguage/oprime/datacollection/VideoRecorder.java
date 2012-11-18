@@ -3,6 +3,7 @@ package ca.ilanguage.oprime.datacollection;
 import ca.ilanguage.oprime.R;
 import ca.ilanguage.oprime.content.OPrime;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,7 +15,6 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 /**
@@ -61,324 +61,330 @@ import android.widget.VideoView;
  */
 public class VideoRecorder extends Activity implements SurfaceHolder.Callback {
 
-	public static final String EXTRA_VIDEO_QUALITY = "videoQuality";
-	public static final String EXTRA_USE_FRONT_FACING_CAMERA = "usefrontcamera";
-	public static final int DEFAULT_DEBUGGING_QUALITY = 500000; // .5 megapixel
-	public static final int DEFAULT_HIGH_QUALITY = 3000000;// 3 megapixel,
+  public static final String EXTRA_VIDEO_QUALITY = "videoQuality";
+  public static final String EXTRA_USE_FRONT_FACING_CAMERA = "usefrontcamera";
+  public static final int DEFAULT_DEBUGGING_QUALITY = 500000; // .5 megapixel
+  public static final int DEFAULT_HIGH_QUALITY = 3000000;// 3 megapixel,
 
-	/*
-	 * Recording variables
-	 */
-	private static final String TAG = "VideoRecorder";
-	private Boolean mRecording = false;
-	private Boolean mRecordingAudioInstead =false;
-	private Boolean mUseFrontFacingCamera = false;
-	private VideoView mVideoView = null;
-	private MediaRecorder mVideoRecorder = null;
-	private Camera mCamera;
-	Context mContext;
-	private int mVideoQuality = DEFAULT_HIGH_QUALITY;
+  /*
+   * Recording variables
+   */
+  private static final String TAG = "VideoRecorder";
+  private Boolean mRecording = false;
+  private Boolean mRecordingAudioInstead = false;
+  private Boolean mUseFrontFacingCamera = false;
+  private VideoView mVideoView = null;
+  private MediaRecorder mVideoRecorder = null;
+  private Camera mCamera;
+  Context mContext;
+  private int mVideoQuality = DEFAULT_HIGH_QUALITY;
 
-	String mAudioResultsFile = "";
-	private VideoStatusReceiver videoStatusReceiver;
+  String mAudioResultsFile = "";
+  private VideoStatusReceiver videoStatusReceiver;
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+  @Override
+  protected void onResume() {
+    // TODO Auto-generated method stub
+    super.onResume();
 
-		if (videoStatusReceiver == null) {
-			videoStatusReceiver = new VideoStatusReceiver();
-		}
-		IntentFilter intentStopped = new IntentFilter(
-				OPrime.INTENT_STOP_VIDEO_RECORDING);
-		registerReceiver(videoStatusReceiver, intentStopped);
-	}
+    if (videoStatusReceiver == null) {
+      videoStatusReceiver = new VideoStatusReceiver();
+    }
+    IntentFilter intentStopped = new IntentFilter(
+        OPrime.INTENT_STOP_VIDEO_RECORDING);
+    registerReceiver(videoStatusReceiver, intentStopped);
+  }
 
-	public void beginRecordingAudio() {
-		if (mRecordingAudioInstead){
-			return;
-		}
-		Intent intent;
-		intent = new Intent(OPrime.INTENT_START_AUDIO_RECORDING);
-		intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, getIntent().getExtras()
-				.getString(OPrime.EXTRA_RESULT_FILENAME));
-		startService(intent);
-	}
+  public void beginRecordingAudio() {
+    if (mRecordingAudioInstead) {
+      return;
+    }
+    Intent intent;
+    intent = new Intent(OPrime.INTENT_START_AUDIO_RECORDING);
+    intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, getIntent().getExtras()
+        .getString(OPrime.EXTRA_RESULT_FILENAME));
+    startService(intent);
+  }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		/*
-		 * Handle various sorts of lacks of front facing camera
-		 */
-		int sdk = android.os.Build.VERSION.SDK_INT;
-		PackageManager pm = getPackageManager();
-		String deviceModel = android.os.Build.MODEL;
-		if (sdk <= 8) {
-//			Toast.makeText(
-//					getApplicationContext(),
-//					"This Android doesn't have enough camera features, we will record audio instead."
-//							+ "The device model is : " + deviceModel,
-//					Toast.LENGTH_LONG).show();
-			beginRecordingAudio();
-			finish();
-		} else if (sdk >= 9 && Camera.getNumberOfCameras() <= 1) {
-//			Toast.makeText(
-//					getApplicationContext(),
-//					"This Android doesn't have a front facing camera, we will record audio instead."
-//							+ "The device model is : " + deviceModel,
-//					Toast.LENGTH_LONG).show();
-			beginRecordingAudio();
-			finish();
-		} else if (sdk >= 7
-				&& !pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-//			Toast.makeText(
-//					getApplicationContext(),
-//					"This Android doesn't seem to have a camera, we will record audio instead."
-//							+ "The device model is : " + deviceModel,
-//					Toast.LENGTH_LONG).show();
-			beginRecordingAudio();
-			finish();
-		} else {
-			initalize();
-		}
+  @SuppressLint("NewApi")
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    /*
+     * Handle various sorts of lacks of front facing camera
+     */
+    int sdk = android.os.Build.VERSION.SDK_INT;
+    PackageManager pm = getPackageManager();
+    String deviceModel = android.os.Build.MODEL;
+    //TODO dont do it like this, instead do the audio recording later if the camera thows an exception.
+    if (sdk <= 8) {
+      // Toast.makeText(
+      // getApplicationContext(),
+      // "This Android doesn't have enough camera features, we will record audio instead."
+      // + "The device model is : " + deviceModel,
+      // Toast.LENGTH_LONG).show();
+      beginRecordingAudio();
+      finish();
+    } else if (sdk >= 9 && Camera.getNumberOfCameras() <= 1) {
+      // Toast.makeText(
+      // getApplicationContext(),
+      // "This Android doesn't have a front facing camera, we will record audio instead."
+      // + "The device model is : " + deviceModel,
+      // Toast.LENGTH_LONG).show();
+      beginRecordingAudio();
+      finish();
+    } else if (sdk >= 7 && !pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+      // Toast.makeText(
+      // getApplicationContext(),
+      // "This Android doesn't seem to have a camera, we will record audio instead."
+      // + "The device model is : " + deviceModel,
+      // Toast.LENGTH_LONG).show();
+      beginRecordingAudio();
+      finish();
+    } else {
+      initalize();
+    }
 
-	}
+  }
 
-	public void initalize() {
-		/*
-		 * Get extras from the Experiment Home screen and set up layout
-		 * depending on extras
-		 */
-		setContentView(R.layout.video_recorder);
+  @SuppressWarnings("deprecation")
+  public void initalize() {
+    /*
+     * Get extras from the Experiment Home screen and set up layout depending on
+     * extras
+     */
+    setContentView(R.layout.video_recorder);
 
-		mVideoView = (VideoView) this.findViewById(R.id.videoView);
-		mVideoQuality = getIntent().getExtras().getInt(EXTRA_VIDEO_QUALITY,
-				DEFAULT_HIGH_QUALITY); // default is high quality
-		mAudioResultsFile = getIntent().getExtras().getString(
-				OPrime.EXTRA_RESULT_FILENAME);
-		mUseFrontFacingCamera = getIntent().getExtras().getBoolean(
-				EXTRA_USE_FRONT_FACING_CAMERA, true);
+    mVideoView = (VideoView) this.findViewById(R.id.videoView);
+    mVideoQuality = getIntent().getExtras().getInt(EXTRA_VIDEO_QUALITY,
+        DEFAULT_HIGH_QUALITY); // default is high quality
+    mAudioResultsFile = getIntent().getExtras().getString(
+        OPrime.EXTRA_RESULT_FILENAME);
+    mUseFrontFacingCamera = getIntent().getExtras().getBoolean(
+        EXTRA_USE_FRONT_FACING_CAMERA, true);
 
-		final SurfaceHolder holder = mVideoView.getHolder();
-		holder.addCallback(this);
-		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-	}
+    final SurfaceHolder holder = mVideoView.getHolder();
+    holder.addCallback(this);
+    int sdk = android.os.Build.VERSION.SDK_INT;
+    /*
+     * After 11 this is set by default
+     * http://stackoverflow.com/questions/9439186/surfaceholder-settype-is-deprecated-but-required
+     */
+    if (sdk < 11) {
+      holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+    }
+  }
 
-	public void surfaceCreated(SurfaceHolder holder) {
-		if (mRecording) {
-			return;
-		}
-		try {
-			beginRecording(holder);
-		} catch (Exception e) {
-			Log.e(TAG, e.toString());
-			beginRecordingAudio();
-		}
-	}
+  public void surfaceCreated(SurfaceHolder holder) {
+    if (mRecording) {
+      return;
+    }
+    try {
+      beginRecording(holder);
+    } catch (Exception e) {
+      Log.e(TAG, e.toString());
+      beginRecordingAudio();
+    }
+  }
 
-	public void surfaceDestroyed(SurfaceHolder holder) {
-	}
+  public void surfaceDestroyed(SurfaceHolder holder) {
+  }
 
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		Log.v(TAG, "Width x Height = " + width + "x" + height);
-	}
+  public void surfaceChanged(SurfaceHolder holder, int format, int width,
+      int height) {
+    Log.v(TAG, "Width x Height = " + width + "x" + height);
+  }
 
+  private void stopRecording() throws Exception {
+    mRecording = false;
+    if (mVideoRecorder != null) {
+      mVideoRecorder.stop();
+      mVideoRecorder.release();
+      mVideoRecorder = null;
+      // Toast.makeText(getApplicationContext(), "Saving.",
+      // Toast.LENGTH_LONG).show();
+    }
+    if (mCamera != null) {
+      mCamera.reconnect();
+      mCamera.stopPreview();
+      mCamera.release();
+      mCamera = null;
+    }
+  }
 
-	private void stopRecording() throws Exception {
-		mRecording = false;
-		if (mVideoRecorder != null) {
-			mVideoRecorder.stop();
-			mVideoRecorder.release();
-			mVideoRecorder = null;
-//			Toast.makeText(getApplicationContext(), "Saving.",
-//					Toast.LENGTH_LONG).show();
-		}
-		if (mCamera != null) {
-			mCamera.reconnect();
-			mCamera.stopPreview();
-			mCamera.release();
-			mCamera = null;
-		}
-	}
+  @Override
+  protected void onPause() {
+    super.onPause();
+  }
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
+  /*
+   * Notes: -Beware of security hazard of running code in this receiver. In this
+   * case, only stopping and saving the recording. -Receivers should be
+   * registered in the manifest, but this is an inner class so that it can
+   * access the member functions of this class so it doesn't need to be
+   * registered in the manifest.xml.
+   * 
+   * http://stackoverflow.com/questions/2463175/how-to-have-android-service-
+   * communicate-with-activity
+   * http://thinkandroid.wordpress.com/2010/02/02/custom
+   * -intents-and-broadcasting-with-receivers/
+   * 
+   * could pass data in the Intent instead of updating database tables
+   * 
+   * @author cesine
+   */
+  public class VideoStatusReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      if (intent.getAction().equals(OPrime.INTENT_STOP_VIDEO_RECORDING)) {
+        finish();
+      }
+    }
+  }
 
-	/*
-	 * Notes: -Beware of security hazard of running code in this receiver. In
-	 * this case, only stopping and saving the recording. -Receivers should be
-	 * registered in the manifest, but this is an inner class so that it can
-	 * access the member functions of this class so it doesn't need to be
-	 * registered in the manifest.xml.
-	 * 
-	 * http://stackoverflow.com/questions/2463175/how-to-have-android-service-
-	 * communicate-with-activity
-	 * http://thinkandroid.wordpress.com/2010/02/02/custom
-	 * -intents-and-broadcasting-with-receivers/
-	 * 
-	 * could pass data in the Intent instead of updating database tables
-	 * 
-	 * @author cesine
-	 */
-	public class VideoStatusReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if (intent.getAction().equals(OPrime.INTENT_STOP_VIDEO_RECORDING)) {
-				finish();
-			}
-		}
-	}
+  @Override
+  protected void onDestroy() {
+    try {
+      stopRecording();
+    } catch (Exception e) {
+      Log.e(TAG, e.toString());
+      // e.printStackTrace();
+    }
+    super.onDestroy();
+    if (videoStatusReceiver != null) {
+      unregisterReceiver(videoStatusReceiver);
+    }
 
-	@Override
-	protected void onDestroy() {
-		try {
-			stopRecording();
-		} catch (Exception e) {
-			Log.e(TAG, e.toString());
-			// e.printStackTrace();
-		}
-		super.onDestroy();
-		if (videoStatusReceiver != null) {
-			unregisterReceiver(videoStatusReceiver);
-		}
+  }
 
-	}
+  /**
+   * Uses the surface defined in video_recorder.xml Tested using 2.2 (HTC
+   * Desire/Hero phone) -> Use all defaults works, records back facing camera
+   * with AMR_NB audio 3.0 (Motorola Xoom tablet) -> Use all defaults doesn't
+   * work, works with these specs, might work with others
+   * 
+   * @param holder
+   *          The surfaceholder from the videoview of the layout
+   * @throws Exception
+   */
+  @SuppressLint("NewApi")
+  private void beginRecording(SurfaceHolder holder) throws Exception {
+    if (mVideoRecorder != null) {
+      mVideoRecorder.stop();
+      mVideoRecorder.release();
+      mVideoRecorder = null;
+    }
+    if (mCamera != null) {
+      mCamera.reconnect();
+      mCamera.stopPreview();
+      mCamera.release();
+      mCamera = null;
+    }
 
-	/**
-	 * Uses the surface defined in video_recorder.xml Tested using 2.2 (HTC
-	 * Desire/Hero phone) -> Use all defaults works, records back facing camera
-	 * with AMR_NB audio 3.0 (Motorola Xoom tablet) -> Use all defaults doesn't
-	 * work, works with these specs, might work with others
-	 * 
-	 * @param holder
-	 *            The surfaceholder from the videoview of the layout
-	 * @throws Exception
-	 */
-	private void beginRecording(SurfaceHolder holder) throws Exception {
-		if (mVideoRecorder != null) {
-			mVideoRecorder.stop();
-			mVideoRecorder.release();
-			mVideoRecorder = null;
-		}
-		if (mCamera != null) {
-			mCamera.reconnect();
-			mCamera.stopPreview();
-			mCamera.release();
-			mCamera = null;
-		}
+    try {
+      if (mUseFrontFacingCamera) {
+        mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);// CAMERA_FACING_FRONT
+        // constant
+        // available
+        // since
+        // SDK
+        // 9
+      } else {
+        mCamera = Camera.open();
+      }
 
-		try {
-			if (mUseFrontFacingCamera) {
-				mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);// CAMERA_FACING_FRONT
-																				// constant
-																				// available
-																				// since
-																				// SDK
-																				// 9
-			} else {
-				mCamera = Camera.open();
-			}
+      // Camera setup is based on the API Camera Preview demo
+      mCamera.setPreviewDisplay(holder);
+      Camera.Parameters parameters = mCamera.getParameters();
+      parameters.setPreviewSize(640, 480);
+      mCamera.setParameters(parameters);
+      mCamera.startPreview();
+      mCamera.unlock();
 
-			// Camera setup is based on the API Camera Preview demo
-			mCamera.setPreviewDisplay(holder);
-			Camera.Parameters parameters = mCamera.getParameters();
-			parameters.setPreviewSize(640, 480);
-			mCamera.setParameters(parameters);
-			mCamera.startPreview();
-			mCamera.unlock();
+      mVideoRecorder = new MediaRecorder();
+      mVideoRecorder.setCamera(mCamera);
 
-			mVideoRecorder = new MediaRecorder();
-			mVideoRecorder.setCamera(mCamera);
+      // Media recorder setup is based on Listing 9-6, Hashimi et all 2010
+      // values based on best practices and good quality,
+      // tested via upload to YouTube and played in QuickTime on Mac Snow
+      // Leopard
+      mVideoRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+      mVideoRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+      mVideoRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);// THREE_GPP
+      // is
+      // big-endian,
+      // storing
+      // and
+      // transferring
+      // the
+      // most
+      // significant
+      // bytes
+      // first.
+      // MPEG_4
+      // as
+      // another
+      // option
+      mVideoRecorder.setVideoSize(640, 480);// YouTube recommended size:
+      // 320x240,
+      // OpenGazer eye tracker:
+      // 640x480
+      // YouTube HD: 1280x720
+      mVideoRecorder.setVideoFrameRate(20); // might be auto-determined
+      // due to lighting
+      mVideoRecorder.setVideoEncodingBitRate(mVideoQuality);// 3000000=3
+      // megapixel,
+      // or the max of
+      // the camera
+      mVideoRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);// MPEG_4_SP
+      // Simple
+      // Profile
+      // is
+      // for
+      // low
+      // bit
+      // rate
+      // and
+      // low
+      // resolution
+      // H264
+      // is
+      // MPEG-4
+      // Part
+      // 10
+      // is
+      // commonly
+      // referred
+      // to
+      // as
+      // H.264
+      // or
+      // AVC
+      int sdk = android.os.Build.VERSION.SDK_INT;
+      // Gingerbread and up can have wide band ie 16,000 hz recordings
+      // (Okay quality for human voice)
+      if (sdk >= 10) {
+        mVideoRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
+        mVideoRecorder.setAudioSamplingRate(16000);
+      } else {
+        // Other devices only have narrow band, ie 8,000 hz
+        // (Same quality as a phone call, not really good quality for
+        // any purpose.
+        // For human voice 8,000 hz means /f/ and /th/ are
+        // indistinguishable)
+        mVideoRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+      }
+      mVideoRecorder.setMaxDuration(600000); // limite to 10min
+      // 600,000limit to 30
+      // seconds 30,000
+      mVideoRecorder.setPreviewDisplay(holder.getSurface());
+      mVideoRecorder.setOutputFile(mAudioResultsFile);
+      mVideoRecorder.prepare();
+      mVideoRecorder.start();
+      mRecording = true;
+    } catch (Exception e) {
+      Log.e(TAG, e.toString());
 
-			// Media recorder setup is based on Listing 9-6, Hashimi et all 2010
-			// values based on best practices and good quality,
-			// tested via upload to YouTube and played in QuickTime on Mac Snow
-			// Leopard
-			mVideoRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-			mVideoRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			mVideoRecorder
-					.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);// THREE_GPP
-																			// is
-																			// big-endian,
-																			// storing
-																			// and
-																			// transferring
-																			// the
-																			// most
-																			// significant
-																			// bytes
-																			// first.
-																			// MPEG_4
-																			// as
-																			// another
-																			// option
-			mVideoRecorder.setVideoSize(640, 480);// YouTube recommended size:
-													// 320x240,
-													// OpenGazer eye tracker:
-													// 640x480
-													// YouTube HD: 1280x720
-			mVideoRecorder.setVideoFrameRate(20); // might be auto-determined
-													// due to lighting
-			mVideoRecorder.setVideoEncodingBitRate(mVideoQuality);// 3000000=3
-																	// megapixel,
-			// or the max of
-			// the camera
-			mVideoRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);// MPEG_4_SP
-																			// Simple
-																			// Profile
-																			// is
-																			// for
-																			// low
-																			// bit
-																			// rate
-																			// and
-																			// low
-																			// resolution
-																			// H264
-																			// is
-																			// MPEG-4
-																			// Part
-																			// 10
-																			// is
-																			// commonly
-																			// referred
-																			// to
-																			// as
-																			// H.264
-																			// or
-																			// AVC
-			int sdk = android.os.Build.VERSION.SDK_INT;
-			// Gingerbread and up can have wide band ie 16,000 hz recordings
-			// (Okay quality for human voice)
-			if (sdk >= 10) {
-				mVideoRecorder
-						.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
-				mVideoRecorder.setAudioSamplingRate(16000);
-			} else {
-				// Other devices only have narrow band, ie 8,000 hz
-				// (Same quality as a phone call, not really good quality for
-				// any purpose.
-				// For human voice 8,000 hz means /f/ and /th/ are
-				// indistinguishable)
-				mVideoRecorder
-						.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			}
-			mVideoRecorder.setMaxDuration(600000); // limite to 10min
-													// 600,000limit to 30
-													// seconds 30,000
-			mVideoRecorder.setPreviewDisplay(holder.getSurface());
-			mVideoRecorder.setOutputFile(mAudioResultsFile);
-			mVideoRecorder.prepare();
-			mVideoRecorder.start();
-			mRecording = true;
-		} catch (Exception e) {
-			Log.e(TAG, e.toString());
-
-		}
-	}
+    }
+  }
 }

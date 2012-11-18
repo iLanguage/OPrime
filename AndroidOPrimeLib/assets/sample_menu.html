@@ -1,0 +1,22 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+	<button value="0" onclick="launchSubEx(event)">Spontaneous Speech</button>
+	<button value="1" onclick="launchSubEx(event)">1 Image</button>
+	<button value="2" onclick="launchSubEx(event)">2 Image</button>
+	<script src="OPrime.js"></script>
+	<script>
+    var launchSubEx = function(event) {
+      console.log("lauching");
+      if (OPrime.isAndroidApp()) {
+        Android.launchSubExperimentJS(event.target.value);
+      } else {
+        alert("Launching " + event.target.value);
+      }
+    };
+  </script>
+</body>
+</html>

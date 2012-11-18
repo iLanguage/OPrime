@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import ca.ilanguage.oprime.activity.HTML5Activity;
+import ca.ilanguage.oprime.datacollection.VideoRecorder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -21,7 +23,7 @@ public class JavaScriptInterface implements Serializable {
 
   private static final long serialVersionUID = -4666851545498417224L;
   protected String TAG = OPrime.OPRIME_TAG;
-  protected boolean D = false;
+  protected boolean D = true;
   protected Context mContext;
   protected String mOutputDir;
   public MediaPlayer mMediaPlayer;
@@ -33,7 +35,7 @@ public class JavaScriptInterface implements Serializable {
   protected String mAudioPlaybackFileUrl;
   protected String mAudioRecordFileUrl;
   protected String mTakeAPictureFileUrl;
-  public HTML5Activity mUIParent;
+  protected HTML5Activity mUIParent;
 
   /**
    * Can pass in all or none of the parameters. Expects the caller to set the
@@ -69,16 +71,29 @@ public class JavaScriptInterface implements Serializable {
     mUIParent = UIParent;
     mAssetsPrefix = assetsPrefix;
     mHandler = new Handler();
+
   }
 
   public JavaScriptInterface(Context context) {
     mContext = context;
-    mOutputDir = OPrime.OUTPUT_DIRECTORY;
+    mOutputDir = OPrimeApp.DEFAULT_OUTPUT_DIRECTORY;
     mAudioPlaybackFileUrl = "";
     if (D)
       Log.d(TAG, "Initializing the Javascript Interface (JSI).");
     mHandler = new Handler();
 
+  }
+
+  public String getVersionJIS() {
+    String versionName;
+    try {
+      versionName = mUIParent.getPackageManager().getPackageInfo(
+          mUIParent.getPackageName(), 0).versionName;
+    } catch (NameNotFoundException e) {
+      Log.d(TAG, "Exception trying to get app version");
+      return "";
+    }
+    return versionName;
   }
 
   public void pauseAudio() {
@@ -345,7 +360,25 @@ public class JavaScriptInterface implements Serializable {
 
   public String getAudioDir() {
     // if its the sdcard, or a web url send that instead
-    return mOutputDir;// "file:///android_asset/";
+    String outputDir = mOutputDir + "audio/";
+    new File(outputDir).mkdirs();
+
+    return outputDir;// "file:///android_asset/";
+  }
+
+  public void startVideoRecorder(String resultsFile) {
+    String outputDir = mOutputDir + "video/";
+    new File(outputDir).mkdirs();
+
+    Intent intent;
+    intent = new Intent(OPrime.INTENT_START_VIDEO_RECORDING);
+    intent.putExtra(VideoRecorder.EXTRA_VIDEO_QUALITY,
+        VideoRecorder.DEFAULT_HIGH_QUALITY);
+    intent.putExtra(VideoRecorder.EXTRA_USE_FRONT_FACING_CAMERA, true);
+    intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, outputDir + resultsFile
+        + ".3gp");
+
+    mUIParent.startActivity(intent);
   }
 
   public void takeAPicture(String resultfilename) {
@@ -372,23 +405,21 @@ public class JavaScriptInterface implements Serializable {
     intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, mTakeAPictureFileUrl);
     mUIParent.startActivityForResult(intent, OPrime.PICTURE_TAKEN);
   }
-  
-  public void saveStringToFile(String contents, String filename, String path){
-    
+
+  public void saveStringToFile(String contents, String filename, String path) {
+
     WriteStringToFile w = new WriteStringToFile();
     w.setContents(contents);
     w.setFilename(filename);
     w.setOutputdir(path);
     w.execute();
-    
+
   }
-  
-  
+
   public void showToast(String toast) {
     Toast.makeText(mContext, toast, Toast.LENGTH_LONG).show();
     if (D)
       Log.d(TAG, "Showing toast " + toast);
-
   }
 
   public void shareIt(String message) {
@@ -491,12 +522,12 @@ public class JavaScriptInterface implements Serializable {
 
     @Override
     protected String doInBackground(Void... params) {
-      if("".equals(outputdir)){
+      if ("".equals(outputdir)) {
         outputdir = mOutputDir;
       }
-      
+
       (new File(outputdir)).mkdirs();
-      
+
       File outfile = new File(outputdir + "/" + filename);
 
       try {
@@ -504,20 +535,23 @@ public class JavaScriptInterface implements Serializable {
         buf.append(contents);
         buf.newLine();
         buf.close();
-        return "File written: "+filename;
+        return "File written: " + filename;
       } catch (IOException inte) {
-        Log.d(TAG, "There was an error writing to the file."+ inte.getMessage());
-        return "File write error: "+filename;
+        Log.d(TAG,
+            "There was an error writing to the file." + inte.getMessage());
+        return "File write error: " + filename;
       }
-      
+
     }
 
     protected void onPreExecute() {
     }
 
     protected void onPostExecute(String result) {
-      if(D) Log.d(TAG, "\t" + result + ": Wrote string to file");
-      if(D) Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+      if (D)
+        Log.d(TAG, "\t" + result + ": Wrote string to file");
+      if (D)
+        Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
 
     }
   }
@@ -542,6 +576,13 @@ public class JavaScriptInterface implements Serializable {
     return D;
   }
 
+  public int getDforDebuggingJIS() {
+    if (D) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
   public void setD(boolean d) {
     D = d;
   }

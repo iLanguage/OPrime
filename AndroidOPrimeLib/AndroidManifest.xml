@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.ilanguage.oprime"
+    android:installLocation="preferExternal"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.STORAGE" />
@@ -17,11 +24,12 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
     <application
+        android:name="ca.ilanguage.oprime.content.OPrimeApp"
         android:icon="@drawable/ic_oprime"
         android:label="@string/app_name" >
 
         <!--
-             The activity tag here is currently not used. The main project TicTacToeMain
+             The activity tag here is currently not used. The main project 
              must currently redefine the activities to be used from the libraries.
              However later the tools will pick up the activities from here and merge them
              automatically, so it's best to define your activities here like for any
@@ -30,6 +38,15 @@
         <activity
             android:name=".activity.OPrimeLib"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="ca.ilanguage.oprime.activity.ParticipantDetails"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="ca.ilanguage.oprime.activity.SubExperiment"
@@ -86,11 +103,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.HTML5GameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="ca.ilanguage.oprime.intent.action.START_HTML5_SUB_EXPERIMENT" />
 
@@ -108,6 +126,7 @@
             </intent-filter>
         </activity>
 
+        <!-- All services must be listed in the manifest before they can be used -->
         <service
             android:name="ca.ilanguage.oprime.datacollection.SubExperimentToJson"
             android:exported="false" >

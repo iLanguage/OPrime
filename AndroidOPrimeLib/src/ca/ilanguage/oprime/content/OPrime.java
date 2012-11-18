@@ -58,10 +58,8 @@ public class OPrime {
 	public static final String EXTRA_OUTPUT_DIR = "outputdir";
 	public static final String EXTRA_STIMULI_IMAGE_ID = "stimuliimageid";
 	public static final String EXTRA_TWO_PAGE_STORYBOOK = "twopagebook";
+	public static final String EXTRA_PLEASE_PREPARE_EXPERIMENT = "pleaseprepareexperiment";
+  
 
-	public static final String OUTPUT_DIRECTORY = "/sdcard/OPrime/";
-	
-
-	
 	
 }

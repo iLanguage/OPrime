@@ -13,7 +13,7 @@ import android.content.Intent;
 import android.util.Log;
 
 public class SubExperimentToJson extends IntentService {
-	protected static final String TAG = "BilingualAphasiaTest";
+	protected static final String TAG = "OPrime";
 	public static final boolean D = true;
 	
 	public SubExperimentToJson(String name) {
@@ -34,13 +34,16 @@ public class SubExperimentToJson extends IntentService {
 		try {
 			FileOutputStream out = new FileOutputStream(outfile,false);
 			out.write(subex.getResultsJson().getBytes());
+			out.flush();
+			out.close();
 		} catch (FileNotFoundException e) {
 			Log.e(TAG, "Problem opening outfile.");
 			
 		} catch (IOException e) {
 			Log.e(TAG, "Problem writing outfile.");
 		}
-		Log.e(TAG, "Done service.");
+    if (D)
+		Log.d(TAG, "Done service.");
 	}
 
 }

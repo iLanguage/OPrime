@@ -1,22 +1,31 @@
 package ca.ilanguage.oprime.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.ilanguage.oprime.R;
 import ca.ilanguage.oprime.content.OPrime;
 import ca.ilanguage.oprime.content.JavaScriptInterface;
+import ca.ilanguage.oprime.content.OPrimeApp;
 import ca.ilanguage.oprime.content.PageUrlGetPair;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.JsPromptResult;
@@ -31,14 +40,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class HTML5Activity extends Activity {
-  protected String TAG = "HTML5GameActivity";
-  public boolean D = false;
+  protected String TAG = "HTML5Activity";
+  public boolean D = true;
 
   protected String mOutputDir;
   protected String mInitialAppServerUrl;
   public WebView mWebView;
   protected JavaScriptInterface mJavaScriptInterface;
   protected String mWebAppBaseDir;
+
 
   /** Called when the activity is first created. */
   @Override
@@ -47,11 +57,12 @@ public class HTML5Activity extends Activity {
     setContentView(R.layout.html5webview);
     setUpVariables();
     prepareWebView();
+    
   }
 
   protected void setUpVariables() {
     if (getIntent().getExtras() == null) {
-      mOutputDir = OPrime.OUTPUT_DIRECTORY;
+      mOutputDir = ((OPrimeApp) getApplication()).getOutputDir();
       D = true;
       mInitialAppServerUrl = "file:///android_asset/OPrimeTest.html";// "http://192.168.0.180:3001/";
       mJavaScriptInterface = new JavaScriptInterface(D, TAG, mOutputDir,
@@ -64,7 +75,7 @@ public class HTML5Activity extends Activity {
     if (getIntent().getExtras().getString(OPrime.EXTRA_OUTPUT_DIR) != null) {
       mOutputDir = getIntent().getExtras().getString(OPrime.EXTRA_OUTPUT_DIR);
     } else {
-      mOutputDir = OPrime.OUTPUT_DIRECTORY;
+      mOutputDir = ((OPrimeApp) getApplication()).getOutputDir();
     }
 
     if (getIntent().getExtras().getString(OPrime.EXTRA_TAG) != null) {
@@ -136,6 +147,14 @@ public class HTML5Activity extends Activity {
     mWebView.loadUrl(message);
   }
 
+  public static boolean isIntentAvailable(Context context, String action) {
+    final PackageManager packageManager = context.getPackageManager();
+    final Intent intent = new Intent(action);
+    List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+        PackageManager.MATCH_DEFAULT_ONLY);
+    return list.size() > 0;
+  }
+
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
     case OPrime.PICTURE_TAKEN:
@@ -147,10 +166,63 @@ public class HTML5Activity extends Activity {
                 + pictureFilePath + "');");
         if (D)
           Log.d(TAG, "In the result for PICTURE_TAKEN. " + pictureFilePath);
+        break;
       }
     default:
       break;
     }
+  }
+
+  public boolean onCreateOptionsMenu(Menu menu) {
+
+    // Inflate the currently selected menu XML resource.
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.home_menu, menu);
+
+    return true;
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.open_settings) {
+      Intent i = new Intent(getBaseContext(), ParticipantDetails.class);
+      startActivity(i);
+      return true;
+    } else if (item.getItemId() == R.id.language_settings) {
+      Intent inte = new Intent(getBaseContext(), ParticipantDetails.class);
+      startActivityForResult(inte, OPrime.SWITCH_LANGUAGE);
+      return true;
+    } else if (item.getItemId() == R.id.result_folder) {
+      final boolean fileManagerAvailable = isIntentAvailable(this,
+          "org.openintents.action.PICK_FILE");
+      if (!fileManagerAvailable) {
+        Toast
+            .makeText(
+                getApplicationContext(),
+                "To open and export recorded files or "
+                    + "draft data you can install the OI File Manager, "
+                    + "it allows you to browse your SDCARD directly on your mobile device."
+                    + " There are other apps which allow you to view the files, but OI is the one this app uses when you click on this button",
+                Toast.LENGTH_LONG).show();
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri
+            .parse("market://details?id=org.openintents.filemanager"));
+        startActivity(goToMarket);
+      } else {
+        Intent openResults = new Intent("org.openintents.action.PICK_FILE");
+        openResults.setData(Uri.parse("file://" + mOutputDir));
+        startActivity(openResults);
+      }
+      // Intent intentReplay = new Intent(getBaseContext(),
+      // ParticipantDetails.class);
+      // startActivityForResult(intentReplay, OPrime.REPLAY_RESULTS);
+      return true;
+    } else if (item.getItemId() == R.id.issue_tracker) {
+      Intent browserIntent = new Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("https://docs.google.com/spreadsheet/viewform?formkey=dGpiRDhreGpmTFBmQ2FUTVVjVlhESHc6MQ"));
+      startActivity(browserIntent);
+      return true;
+    }
+    return false;
   }
 
   class MyWebChromeClient extends WebChromeClient {
@@ -166,7 +238,7 @@ public class HTML5Activity extends Activity {
 
     @Override
     public boolean onConsoleMessage(ConsoleMessage cm) {
-      if(cm.message() == null){
+      if (cm.message() == null) {
         return true;
       }
       if (D)
@@ -174,24 +246,26 @@ public class HTML5Activity extends Activity {
         // + " -- From line " + cm.lineNumber() + " of "
         // + cm.sourceId()
         );
-      
+
       /*
-       * Handle SOAP servers refusal to connect by telling user the entire error.
+       * Handle SOAP servers refusal to connect by telling user the entire
+       * error.
        */
-      if(cm.message().startsWith("XMLHttpRequest cannot load")){
+      if (cm.message().startsWith("XMLHttpRequest cannot load")) {
         new AlertDialog.Builder(HTML5Activity.this)
-        .setTitle("")
-        .setMessage(cm.message()+"\nPlease contact the server administrator.")
-        .setPositiveButton(android.R.string.ok,
-            new AlertDialog.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                return ;
-              }
-            }).setCancelable(false).create().show();
+            .setTitle("")
+            .setMessage(
+                cm.message() + "\nPlease contact the server administrator.")
+            .setPositiveButton(android.R.string.ok,
+                new AlertDialog.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int which) {
+                    return;
+                  }
+                }).setCancelable(false).create().show();
       }
       return true;
     }
-    
+
     @Override
     public boolean onJsBeforeUnload(WebView view, String url, String message,
         JsResult result) {

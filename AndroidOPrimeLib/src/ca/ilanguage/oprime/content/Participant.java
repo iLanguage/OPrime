@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import android.graphics.Region.Op;
-
 public class Participant {
 	private static int counter = 0;
 	
