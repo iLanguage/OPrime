@@ -10,8 +10,7 @@
     <string name="preference_user_guide_title">User Guide</string>
     <string name="preference_user_guide_summary">Click on this link to download 
         Cook, Marquis, Achim, Dessureault, Nguyen, Royle 2013 which discusses the OPrime library project
-         data collection in a clinical or research context. 
-         The codebase is documented using milestones and issues on the Bilingual Aphasia Test.</string>
+         data collection in a clinical or research context. </string>
     <string name="preference_about">About</string>
     <string name="preference_visit_bug_tracker">Contact Us</string>
     <string name="preference_visit_bug_tracker_summary">Report a bug or request a feature</string>

@@ -90,8 +90,9 @@ public class OPrimeApp extends Application {
     // File.separator;
 
     mLanguage = Locale.getDefault();
+//    new File(mOutputDir).mkdirs();
     new File(mOutputDir + "video/").mkdirs();
-    new File(mOutputDir + "audio/").mkdirs();
+//    new File(mOutputDir + "audio/").mkdirs();
     new File(mOutputDir + "images/").mkdirs();
     new File(mOutputDir + "touchdata/").mkdirs();
 
@@ -149,8 +150,9 @@ public class OPrimeApp extends Application {
     }
     addStimuli();
     mCurrentSubExperiment = 0;
-    Log.d(TAG, "Created an experiment "
-        + mExperiments.get(mCurrentExperiment).getTitle());
+    if (D)
+      Log.d(TAG, "Created an experiment "
+          + mExperiments.get(mCurrentExperiment).getTitle());
 
   }
 
@@ -184,12 +186,8 @@ public class OPrimeApp extends Application {
     stimuli.add(new Stimulus(R.drawable.androids_experimenter_kids, "Item 1"));
     mExperiments.get(mCurrentExperiment).getSubExperiments().get(1)
         .setStimuli(stimuli);
-    mExperiments
-    .get(mCurrentExperiment)
-    .getSubExperiments()
-    .get(1)
-    .setIntentToCallThisSubExperiment(
-        OPrime.INTENT_START_SUB_EXPERIMENT);
+    mExperiments.get(mCurrentExperiment).getSubExperiments().get(1)
+        .setIntentToCallThisSubExperiment(OPrime.INTENT_START_SUB_EXPERIMENT);
     /*
      * Sample SubExperiment: 2 images per item.
      */
@@ -208,11 +206,11 @@ public class OPrimeApp extends Application {
     mExperiments.get(mCurrentExperiment).getSubExperiments().get(2)
         .setStimuli(stimuli);
     mExperiments
-    .get(mCurrentExperiment)
-    .getSubExperiments()
-    .get(1)
-    .setIntentToCallThisSubExperiment(
-        OPrime.INTENT_START_TWO_IMAGE_SUB_EXPERIMENT);
+        .get(mCurrentExperiment)
+        .getSubExperiments()
+        .get(1)
+        .setIntentToCallThisSubExperiment(
+            OPrime.INTENT_START_TWO_IMAGE_SUB_EXPERIMENT);
   }
 
   /**

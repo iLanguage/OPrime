@@ -9,7 +9,7 @@ import ca.ilanguage.oprime.content.OPrime;
 
 import android.app.Activity;
 import android.content.ContentValues;
-import android.content.CursorLoader;
+import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -139,22 +139,17 @@ public class TakePicture extends Activity {
   }
 
   public String getPath(Uri uri) {
-    
+
     String selection = null;
     String[] selectionArgs = null;
     String sortOrder = null;
 
     String[] projection = { MediaStore.Images.Media.DATA };
-    CursorLoader cursorLoader = new CursorLoader(
-            this, 
-            uri, 
-            projection, 
-            selection, 
-            selectionArgs, 
-            sortOrder);
+    CursorLoader cursorLoader = new CursorLoader(this, uri, projection,
+        selection, selectionArgs, sortOrder);
 
     Cursor cursor = cursorLoader.loadInBackground();
-    
+
     int column_index = cursor
         .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
     cursor.moveToFirst();

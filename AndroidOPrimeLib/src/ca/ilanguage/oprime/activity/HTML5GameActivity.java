@@ -8,6 +8,8 @@ import ca.ilanguage.oprime.content.OPrime;
 import ca.ilanguage.oprime.content.OPrimeApp;
 import ca.ilanguage.oprime.content.Participant;
 import ca.ilanguage.oprime.content.SubExperimentBlock;
+import ca.ilanguage.oprime.datacollection.AudioRecorder;
+import ca.ilanguage.oprime.datacollection.SubExperimentToJson;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,21 +29,24 @@ public class HTML5GameActivity extends HTML5Activity {
 
   @Override
   protected void setUpVariables() {
-    mOutputDir = ((OPrimeApp) getApplication()).getOutputDir();
     D = true;
+    mOutputDir = ((OPrimeApp) getApplication()).getOutputDir();
     mInitialAppServerUrl = "file:///android_asset/sample_menu.html";// "http://192.168.0.180:3001/";
     mJavaScriptInterface = new ExperimentJavaScriptInterface(D, TAG,
         mOutputDir, getApplicationContext(), this, "");
     if (D)
       Log.d(TAG, "Using the OPrime experiment javascript interface.");
 
-    app = (OPrimeApp) getApplication();
+    this.app = (OPrimeApp) getApplication();
   }
 
   @Override
   protected void prepareWebView() {
     super.prepareWebView();
+    checkIfNeedToPrepareExperiment();
+  }
 
+  protected void checkIfNeedToPrepareExperiment(){
     boolean prepareExperiment = getIntent().getExtras().getBoolean(
         OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, false);
     if (prepareExperiment) {
@@ -52,7 +57,7 @@ public class HTML5GameActivity extends HTML5Activity {
           MODE_PRIVATE);
       String lang = prefs.getString(OPrimeApp.PREFERENCE_EXPERIMENT_LANGUAGE,
           "");
-      if (lang.equals(app.getLanguage().getLanguage())) {
+      if (app.getLanguage().getLanguage().equals(lang) && app.getExperiment() != null) {
         // do nothing if they didn't change the language
         if (D) {
           Log.d(TAG,
@@ -60,6 +65,14 @@ public class HTML5GameActivity extends HTML5Activity {
                   + lang);
         }
       } else {
+        if (lang == null) {
+          lang = app.getLanguage().getLanguage();
+          if (D) {
+            Log.d(TAG,
+                "The Language was null, setting it to the tablets default language "
+                    + lang);
+          }
+        }
         if (D) {
           Log.d(TAG, "Preparing the experiment for " + lang);
         }
@@ -68,18 +81,13 @@ public class HTML5GameActivity extends HTML5Activity {
       }
     }
   }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-  }
-
+  
   protected void initExperiment() {
-    getParticipantDetails();
+    getParticipantDetails(this.app);
     mWebView.loadUrl("file:///android_asset/sample_menu.html");
   }
 
-  protected void getParticipantDetails() {
+  protected void getParticipantDetails(OPrimeApp app) {
     Participant p;
     try {
       p = app.getExperiment().getParticipant();
@@ -137,6 +145,9 @@ public class HTML5GameActivity extends HTML5Activity {
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if(app == null){
+      app = this.getApp();
+    }
     switch (requestCode) {
     case OPrime.EXPERIMENT_COMPLETED:
       if (data != null) {
@@ -144,7 +155,7 @@ public class HTML5GameActivity extends HTML5Activity {
             .getSerializable(OPrime.EXTRA_SUB_EXPERIMENT);
         app.getSubExperiments().set(mCurrentSubex, completedExp);
 
-        Intent i = new Intent(OPrime.INTENT_SAVE_SUB_EXPERIMENT_JSON);
+        Intent i = new Intent(this, SubExperimentToJson.class);
         i.putExtra(OPrime.EXTRA_SUB_EXPERIMENT, (Serializable) app
             .getSubExperiments().get(mCurrentSubex));
         startService(i);
@@ -162,15 +173,15 @@ public class HTML5GameActivity extends HTML5Activity {
         trackCompletedExperiment(completedExp);
 
         app.writePrivateParticipantToFile();
-        
+
         String intentAfterSubExperiment = app.getExperiment()
             .getSubExperiments().get(mCurrentSubex)
             .getIntentToCallAfterThisSubExperiment();
-        
+
         if (!"".equals(intentAfterSubExperiment)) {
           Intent takepicture = new Intent(intentAfterSubExperiment);
           takepicture.putExtra(OPrime.EXTRA_RESULT_FILENAME, completedExp
-              .getResultsFileWithoutSuffix().replace("video", "writing")
+              .getResultsFileWithoutSuffix().replace("video", "images")
               + ".jpg");
           startActivity(takepicture);
         }
@@ -214,7 +225,7 @@ public class HTML5GameActivity extends HTML5Activity {
   protected void stopVideoRecorder() {
     Intent i = new Intent(OPrime.INTENT_STOP_VIDEO_RECORDING);
     sendBroadcast(i);
-    Intent audio = new Intent(OPrime.INTENT_START_AUDIO_RECORDING);
+    Intent audio = new Intent(this, AudioRecorder.class);
     stopService(audio);
     // Toast.makeText(this, "Subexperiment complete. ",
     // Toast.LENGTH_LONG).show();

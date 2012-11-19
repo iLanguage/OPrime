@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
+    
     <application
         android:name="ca.ilanguage.oprime.content.OPrimeApp"
         android:icon="@drawable/ic_oprime"
@@ -129,7 +130,7 @@
         <!-- All services must be listed in the manifest before they can be used -->
         <service
             android:name="ca.ilanguage.oprime.datacollection.SubExperimentToJson"
-            android:exported="false" >
+            android:permission="ca.ilanguage.oprime.permission.SAVE_SUB_EXPERIMENT_JSON" >
             <intent-filter>
                 <action android:name="ca.ilanguage.oprime.intent.action.SAVE_SUB_EXPERIMENT_JSON" />
 
@@ -138,7 +139,7 @@
         </service>
         <service
             android:name="ca.ilanguage.oprime.datacollection.AudioRecorder"
-            android:exported="false" >
+            android:permission="ca.ilanguage.oprime.permission.START_AUDIO_RECORDING_SERVICE" >
             <intent-filter>
                 <action android:name="ca.ilanguage.oprime.intent.action.START_AUDIO_RECORDING_SERVICE" />
 

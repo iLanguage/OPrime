@@ -100,7 +100,7 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback {
       return;
     }
     Intent intent;
-    intent = new Intent(OPrime.INTENT_START_AUDIO_RECORDING);
+    intent = new Intent(this, AudioRecorder.class);
     intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, getIntent().getExtras()
         .getString(OPrime.EXTRA_RESULT_FILENAME));
     startService(intent);

@@ -14,8 +14,8 @@ public class SubExperimentBlock implements Serializable {
   String resultsFileWithoutSuffix = OPrime.EMPTYSTRING;
   long startTime = 0;
   int displayedStimuli = 0;
-  protected String mIntentToCallThisSubExperiment = OPrime.INTENT_START_SUB_EXPERIMENT;
-  protected String mIntentToCallAfterThisSubExperiment = "";
+  protected String intentToCallThisSubExperiment = OPrime.INTENT_START_SUB_EXPERIMENT;
+  protected String intentToCallAfterThisSubExperiment = "";
 
   public SubExperimentBlock() {
     super();
@@ -46,6 +46,19 @@ public class SubExperimentBlock implements Serializable {
     this.resultsFileWithoutSuffix = resultsFile;
     this.stimuli = stimuli;
     this.startTime = System.currentTimeMillis();
+  }
+
+  public SubExperimentBlock(String title, String language, String description,
+      ArrayList<? extends Stimulus> stimuli, String resultsFile,
+      String intentToCall) {
+    super();
+    this.title = title;
+    this.language = language;
+    this.description = description;
+    this.resultsFileWithoutSuffix = resultsFile;
+    this.stimuli = stimuli;
+    this.startTime = System.currentTimeMillis();
+    this.intentToCallThisSubExperiment = intentToCall;
   }
 
   public boolean isExperimentProbablyComplete() {
@@ -123,21 +136,21 @@ public class SubExperimentBlock implements Serializable {
   }
 
   public String getIntentToCallThisSubExperiment() {
-    return mIntentToCallThisSubExperiment;
+    return intentToCallThisSubExperiment;
   }
 
   public void setIntentToCallThisSubExperiment(
-      String mIntentToCallThisSubExperiment) {
-    this.mIntentToCallThisSubExperiment = mIntentToCallThisSubExperiment;
+      String intentToCallThisSubExperiment) {
+    this.intentToCallThisSubExperiment = intentToCallThisSubExperiment;
   }
 
   public String getIntentToCallAfterThisSubExperiment() {
-    return mIntentToCallAfterThisSubExperiment;
+    return intentToCallAfterThisSubExperiment;
   }
 
   public void setIntentToCallAfterThisSubExperiment(
-      String mIntentToCallAfterThisSubExperiment) {
-    this.mIntentToCallAfterThisSubExperiment = mIntentToCallAfterThisSubExperiment;
+      String intentToCallAfterThisSubExperiment) {
+    this.intentToCallAfterThisSubExperiment = intentToCallAfterThisSubExperiment;
   }
-  
+
 }

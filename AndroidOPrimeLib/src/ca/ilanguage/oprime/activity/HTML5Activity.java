@@ -49,7 +49,6 @@ public class HTML5Activity extends Activity {
   protected JavaScriptInterface mJavaScriptInterface;
   protected String mWebAppBaseDir;
 
-
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class HTML5Activity extends Activity {
     setContentView(R.layout.html5webview);
     setUpVariables();
     prepareWebView();
-    
+
   }
 
   protected void setUpVariables() {
@@ -129,17 +128,20 @@ public class HTML5Activity extends Activity {
     webSettings.setDefaultTextEncodingName("utf-8");
     webSettings.setAppCacheEnabled(true);
     webSettings.setDomStorageEnabled(true);
+    // webSettings.setDatabasePath(this.getFilesDir().getAbsolutePath()+"webdb/");
+    // //TODO change to this
     webSettings.setDatabasePath("/data/data/"
         + getApplicationContext().getPackageName() + "/databases/");
-    Log.d(TAG,
-        "Turning on dom storage enabled webSettings.setDomStorageEnabled "
-            + "/data/data/" + getApplicationContext().getPackageName()
-            + "/databases/");
+    if (D)
+      Log.d(TAG,
+          "Turning on dom storage enabled webSettings.setDomStorageEnabled "
+              + "/data/data/" + getApplicationContext().getPackageName()
+              + "/databases/");
 
     webSettings.setUserAgentString(webSettings.getUserAgentString() + " "
         + OPrime.USER_AGENT_STRING);
     mWebView.loadUrl(mInitialAppServerUrl);
-    mJavaScriptInterface.setUIParent(this);
+    //mJavaScriptInterface.setUIParent(this);
 
   }
 
@@ -218,7 +220,7 @@ public class HTML5Activity extends Activity {
     } else if (item.getItemId() == R.id.issue_tracker) {
       Intent browserIntent = new Intent(
           Intent.ACTION_VIEW,
-          Uri.parse("https://docs.google.com/spreadsheet/viewform?formkey=dGpiRDhreGpmTFBmQ2FUTVVjVlhESHc6MQ"));
+          Uri.parse("https://github.com/iLanguage/OPrime/issues"));
       startActivity(browserIntent);
       return true;
     }
@@ -417,6 +419,9 @@ public class HTML5Activity extends Activity {
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
+    if (D)
+      Log.d(TAG,
+          "Configuration has changed (rotation). Not redrawing the screen.");
     /*
      * Doing nothing makes the current redraw properly
      */

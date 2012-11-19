@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import ca.ilanguage.oprime.activity.HTML5Activity;
+import ca.ilanguage.oprime.datacollection.AudioRecorder;
 import ca.ilanguage.oprime.datacollection.VideoRecorder;
 
 import android.content.Context;
@@ -324,7 +325,7 @@ public class JavaScriptInterface implements Serializable {
       Log.d(TAG, "This is what the audiofile looks like:" + mAudioRecordFileUrl);
 
     Intent intent;
-    intent = new Intent(OPrime.INTENT_START_AUDIO_RECORDING);
+    intent = new Intent(mContext, AudioRecorder.class);
     intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, mAudioRecordFileUrl);
     mUIParent.startService(intent);
     // Publish audio recording started
@@ -341,7 +342,7 @@ public class JavaScriptInterface implements Serializable {
     if (mAudioRecordFileUrl == null) {
       return;
     }
-    Intent audio = new Intent(OPrime.INTENT_START_AUDIO_RECORDING);
+    Intent audio = new Intent(mContext, AudioRecorder.class);
     mUIParent.stopService(audio);
     // Publish stopped audio
     LoadUrlToWebView v = new LoadUrlToWebView();

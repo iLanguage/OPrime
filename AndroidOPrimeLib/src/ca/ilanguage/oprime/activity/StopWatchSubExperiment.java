@@ -35,6 +35,7 @@ import ca.ilanguage.oprime.R;
 import ca.ilanguage.oprime.content.OPrime;
 import ca.ilanguage.oprime.content.Stimulus;
 import ca.ilanguage.oprime.content.SubExperimentBlock;
+import ca.ilanguage.oprime.datacollection.AudioRecorder;
 
 public class StopWatchSubExperiment extends Activity {
     Chronometer mChronometer;
@@ -102,7 +103,7 @@ public class StopWatchSubExperiment extends Activity {
 		mSubExperiment.setStimuli(mStimuli);
 		Intent video = new Intent(OPrime.INTENT_STOP_VIDEO_RECORDING);
 	    sendBroadcast(video);
-	    Intent audio = new Intent(OPrime.INTENT_START_AUDIO_RECORDING);
+	    Intent audio = new Intent(this, AudioRecorder.class);
 		stopService(audio);
 		 
 		Intent intent = new Intent(OPrime.INTENT_FINISHED_SUB_EXPERIMENT);

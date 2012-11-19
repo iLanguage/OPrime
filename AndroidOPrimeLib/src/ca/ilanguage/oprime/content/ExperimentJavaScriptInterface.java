@@ -9,7 +9,6 @@ import ca.ilanguage.oprime.content.JavaScriptInterface;
 import ca.ilanguage.oprime.content.OPrime;
 
 public class ExperimentJavaScriptInterface extends JavaScriptInterface {
-  HTML5GameActivity UIParent;
   private Handler mHandlerDelayStimuli = new Handler();
 
   private static final long serialVersionUID = -8802714328569435146L;
@@ -42,7 +41,7 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
     this.startVideoRecorder(resultsFile);
 
     app.getSubExperiments().get(currentSubExperiment)
-        .setResultsFileWithoutSuffix(mOutputDir + resultsFile);
+        .setResultsFileWithoutSuffix(mOutputDir +"video/"+ resultsFile);
 
   }
 
