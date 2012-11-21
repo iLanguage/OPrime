@@ -9,7 +9,6 @@ import ca.ilanguage.oprime.content.JavaScriptInterface;
 import ca.ilanguage.oprime.content.OPrime;
 
 public class ExperimentJavaScriptInterface extends JavaScriptInterface {
-  private Handler mHandlerDelayStimuli = new Handler();
 
   private static final long serialVersionUID = -8802714328569435146L;
 
@@ -18,6 +17,7 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
     super(d, tag, outputDir, context, UIParent, assetsPrefix);
   }
 
+  @Deprecated
   public void startVideoRecorderWithResult() {
     String mDateString = (String) android.text.format.DateFormat.format(
         "yyyy-MM-dd_kk_mm", new java.util.Date(System.currentTimeMillis()));
@@ -38,11 +38,10 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
     if (D) {
       Log.d(TAG, "Starting video/audio recording to:" + resultsFile);
     }
-    this.startVideoRecorder(resultsFile);
+     this.startVideoRecorder(resultsFile);
 
     app.getSubExperiments().get(currentSubExperiment)
         .setResultsFileWithoutSuffix(mOutputDir + "video/" + resultsFile);
-
   }
 
   public void launchSubExperimentJS(String subex) {
@@ -52,32 +51,37 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
     final int currentSubExperiment = Integer.parseInt(subex);
     ((HTML5GameActivity) mUIParent).setCurrentSubex(currentSubExperiment);
 
-    startVideoRecorderWithResult();
-    /*
-     * Wait two seconds so that the video activity has time to load the camera.
-     * It will continue recording until you exit the video activity.
-     */
-    mHandlerDelayStimuli.postDelayed(new Runnable() {
-      public void run() {
-        // Toast.makeText(mContext,
-        // "Launching subexperiment "+getCurrentSubex(),
-        // Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(((OPrimeApp) mUIParent.getApplication())
-            .getSubExperiments().get(currentSubExperiment)
-            .getIntentToCallThisSubExperiment());
+    String mDateString = (String) android.text.format.DateFormat.format(
+        "yyyy-MM-dd_kk_mm", new java.util.Date(System.currentTimeMillis()));
+    mDateString = mDateString.replaceAll("/", "-").replaceAll(" ", "-");
 
-        intent.putExtra(
-            OPrime.EXTRA_SUB_EXPERIMENT,
-            ((OPrimeApp) mUIParent.getApplication()).getSubExperiments().get(
-                currentSubExperiment));
+    OPrimeApp app = ((HTML5GameActivity) mUIParent).getApp();
+    String resultsFile = app.getExperiment().getParticipant().getCode()
+        + "_"
+        + app.getLanguage()
+        + currentSubExperiment
+        + "_"
+        + app.getSubExperiments().get(currentSubExperiment).getTitle()
+            .replaceAll(" ", "_") + "-" + mDateString;
 
-        intent.putExtra(OPrime.EXTRA_LANGUAGE, ((OPrimeApp) mUIParent
-            .getApplication()).getLanguage().getLanguage());
+    Intent intent = new Intent(((OPrimeApp) mUIParent.getApplication())
+        .getSubExperiments().get(currentSubExperiment)
+        .getIntentToCallThisSubExperiment());
 
-        mUIParent.startActivityForResult(intent, OPrime.EXPERIMENT_COMPLETED);
+    intent.putExtra(
+        OPrime.EXTRA_SUB_EXPERIMENT,
+        ((OPrimeApp) mUIParent.getApplication()).getSubExperiments().get(
+            currentSubExperiment));
+    intent.putExtra(OPrime.EXTRA_LANGUAGE,
+        ((OPrimeApp) mUIParent.getApplication()).getLanguage().getLanguage());
+    intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, mOutputDir + "video/"
+        + resultsFile + ".3gp");
+    mUIParent.startActivityForResult(intent, OPrime.EXPERIMENT_COMPLETED);
 
-      }
-    }, 2000);
+    app.getSubExperiments().get(currentSubExperiment)
+        .setResultsFileWithoutSuffix(mOutputDir + "video/" + resultsFile);
+    if(D)      Log.d(TAG, "setResultsFileWithoutSuffix sub experiment:" + resultsFile);
+
   }
 
   public String fetchSubExperimentsArrayJS() {

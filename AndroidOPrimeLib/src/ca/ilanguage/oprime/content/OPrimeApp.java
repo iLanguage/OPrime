@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class OPrimeApp extends Application {
   public static final String TAG = "OPrime";
-  public static final boolean D = true;
+  public static final boolean D = false;
   public static final String DEFAULT_OUTPUT_DIRECTORY = "/sdcard/OPrime/";
 
   protected String mOutputDir = DEFAULT_OUTPUT_DIRECTORY;
@@ -253,10 +253,10 @@ public class OPrimeApp extends Application {
       out.flush();
       out.close();
     } catch (FileNotFoundException e) {
-      Log.e(TAG, "Problem opening outfile.");
+      Log.e(TAG, "writePrivateParticipantToFile Problem opening outfile.");
 
     } catch (IOException e) {
-      Log.e(TAG, "Problem writing outfile.");
+      Log.e(TAG, "writePrivateParticipantToFile Problem writing outfile.");
     }
   }
 

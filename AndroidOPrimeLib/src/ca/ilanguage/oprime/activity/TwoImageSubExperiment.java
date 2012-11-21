@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import ca.ilanguage.oprime.R;
 import ca.ilanguage.oprime.content.TwoImageStimulus;
@@ -22,6 +24,22 @@ public class TwoImageSubExperiment extends SubExperiment {
 	public void initalizeLayout(){
 		mStimuliIndex = -1;
 		setContentView(R.layout.two_images);
+		
+		 /*
+     * Set up the video recording
+     */
+    mVideoView = (VideoView) findViewById(R.id.videoViewTwoImage);
+    final SurfaceHolder holder = mVideoView.getHolder();
+    holder.addCallback(this);
+    int sdk = android.os.Build.VERSION.SDK_INT;
+    /*
+     * After 11 this is set by default http:stackoverflow.com/questions/9439186
+     * /surfaceholder-settype-is-deprecated-but-required
+     */
+    if (sdk < 11) {
+      holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+    }
+    
 		nextStimuli();
 	}
 	@Override

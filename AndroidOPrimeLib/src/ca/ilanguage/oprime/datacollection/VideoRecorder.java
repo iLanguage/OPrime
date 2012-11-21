@@ -65,6 +65,7 @@ import android.widget.VideoView;
  * 
  * startActivityForResult(intent, OPrime.EXPERIMENT_COMPLETED);
  */
+@Deprecated
 public class VideoRecorder extends Activity implements SurfaceHolder.Callback {
 
   public static final String EXTRA_VIDEO_QUALITY = "videoQuality";

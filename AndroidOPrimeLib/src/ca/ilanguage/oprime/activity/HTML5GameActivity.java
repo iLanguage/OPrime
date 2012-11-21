@@ -11,7 +11,6 @@ import ca.ilanguage.oprime.content.Participant;
 import ca.ilanguage.oprime.content.SubExperimentBlock;
 import ca.ilanguage.oprime.datacollection.AudioRecorder;
 import ca.ilanguage.oprime.datacollection.SubExperimentToJson;
-import ca.ilanguage.oprime.datacollection.VideoRecorder;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,20 +31,11 @@ public class HTML5GameActivity extends HTML5Activity {
     String outputDir = mOutputDir + "video/";
     new File(outputDir).mkdirs();
 
-//    Intent intent;
-//    intent = new Intent(OPrime.INTENT_START_VIDEO_RECORDING);
-//    intent.putExtra(VideoRecorder.EXTRA_VIDEO_QUALITY,
-//        VideoRecorder.DEFAULT_HIGH_QUALITY);
-//    intent.putExtra(VideoRecorder.EXTRA_USE_FRONT_FACING_CAMERA, true);
-//    intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, outputDir + System.currentTimeMillis()
-//        + ".mp4");
-//
-//    this.startActivity(intent);
   }
 
   @Override
   protected void setUpVariables() {
-    D = true;
+    D = ((OPrimeApp) getApplication()).D;
     mOutputDir = ((OPrimeApp) getApplication()).getOutputDir();
     mInitialAppServerUrl = "file:///android_asset/sample_menu.html";// "http://192.168.0.180:3001/";
     mJavaScriptInterface = new ExperimentJavaScriptInterface(D, TAG,

@@ -27,8 +27,8 @@
                 android:layout_weight="0"
                 android:format="@string/chronometer_initial_format"
                 android:paddingBottom="30dip"
-                android:paddingTop="30dip" 
-                android:textSize="80dip"/>
+                android:paddingTop="30dip"
+                android:textSize="80dip" />
 
             <Button
                 android:id="@+id/start"
@@ -52,27 +52,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chronometer_reset" >
             </Button>
-            
-            
-            
-             <TextView
+
+            <TextView
                 android:id="@+id/stimuli_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#"
                 android:textColor="#ffffff"
                 android:textSize="20dip" >
-                </TextView>
-                
-             <ImageButton
+            </TextView>
+
+            <ImageButton
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onNextClick"
                 android:src="@drawable/ic_play" >
             </ImageButton>
-            
-             
+
+            <VideoView
+                android:id="@+id/videoViewStopWatch"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
         </TableRow>
 
         <TableRow
@@ -83,11 +84,11 @@
 
             <ImageView
                 android:id="@+id/rightimage"
-                android:src="@drawable/androids_experimenter_kids"
                 android:layout_width="0px"
                 android:layout_height="fill_parent"
                 android:layout_weight=".5"
-                android:gravity="center" />
+                android:gravity="center"
+                android:src="@drawable/androids_experimenter_kids" />
         </TableRow>
     </TableLayout>
 
