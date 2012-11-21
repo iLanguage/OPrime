@@ -32,15 +32,15 @@ public class HTML5GameActivity extends HTML5Activity {
     String outputDir = mOutputDir + "video/";
     new File(outputDir).mkdirs();
 
-    Intent intent;
-    intent = new Intent(OPrime.INTENT_START_VIDEO_RECORDING);
-    intent.putExtra(VideoRecorder.EXTRA_VIDEO_QUALITY,
-        VideoRecorder.DEFAULT_HIGH_QUALITY);
-    intent.putExtra(VideoRecorder.EXTRA_USE_FRONT_FACING_CAMERA, true);
-    intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, outputDir + System.currentTimeMillis()
-        + ".mp4");
-
-    this.startActivity(intent);
+//    Intent intent;
+//    intent = new Intent(OPrime.INTENT_START_VIDEO_RECORDING);
+//    intent.putExtra(VideoRecorder.EXTRA_VIDEO_QUALITY,
+//        VideoRecorder.DEFAULT_HIGH_QUALITY);
+//    intent.putExtra(VideoRecorder.EXTRA_USE_FRONT_FACING_CAMERA, true);
+//    intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, outputDir + System.currentTimeMillis()
+//        + ".mp4");
+//
+//    this.startActivity(intent);
   }
 
   @Override

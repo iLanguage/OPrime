@@ -90,9 +90,9 @@ public class OPrimeApp extends Application {
     // File.separator;
 
     mLanguage = Locale.getDefault();
-//    new File(mOutputDir).mkdirs();
+    // new File(mOutputDir).mkdirs();
     new File(mOutputDir + "video/").mkdirs();
-//    new File(mOutputDir + "audio/").mkdirs();
+    // new File(mOutputDir + "audio/").mkdirs();
     new File(mOutputDir + "images/").mkdirs();
     new File(mOutputDir + "touchdata/").mkdirs();
 

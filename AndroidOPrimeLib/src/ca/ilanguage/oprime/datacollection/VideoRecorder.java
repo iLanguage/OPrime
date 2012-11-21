@@ -417,7 +417,7 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback {
         return;
       }
 
-      mCamera.setPreviewDisplay(holder);
+//      mCamera.setPreviewDisplay(holder); //this line doesn't seem to be necessary
 //      Camera.Parameters parameters = mCamera.getParameters();
 //      // parameters.setPreviewSize(640, 480);
 //      List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();

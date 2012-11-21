@@ -23,6 +23,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!--
+    <uses-permission android:name="ca.ilanguage.oprime.permission.START_AUDIO_RECORDING_SERVICE" />
+    <uses-permission android:name="ca.ilanguage.oprime.permission.SAVE_SUB_EXPERIMENT_JSON" />
+    -->
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -133,18 +137,16 @@
         </activity>
 
         <!-- All services must be listed in the manifest before they can be used -->
-        <service
-            android:name="ca.ilanguage.oprime.datacollection.SubExperimentToJson"
-            android:permission="ca.ilanguage.oprime.permission.SAVE_SUB_EXPERIMENT_JSON" >
+        <!-- android:permission="ca.ilanguage.oprime.permission.SAVE_SUB_EXPERIMENT_JSON" -->
+        <service android:name="ca.ilanguage.oprime.datacollection.SubExperimentToJson" >
             <intent-filter>
                 <action android:name="ca.ilanguage.oprime.intent.action.SAVE_SUB_EXPERIMENT_JSON" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        <service
-            android:name="ca.ilanguage.oprime.datacollection.AudioRecorder"
-            android:permission="ca.ilanguage.oprime.permission.START_AUDIO_RECORDING_SERVICE" >
+        <!-- android:permission="ca.ilanguage.oprime.permission.START_AUDIO_RECORDING_SERVICE" -->
+        <service android:name="ca.ilanguage.oprime.datacollection.AudioRecorder" >
             <intent-filter>
                 <action android:name="ca.ilanguage.oprime.intent.action.START_AUDIO_RECORDING_SERVICE" />
 
