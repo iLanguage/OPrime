@@ -74,7 +74,7 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
         intent.putExtra(OPrime.EXTRA_LANGUAGE, ((OPrimeApp) mUIParent
             .getApplication()).getLanguage().getLanguage());
 
-        mUIParent.startActivityForResult(intent, OPrime.EXPERIMENT_COMPLETED);
+//        mUIParent.startActivityForResult(intent, OPrime.EXPERIMENT_COMPLETED);
 
       }
     }, 2000);

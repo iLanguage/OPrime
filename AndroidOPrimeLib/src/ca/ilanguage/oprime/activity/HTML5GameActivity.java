@@ -1,5 +1,6 @@
 package ca.ilanguage.oprime.activity;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -10,6 +11,7 @@ import ca.ilanguage.oprime.content.Participant;
 import ca.ilanguage.oprime.content.SubExperimentBlock;
 import ca.ilanguage.oprime.datacollection.AudioRecorder;
 import ca.ilanguage.oprime.datacollection.SubExperimentToJson;
+import ca.ilanguage.oprime.datacollection.VideoRecorder;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +27,20 @@ public class HTML5GameActivity extends HTML5Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+    
+    String outputDir = mOutputDir + "video/";
+    new File(outputDir).mkdirs();
+
+    Intent intent;
+    intent = new Intent(OPrime.INTENT_START_VIDEO_RECORDING);
+    intent.putExtra(VideoRecorder.EXTRA_VIDEO_QUALITY,
+        VideoRecorder.DEFAULT_HIGH_QUALITY);
+    intent.putExtra(VideoRecorder.EXTRA_USE_FRONT_FACING_CAMERA, true);
+    intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, outputDir + System.currentTimeMillis()
+        + ".mp4");
+
+    this.startActivity(intent);
   }
 
   @Override
