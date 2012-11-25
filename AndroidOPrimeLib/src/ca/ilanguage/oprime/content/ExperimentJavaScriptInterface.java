@@ -93,8 +93,7 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
   }
 
   public String fetchExperimentTitleJS() {
-    return ((OPrimeApp) mUIParent.getApplication()).getExperiment().getTitle();// ((RoogleTankApp)
-    // getApplication()).getLastMessage();
+    return ((OPrimeApp) mUIParent.getApplication()).getExperiment().getTitle();
   }
 
   public void setAutoAdvanceJS(String autoadvance) {

@@ -132,8 +132,9 @@ public class OPrimeApp extends Application {
       boolean autoAdvanceStimuliOnTouch) {
     forceLocale(languagecode);
 
+    //getString(R.string.experiment_title)
     Experiment expLocalized = new Experiment(
-        getString(R.string.experiment_title) + " - "
+        "Bilingual Aphasia Test" + " - "
             + mLanguage.getDisplayLanguage());
 
     mExperiments.add(expLocalized);
