@@ -48,30 +48,21 @@ public class HTML5Activity extends Activity {
   public WebView mWebView;
   protected JavaScriptInterface mJavaScriptInterface;
   protected String mWebAppBaseDir;
-  protected OPrimeApp app = null;
 
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    // Allow other inherited classes to set teh app, only set if they don't.
-    if (this.app == null) {
-      if (D) {
-        Log.d(
-            TAG,
-            "Setting the app to OPrimeApp, this might have unwanted consequences if using an extended OPrimeApp.");
-      }
-      this.setApp((OPrimeApp) getApplication());
-    }
     setContentView(R.layout.html5webview);
     setUpVariables();
     prepareWebView();
+
   }
 
   protected void setUpVariables() {
     if (getIntent().getExtras() == null) {
-      mOutputDir = this.getApp().getOutputDir();
-      D = this.getApp().D;
+      mOutputDir = ((OPrimeApp) getApplication()).getOutputDir();
+      D = true;
       mInitialAppServerUrl = "file:///android_asset/OPrimeTest.html";// "http://192.168.0.180:3001/";
       mJavaScriptInterface = new JavaScriptInterface(D, TAG, mOutputDir,
           getApplicationContext(), this, "");
@@ -83,7 +74,7 @@ public class HTML5Activity extends Activity {
     if (getIntent().getExtras().getString(OPrime.EXTRA_OUTPUT_DIR) != null) {
       mOutputDir = getIntent().getExtras().getString(OPrime.EXTRA_OUTPUT_DIR);
     } else {
-      mOutputDir = this.getApp().getOutputDir();
+      mOutputDir = ((OPrimeApp) getApplication()).getOutputDir();
     }
 
     if (getIntent().getExtras().getString(OPrime.EXTRA_TAG) != null) {
@@ -150,16 +141,8 @@ public class HTML5Activity extends Activity {
     webSettings.setUserAgentString(webSettings.getUserAgentString() + " "
         + OPrime.USER_AGENT_STRING);
     mWebView.loadUrl(mInitialAppServerUrl);
-    // mJavaScriptInterface.setUIParent(this);
+    //mJavaScriptInterface.setUIParent(this);
 
-  }
-
-  public OPrimeApp getApp() {
-    return app;
-  }
-
-  public void setApp(OPrimeApp app) {
-    this.app = app;
   }
 
   public void loadUrlToWebView(String message) {
@@ -235,7 +218,8 @@ public class HTML5Activity extends Activity {
       // startActivityForResult(intentReplay, OPrime.REPLAY_RESULTS);
       return true;
     } else if (item.getItemId() == R.id.issue_tracker) {
-      Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+      Intent browserIntent = new Intent(
+          Intent.ACTION_VIEW,
           Uri.parse("https://github.com/iLanguage/OPrime/issues"));
       startActivity(browserIntent);
       return true;

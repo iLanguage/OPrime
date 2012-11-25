@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class OPrimeApp extends Application {
   public static final String TAG = "OPrime";
-  public static final boolean D = true;
+  public static final boolean D = false;
   public static final String DEFAULT_OUTPUT_DIRECTORY = "/sdcard/OPrime/";
 
   protected boolean mAutoAdvanceStimuliOnTouch = false;
@@ -149,9 +149,8 @@ public class OPrimeApp extends Application {
           .getSubExperiments()
           .add(
               new SubExperimentBlock(subextitles[i], languagecode,
-                  subextitles[i], null, OPrime.EMPTYSTRING,
-                  OPrime.INTENT_START_SUB_EXPERIMENT, true,
-                  autoAdvanceStimuliOnTouch));
+                  subextitles[i], null, OPrime.EMPTYSTRING, OPrime.INTENT_START_SUB_EXPERIMENT,
+                  true, autoAdvanceStimuliOnTouch));
     }
     addStimuli();
     mCurrentSubExperiment = 0;
