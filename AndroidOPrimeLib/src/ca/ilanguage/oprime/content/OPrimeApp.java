@@ -20,6 +20,7 @@ public class OPrimeApp extends Application {
   public static final boolean D = false;
   public static final String DEFAULT_OUTPUT_DIRECTORY = "/sdcard/OPrime/";
 
+  protected boolean mAutoAdvanceStimuliOnTouch = false;
   protected String mOutputDir = DEFAULT_OUTPUT_DIRECTORY;
 
   /*
@@ -70,6 +71,7 @@ public class OPrimeApp extends Application {
   public static final String PREFERENCE_PARTICIPANT_ENDTIME = "participantendtime";
   public static final String PREFERENCE_EXPERIEMENTER_CODE = "experimenterCode";
   public static final String PREFERENCE_EXPERIMENT_LANGUAGE = "experimentlanguage";
+  public static final String PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH = "autoAdvanceStimuliOnTouch";
   public static final String PREFERENCE_PARTICIPANT_LANGUAGES = "participantlangs";
   public static final String PREFERENCE_TESTING_DAY_NUMBER = "testingdaynumber";
   public static final String PREFERENCE_PARTICIPANT_NUMBER_IN_DAY = "participantnumberinday";
@@ -126,7 +128,8 @@ public class OPrimeApp extends Application {
     return titles;
   }
 
-  public void createNewExperiment(String languagecode) {
+  public void createNewExperiment(String languagecode,
+      boolean autoAdvanceStimuliOnTouch) {
     forceLocale(languagecode);
 
     Experiment expLocalized = new Experiment(
@@ -146,7 +149,8 @@ public class OPrimeApp extends Application {
           .getSubExperiments()
           .add(
               new SubExperimentBlock(subextitles[i], languagecode,
-                  subextitles[i], null, ""));
+                  subextitles[i], null, OPrime.EMPTYSTRING, OPrime.INTENT_START_SUB_EXPERIMENT,
+                  true, autoAdvanceStimuliOnTouch));
     }
     addStimuli();
     mCurrentSubExperiment = 0;
@@ -359,6 +363,14 @@ public class OPrimeApp extends Application {
 
   public void setOutputDir(String mOutputDir) {
     this.mOutputDir = mOutputDir;
+  }
+
+  public boolean isAutoAdvanceStimuliOnTouch() {
+    return mAutoAdvanceStimuliOnTouch;
+  }
+
+  public void setAutoAdvanceStimuliOnTouch(boolean mAutoAdvanceStimuliOnTouch) {
+    this.mAutoAdvanceStimuliOnTouch = mAutoAdvanceStimuliOnTouch;
   }
 
   public String getLocalCouchDir() {

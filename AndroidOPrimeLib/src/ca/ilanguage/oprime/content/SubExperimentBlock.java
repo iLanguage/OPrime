@@ -7,15 +7,17 @@ import com.google.gson.Gson;
 
 public class SubExperimentBlock implements Serializable {
   private static final long serialVersionUID = -3637915995040502723L;
-  String title = OPrime.EMPTYSTRING;
-  String language = OPrime.DEFAULT_LANGUAGE;
-  String description = OPrime.EMPTYSTRING;
-  ArrayList<? extends Stimulus> stimuli;
-  String resultsFileWithoutSuffix = OPrime.EMPTYSTRING;
-  long startTime = 0;
-  int displayedStimuli = 0;
+  protected String title = OPrime.EMPTYSTRING;
+  protected String language = OPrime.DEFAULT_LANGUAGE;
+  protected String description = OPrime.EMPTYSTRING;
+  protected ArrayList<? extends Stimulus> stimuli;
+  protected String resultsFileWithoutSuffix = OPrime.EMPTYSTRING;
+  protected long startTime = 0;
+  protected int displayedStimuli = 0;
   protected String intentToCallThisSubExperiment = OPrime.INTENT_START_SUB_EXPERIMENT;
   protected String intentToCallAfterThisSubExperiment = "";
+  protected boolean autoAdvanceStimuliOnTouchIsPossible = true;
+  protected boolean autoAdvanceStimuliOnTouch = false;
 
   public SubExperimentBlock() {
     super();
@@ -59,6 +61,22 @@ public class SubExperimentBlock implements Serializable {
     this.stimuli = stimuli;
     this.startTime = System.currentTimeMillis();
     this.intentToCallThisSubExperiment = intentToCall;
+  }
+
+  public SubExperimentBlock(String title, String language, String description,
+      ArrayList<? extends Stimulus> stimuli, String resultsFile,
+      String intentToCall, boolean autoAdvanceStimuliOnTouchIsPossible,
+      boolean autoAdvanceStimuliOnTouch) {
+    super();
+    this.title = title;
+    this.language = language;
+    this.description = description;
+    this.resultsFileWithoutSuffix = resultsFile;
+    this.stimuli = stimuli;
+    this.startTime = System.currentTimeMillis();
+    this.intentToCallThisSubExperiment = intentToCall;
+    this.autoAdvanceStimuliOnTouch = autoAdvanceStimuliOnTouch;
+    this.autoAdvanceStimuliOnTouchIsPossible = autoAdvanceStimuliOnTouchIsPossible;
   }
 
   public boolean isExperimentProbablyComplete() {
@@ -151,6 +169,28 @@ public class SubExperimentBlock implements Serializable {
   public void setIntentToCallAfterThisSubExperiment(
       String intentToCallAfterThisSubExperiment) {
     this.intentToCallAfterThisSubExperiment = intentToCallAfterThisSubExperiment;
+  }
+
+  public boolean isAutoAdvanceStimuliOnTouch() {
+    if (this.autoAdvanceStimuliOnTouchIsPossible) {
+      return autoAdvanceStimuliOnTouch;
+    } else {
+      return false;
+    }
+  }
+
+  public void setAutoAdvanceStimuliOnTouch(
+      boolean autoAdvanceStimuliOnTouchPreference) {
+    this.autoAdvanceStimuliOnTouch = autoAdvanceStimuliOnTouchPreference;
+  }
+
+  public boolean isAutoAdvanceStimuliOnTouchIsPossible() {
+    return autoAdvanceStimuliOnTouchIsPossible;
+  }
+
+  public void setAutoAdvanceStimuliOnTouchIsPossible(
+      boolean autoAdvanceStimuliOnTouchIsPossible) {
+    this.autoAdvanceStimuliOnTouchIsPossible = autoAdvanceStimuliOnTouchIsPossible;
   }
 
 }

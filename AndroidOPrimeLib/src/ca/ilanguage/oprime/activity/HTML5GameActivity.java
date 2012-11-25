@@ -26,8 +26,7 @@ public class HTML5GameActivity extends HTML5Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
-    
+
     String outputDir = mOutputDir + "video/";
     new File(outputDir).mkdirs();
 
@@ -52,7 +51,7 @@ public class HTML5GameActivity extends HTML5Activity {
     checkIfNeedToPrepareExperiment();
   }
 
-  protected void checkIfNeedToPrepareExperiment(){
+  protected void checkIfNeedToPrepareExperiment() {
     boolean prepareExperiment = getIntent().getExtras().getBoolean(
         OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, false);
     if (prepareExperiment) {
@@ -63,7 +62,13 @@ public class HTML5GameActivity extends HTML5Activity {
           MODE_PRIVATE);
       String lang = prefs.getString(OPrimeApp.PREFERENCE_EXPERIMENT_LANGUAGE,
           "");
-      if (app.getLanguage().getLanguage().equals(lang) && app.getExperiment() != null) {
+      boolean autoAdvanceStimuliOnTouch = prefs.getBoolean(
+          OPrimeApp.PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH, false);
+      ((OPrimeApp) this.getApplication())
+          .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
+
+      if (app.getLanguage().getLanguage().equals(lang)
+          && app.getExperiment() != null) {
         // do nothing if they didn't change the language
         if (D) {
           Log.d(TAG,
@@ -82,12 +87,12 @@ public class HTML5GameActivity extends HTML5Activity {
         if (D) {
           Log.d(TAG, "Preparing the experiment for " + lang);
         }
-        app.createNewExperiment(lang);
+        app.createNewExperiment(lang, autoAdvanceStimuliOnTouch);
         initExperiment();
       }
     }
   }
-  
+
   protected void initExperiment() {
     getParticipantDetails(this.app);
     mWebView.loadUrl("file:///android_asset/sample_menu.html");
@@ -116,6 +121,10 @@ public class HTML5GameActivity extends HTML5Activity {
         OPrimeApp.PREFERENCE_PARTICIPANT_BIRTHDATE, "");
     String lang = prefs.getString(OPrimeApp.PREFERENCE_EXPERIMENT_LANGUAGE,
         "en");
+    boolean autoAdvanceStimuliOnTouch = prefs.getBoolean(
+        OPrimeApp.PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH, false);
+    ((OPrimeApp) this.getApplication())
+        .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
     // String langs =
     // prefs.getString(OPrimeApp.PREFERENCE_PARTICIPANT_LANGUAGES,
     // "");
@@ -137,7 +146,7 @@ public class HTML5GameActivity extends HTML5Activity {
     p.setDetails(details);
 
     if (app.getExperiment() == null) {
-      app.createNewExperiment(lang);
+      app.createNewExperiment(lang, autoAdvanceStimuliOnTouch);
     }
     app.getExperiment().setParticipant(p);
     // Toast.makeText(getApplicationContext(), p.toCSVPrivateString(),
@@ -151,7 +160,7 @@ public class HTML5GameActivity extends HTML5Activity {
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if(app == null){
+    if (app == null) {
       app = this.getApp();
     }
     switch (requestCode) {
@@ -183,7 +192,6 @@ public class HTML5GameActivity extends HTML5Activity {
         String intentAfterSubExperiment = app.getExperiment()
             .getSubExperiments().get(mCurrentSubex)
             .getIntentToCallAfterThisSubExperiment();
-
         if (!"".equals(intentAfterSubExperiment)) {
           Intent takepicture = new Intent(intentAfterSubExperiment);
           takepicture.putExtra(OPrime.EXTRA_RESULT_FILENAME, completedExp
@@ -199,6 +207,7 @@ public class HTML5GameActivity extends HTML5Activity {
           Toast.makeText(getApplicationContext(), "Experiment completed!",
               Toast.LENGTH_LONG).show();
         } else {
+          Toast.makeText(this, "Sub-experiment complete. ", Toast.LENGTH_LONG).show();
           mWebView.loadUrl("javascript:getPositionAsButton(0,0,"
               + mCurrentSubex + ")");
         }
@@ -212,10 +221,15 @@ public class HTML5GameActivity extends HTML5Activity {
           MODE_PRIVATE);
       String lang = prefs.getString(OPrimeApp.PREFERENCE_EXPERIMENT_LANGUAGE,
           "en");
+      boolean autoAdvanceStimuliOnTouch = prefs.getBoolean(
+          OPrimeApp.PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH, false);
+      ((OPrimeApp) this.getApplication())
+          .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
+
       if (lang.equals(app.getLanguage().getLanguage())) {
-        // do nothing if they didnt change the languge
+        // do nothing if they didn't change the language
       } else {
-        app.createNewExperiment(lang);
+        app.createNewExperiment(lang, autoAdvanceStimuliOnTouch);
         initExperiment();
       }
       break;
@@ -233,8 +247,6 @@ public class HTML5GameActivity extends HTML5Activity {
     sendBroadcast(i);
     Intent audio = new Intent(this, AudioRecorder.class);
     stopService(audio);
-    // Toast.makeText(this, "Subexperiment complete. ",
-    // Toast.LENGTH_LONG).show();
   }
 
   public int getCurrentSubex() {

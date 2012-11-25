@@ -41,7 +41,7 @@ public class SubExperiment extends Activity implements SurfaceHolder.Callback {
   protected Locale language;
   protected int mStimuliIndex = -1;
   protected long mLastTouchTime = 0;
-  protected boolean mTakePicture = false;
+  protected Boolean mAutoAdvanceStimuliOnTouch = false;
   protected String TAG = "OPrime SubExperiment";
   protected int width = 1;
   protected int height = 1;
@@ -77,8 +77,7 @@ public class SubExperiment extends Activity implements SurfaceHolder.Callback {
         .getSerializable(OPrime.EXTRA_SUB_EXPERIMENT);
     this.setTitle(mSubExperiment.getTitle());
     mStimuli = mSubExperiment.getStimuli();
-    mTakePicture = (boolean) getIntent().getExtras().getBoolean(
-        OPrime.EXTRA_TAKE_PICTURE_AT_END, false);
+    mAutoAdvanceStimuliOnTouch = mSubExperiment.isAutoAdvanceStimuliOnTouch();
     if (mStimuli == null || mStimuli.size() == 0) {
       loadDefaults();
     }
@@ -338,13 +337,15 @@ public class SubExperiment extends Activity implements SurfaceHolder.Callback {
     t.height = height;
     t.time = System.currentTimeMillis();
     recordTouchPoint(t, mStimuliIndex);
-    playTouch();
     mLastTouchTime = t.time;
     /*
      * Auto advance to the next stimuli after recording the touch point. the
-     * user can use teh arrows if they didnt mean to auto advacne.
+     * user can use teh arrows if they didnt mean to auto advance.
      */
-    nextStimuli();
+    if (mAutoAdvanceStimuliOnTouch) {
+      nextStimuli();
+      playTouch();
+    }
     return super.onTouchEvent(me);
   }
 

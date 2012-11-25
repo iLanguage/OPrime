@@ -2,7 +2,6 @@ package ca.ilanguage.oprime.content;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 import ca.ilanguage.oprime.activity.HTML5GameActivity;
 import ca.ilanguage.oprime.content.JavaScriptInterface;

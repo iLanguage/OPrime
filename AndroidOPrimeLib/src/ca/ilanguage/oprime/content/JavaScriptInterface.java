@@ -455,6 +455,10 @@ public class JavaScriptInterface implements Serializable {
       }
     }
   }
+  
+  protected void authenticate(String username, String password){
+    //TODO look in database for user, and then publish result
+  }
 
   public class ListenForEndAudioInterval extends AsyncTask<Void, Void, String> {
     private int endAudioInterval;
