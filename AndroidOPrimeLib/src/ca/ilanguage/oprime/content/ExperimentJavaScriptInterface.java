@@ -22,24 +22,24 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
         "yyyy-MM-dd_kk_mm", new java.util.Date(System.currentTimeMillis()));
     mDateString = mDateString.replaceAll("/", "-").replaceAll(" ", "-");
 
-    OPrimeApp app = ((HTML5GameActivity) mUIParent).getApp();
     int currentSubExperiment = ((HTML5GameActivity) mUIParent)
         .getCurrentSubex();
 
-    String resultsFile = app.getExperiment().getParticipant().getCode()
+    String resultsFile = mUIParent.getApp().getExperiment().getParticipant()
+        .getCode()
         + "_"
-        + app.getLanguage()
+        + mUIParent.getApp().getLanguage()
         + currentSubExperiment
         + "_"
-        + app.getSubExperiments().get(currentSubExperiment).getTitle()
-            .replaceAll(" ", "_") + "-" + mDateString;
+        + mUIParent.getApp().getSubExperiments().get(currentSubExperiment)
+            .getTitle().replaceAll(" ", "_") + "-" + mDateString;
 
     if (D) {
       Log.d(TAG, "Starting video/audio recording to:" + resultsFile);
     }
-     this.startVideoRecorder(resultsFile);
+    this.startVideoRecorder(resultsFile);
 
-    app.getSubExperiments().get(currentSubExperiment)
+    mUIParent.getApp().getSubExperiments().get(currentSubExperiment)
         .setResultsFileWithoutSuffix(mOutputDir + "video/" + resultsFile);
   }
 
@@ -54,38 +54,35 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
         "yyyy-MM-dd_kk_mm", new java.util.Date(System.currentTimeMillis()));
     mDateString = mDateString.replaceAll("/", "-").replaceAll(" ", "-");
 
-    OPrimeApp app = ((HTML5GameActivity) mUIParent).getApp();
-    String resultsFile = app.getExperiment().getParticipant().getCode()
+    String resultsFile = mUIParent.getApp().getExperiment().getParticipant()
+        .getCode()
         + "_"
-        + app.getLanguage()
+        + mUIParent.getApp().getLanguage()
         + currentSubExperiment
         + "_"
-        + app.getSubExperiments().get(currentSubExperiment).getTitle()
-            .replaceAll(" ", "_") + "-" + mDateString;
+        + mUIParent.getApp().getSubExperiments().get(currentSubExperiment)
+            .getTitle().replaceAll(" ", "_") + "-" + mDateString;
 
-    Intent intent = new Intent(((OPrimeApp) mUIParent.getApplication())
-        .getSubExperiments().get(currentSubExperiment)
-        .getIntentToCallThisSubExperiment());
+    Intent intent = new Intent(mUIParent.getApp().getSubExperiments()
+        .get(currentSubExperiment).getIntentToCallThisSubExperiment());
 
-    intent.putExtra(
-        OPrime.EXTRA_SUB_EXPERIMENT,
-        ((OPrimeApp) mUIParent.getApplication()).getSubExperiments().get(
-            currentSubExperiment));
-    intent.putExtra(OPrime.EXTRA_LANGUAGE,
-        ((OPrimeApp) mUIParent.getApplication()).getLanguage().getLanguage());
+    intent.putExtra(OPrime.EXTRA_SUB_EXPERIMENT, mUIParent.getApp()
+        .getSubExperiments().get(currentSubExperiment));
+    intent.putExtra(OPrime.EXTRA_LANGUAGE, mUIParent.getApp().getLanguage()
+        .getLanguage());
     intent.putExtra(OPrime.EXTRA_RESULT_FILENAME, mOutputDir + "video/"
         + resultsFile + ".3gp");
     mUIParent.startActivityForResult(intent, OPrime.EXPERIMENT_COMPLETED);
 
-    app.getSubExperiments().get(currentSubExperiment)
+    mUIParent.getApp().getSubExperiments().get(currentSubExperiment)
         .setResultsFileWithoutSuffix(mOutputDir + "video/" + resultsFile);
-    if(D)      Log.d(TAG, "setResultsFileWithoutSuffix sub experiment:" + resultsFile);
+    if (D)
+      Log.d(TAG, "setResultsFileWithoutSuffix sub experiment:" + resultsFile);
 
   }
 
   public String fetchSubExperimentsArrayJS() {
-    return ((OPrimeApp) mUIParent.getApplication()).getSubExperimentTitles()
-        .toString();
+    return mUIParent.getApp().getSubExperimentTitles().toString();
   }
 
   public String fetchParticipantCodesJS() {
@@ -93,8 +90,7 @@ public class ExperimentJavaScriptInterface extends JavaScriptInterface {
   }
 
   public String fetchExperimentTitleJS() {
-    return ((OPrimeApp) mUIParent.getApplication()).getExperiment().getTitle();// ((RoogleTankApp)
-    // getApplication()).getLastMessage();
+    return mUIParent.getApp().getExperiment().getTitle();
   }
 
   public void setAutoAdvanceJS(String autoadvance) {
