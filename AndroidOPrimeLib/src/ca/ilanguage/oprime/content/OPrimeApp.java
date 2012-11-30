@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ca.ilanguage.oprime.R;
+import ca.ilanguage.oprime.activity.HTML5Activity;
 
+import android.app.AlertDialog;
 import android.app.Application;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -132,10 +136,9 @@ public class OPrimeApp extends Application {
       boolean autoAdvanceStimuliOnTouch) {
     forceLocale(languagecode);
 
-    //getString(R.string.experiment_title)
-    Experiment expLocalized = new Experiment(
-        "Bilingual Aphasia Test" + " - "
-            + mLanguage.getDisplayLanguage());
+    // getString(R.string.experiment_title)
+    Experiment expLocalized = new Experiment("Bilingual Aphasia Test" + " - "
+        + mLanguage.getDisplayLanguage());
 
     mExperiments.add(expLocalized);
     mCurrentExperiment = mExperiments.size() - 1;
@@ -150,8 +153,9 @@ public class OPrimeApp extends Application {
           .getSubExperiments()
           .add(
               new SubExperimentBlock(subextitles[i], languagecode,
-                  subextitles[i], null, OPrime.EMPTYSTRING, OPrime.INTENT_START_SUB_EXPERIMENT,
-                  true, autoAdvanceStimuliOnTouch));
+                  subextitles[i], null, OPrime.EMPTYSTRING,
+                  OPrime.INTENT_START_SUB_EXPERIMENT, true,
+                  autoAdvanceStimuliOnTouch));
     }
     addStimuli();
     mCurrentSubExperiment = 0;
@@ -320,6 +324,9 @@ public class OPrimeApp extends Application {
     getBaseContext().getResources().updateConfiguration(config,
         getBaseContext().getResources().getDisplayMetrics());
     mLanguage = Locale.getDefault();
+
+    
+
     return Locale.getDefault().getDisplayLanguage();
   }
 

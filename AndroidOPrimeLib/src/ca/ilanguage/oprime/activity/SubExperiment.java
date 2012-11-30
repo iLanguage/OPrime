@@ -29,6 +29,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 public class SubExperiment extends Activity implements SurfaceHolder.Callback {
@@ -259,6 +260,7 @@ public class SubExperiment extends Activity implements SurfaceHolder.Callback {
     if (lang.equals(Locale.getDefault().getLanguage())) {
       return Locale.getDefault().getDisplayLanguage();
     }
+
     Configuration config = getBaseContext().getResources().getConfiguration();
     Locale locale;
     if (lang.contains("-")) {
@@ -272,6 +274,23 @@ public class SubExperiment extends Activity implements SurfaceHolder.Callback {
     getBaseContext().getResources().updateConfiguration(config,
         getBaseContext().getResources().getDisplayMetrics());
     language = Locale.getDefault();
+
+    /*
+     * Let the user know if the language is not there.
+     */
+    String availibleLanguages = "el,es,es-rES,fr,iu,iw,kn,ru";
+    if (availibleLanguages.contains(lang)) {
+      // do nothing, this langauge is supported
+    } else {
+      Toast
+          .makeText(
+              this,
+              language.getDisplayLanguage()
+                  + " is not supported yet, we have only put ~8 BAT languages in the app. Please contact us to request "
+                  + language.getDisplayLanguage() + " if you need it.",
+              Toast.LENGTH_LONG).show();
+    }
+
     return Locale.getDefault().getDisplayLanguage();
   }
 
@@ -338,13 +357,13 @@ public class SubExperiment extends Activity implements SurfaceHolder.Callback {
     t.time = System.currentTimeMillis();
     recordTouchPoint(t, mStimuliIndex);
     mLastTouchTime = t.time;
+    playTouch();
     /*
      * Auto advance to the next stimuli after recording the touch point. the
      * user can use teh arrows if they didnt mean to auto advance.
      */
     if (mAutoAdvanceStimuliOnTouch) {
       nextStimuli();
-      playTouch();
     }
     return super.onTouchEvent(me);
   }

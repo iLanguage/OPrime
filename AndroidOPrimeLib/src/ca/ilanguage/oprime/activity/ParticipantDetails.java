@@ -43,6 +43,7 @@ public class ParticipantDetails extends PreferenceActivity {
     i.putExtra(OPrime.EXTRA_DEBUG_MODE, OPrimeApp.D);
     i.putExtra(OPrime.EXTRA_TAG, OPrimeApp.TAG);
     startActivity(i);
+    finish();
 
     super.onBackPressed();
   }
