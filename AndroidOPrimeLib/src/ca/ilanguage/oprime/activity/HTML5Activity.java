@@ -187,11 +187,13 @@ public class HTML5Activity extends Activity {
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.open_settings) {
       Intent i = new Intent(getBaseContext(), ParticipantDetails.class);
+      i.putExtra(OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, true);
       startActivity(i);
       return true;
     } else if (item.getItemId() == R.id.language_settings) {
       Intent inte = new Intent(getBaseContext(), ParticipantDetails.class);
       startActivityForResult(inte, OPrime.SWITCH_LANGUAGE);
+      inte.putExtra(OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, true);
       return true;
     } else if (item.getItemId() == R.id.result_folder) {
       final boolean fileManagerAvailable = isIntentAvailable(this,

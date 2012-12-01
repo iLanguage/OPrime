@@ -38,11 +38,24 @@ public class ParticipantDetails extends PreferenceActivity {
 
   @Override
   public void onBackPressed() {
-    Intent i = new Intent(getBaseContext(), HTML5GameActivity.class);
-    i.putExtra(OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, true);
-    i.putExtra(OPrime.EXTRA_DEBUG_MODE, OPrimeApp.D);
-    i.putExtra(OPrime.EXTRA_TAG, OPrimeApp.TAG);
-    startActivity(i);
+    try {
+      boolean prepareExperiment = getIntent().getExtras().getBoolean(
+          OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, false);
+      if (prepareExperiment) {
+      } else {
+        Intent i = new Intent(getBaseContext(), HTML5GameActivity.class);
+        i.putExtra(OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, true);
+        i.putExtra(OPrime.EXTRA_DEBUG_MODE, OPrimeApp.D);
+        i.putExtra(OPrime.EXTRA_TAG, OPrimeApp.TAG);
+        startActivity(i);
+      }
+    } catch (Exception e) {
+      Intent i = new Intent(getBaseContext(), HTML5GameActivity.class);
+      i.putExtra(OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, true);
+      i.putExtra(OPrime.EXTRA_DEBUG_MODE, OPrimeApp.D);
+      i.putExtra(OPrime.EXTRA_TAG, OPrimeApp.TAG);
+      startActivity(i);
+    }
     finish();
 
     super.onBackPressed();

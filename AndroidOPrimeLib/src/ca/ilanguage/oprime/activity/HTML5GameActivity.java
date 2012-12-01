@@ -48,13 +48,13 @@ public class HTML5GameActivity extends HTML5Activity {
   @Override
   protected void prepareWebView() {
     super.prepareWebView();
-    checkIfNeedToPrepareExperiment();
+    checkIfNeedToPrepareExperiment(false);
   }
 
-  protected void checkIfNeedToPrepareExperiment() {
+  protected void checkIfNeedToPrepareExperiment(boolean activtySaysToPrepareExperiment) {
     boolean prepareExperiment = getIntent().getExtras().getBoolean(
         OPrime.EXTRA_PLEASE_PREPARE_EXPERIMENT, false);
-    if (prepareExperiment) {
+    if (prepareExperiment || activtySaysToPrepareExperiment) {
       if (D) {
         Log.d(TAG, "HTML5GameActivity was asked to prepare the experiment.");
       }
@@ -64,8 +64,8 @@ public class HTML5GameActivity extends HTML5Activity {
           "");
       boolean autoAdvanceStimuliOnTouch = prefs.getBoolean(
           OPrimeApp.PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH, false);
-      ((OPrimeApp) this.getApplication())
-          .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
+//      ((OPrimeApp) this.getApplication())
+//          .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
 
       if (app.getLanguage().getLanguage().equals(lang)
           && app.getExperiment() != null) {
@@ -123,8 +123,8 @@ public class HTML5GameActivity extends HTML5Activity {
         "en");
     boolean autoAdvanceStimuliOnTouch = prefs.getBoolean(
         OPrimeApp.PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH, false);
-    ((OPrimeApp) this.getApplication())
-        .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
+//    ((OPrimeApp) this.getApplication())
+//        .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
     // String langs =
     // prefs.getString(OPrimeApp.PREFERENCE_PARTICIPANT_LANGUAGES,
     // "");
@@ -214,24 +214,26 @@ public class HTML5GameActivity extends HTML5Activity {
       }
       break;
     case OPrime.PREPARE_TRIAL:
-      initExperiment();
+//      initExperiment();
+      checkIfNeedToPrepareExperiment(true);
       break;
     case OPrime.SWITCH_LANGUAGE:
-      SharedPreferences prefs = getSharedPreferences(OPrimeApp.PREFERENCE_NAME,
-          MODE_PRIVATE);
-      String lang = prefs.getString(OPrimeApp.PREFERENCE_EXPERIMENT_LANGUAGE,
-          "en");
-      boolean autoAdvanceStimuliOnTouch = prefs.getBoolean(
-          OPrimeApp.PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH, false);
-      ((OPrimeApp) this.getApplication())
-          .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
-
-      if (lang.equals(app.getLanguage().getLanguage())) {
-        // do nothing if they didn't change the language
-      } else {
-        app.createNewExperiment(lang, autoAdvanceStimuliOnTouch);
-        initExperiment();
-      }
+      checkIfNeedToPrepareExperiment(true);
+//      SharedPreferences prefs = getSharedPreferences(OPrimeApp.PREFERENCE_NAME,
+//          MODE_PRIVATE);
+//      String lang = prefs.getString(OPrimeApp.PREFERENCE_EXPERIMENT_LANGUAGE,
+//          "en");
+//      boolean autoAdvanceStimuliOnTouch = prefs.getBoolean(
+//          OPrimeApp.PREFERENCE_EXPERIMENT_AUTO_ADVANCE_ON_TOUCH, false);
+////      ((OPrimeApp) this.getApplication())
+////          .setAutoAdvanceStimuliOnTouch(autoAdvanceStimuliOnTouch);
+//
+//      if (lang.equals(app.getLanguage().getLanguage())) {
+//        // do nothing if they didn't change the language
+//      } else {
+//        app.createNewExperiment(lang, autoAdvanceStimuliOnTouch);
+//        initExperiment();
+//      }
       break;
     case OPrime.REPLAY_RESULTS:
       break;

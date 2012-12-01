@@ -8,14 +8,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ca.ilanguage.oprime.R;
-import ca.ilanguage.oprime.activity.HTML5Activity;
 
-import android.app.AlertDialog;
 import android.app.Application;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,7 +20,7 @@ public class OPrimeApp extends Application {
   public static final boolean D = false;
   public static final String DEFAULT_OUTPUT_DIRECTORY = "/sdcard/OPrime/";
 
-  protected boolean mAutoAdvanceStimuliOnTouch = false;
+//  protected boolean mAutoAdvanceStimuliOnTouch = false;
   protected String mOutputDir = DEFAULT_OUTPUT_DIRECTORY;
 
   /*
@@ -373,13 +369,13 @@ public class OPrimeApp extends Application {
     this.mOutputDir = mOutputDir;
   }
 
-  public boolean isAutoAdvanceStimuliOnTouch() {
-    return mAutoAdvanceStimuliOnTouch;
-  }
+//  public boolean isAutoAdvanceStimuliOnTouch() {
+//    return mAutoAdvanceStimuliOnTouch;
+//  }
 
-  public void setAutoAdvanceStimuliOnTouch(boolean mAutoAdvanceStimuliOnTouch) {
-    this.mAutoAdvanceStimuliOnTouch = mAutoAdvanceStimuliOnTouch;
-  }
+//  public void setAutoAdvanceStimuliOnTouch(boolean mAutoAdvanceStimuliOnTouch) {
+//    this.mAutoAdvanceStimuliOnTouch = mAutoAdvanceStimuliOnTouch;
+//  }
 
   public String getLocalCouchDir() {
     return mLocalCouchDir;
