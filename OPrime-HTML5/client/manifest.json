@@ -1,0 +1,19 @@
+{
+  "name": "DyslexDisorthGame Tests",
+  "version": "1.0",
+  "description": "An chrome extension for the developers to test the DyslexDisorthGame App",
+  "app": {
+    "launch": {
+      "local_path": "./tests/jasmine.html"
+    }
+  },
+  "offline_enabled": true,
+  "permissions": [
+    "unlimitedStorage",
+    "<all_urls>"
+  ],
+   "icons": { 
+
+  }
+  
+}
