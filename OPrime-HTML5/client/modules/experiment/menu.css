@@ -1,0 +1,85 @@
+BODY,TD {
+  Color: "#8e8e94";
+  FONT-SIZE: 80%;
+  FONT-FAMILY: Tahoma, Arial, Helvetica, sans-serif;
+  TEXT-DECORATION: none;
+  margin: 0;
+}
+
+UNKNOWN {
+  COLOR: "#00cc00"
+}
+
+PRE {
+  FONT-FAMILY: Tahoma, Arial, Helvetica, sans-serif;
+  TEXT-DECORATION: none
+}
+
+A.whiteLinks:hover {
+  COLOR: #660000;
+  FONT-SIZE: 12px;
+  LINE-HEIGHT: 12px;
+  TEXT-DECORATION: none
+}
+
+A.whiteLinks {
+  COLOR: #ffffff;
+  FONT-SIZE: 12px;
+  LINE-HEIGHT: 12px;
+  TEXT-DECORATION: none
+}
+
+A:hover {
+  COLOR: #660000
+}
+
+A {
+  COLOR: #8e8e94
+}
+
+blockquote {
+  top: -15px;
+  bottom: -10px;
+  position: relative;
+  margin-right: 4px;
+  margin-left: 10px
+}
+
+H1 {
+  FONT-SIZE: 100%;
+  COLOR: #979797
+}
+
+H2 {
+  FONT-SIZE: 120%;
+  COLOR: #ffffff
+}
+
+H3 {
+  FONT-SIZE: 140%;
+  COLOR: #ffffff
+}
+/* Including the Lobster font from Google's Font Directory */
+@font-face {
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Lobster'), url('google_lobster_font.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Lobster'),
+    url('http://themes.googleusercontent.com/static/fonts/lobster/v3/NIaFDq6p6eLpSvtV2DTNDQLUuEpTyoUstqEm5AMlJo4.woff')
+    format('woff');
+}
+
+input.groovybutton {
+  font-size: 8px;
+  color: #FFFFFF;
+  background-color: #006633;
+  border-style: double;
+  border-color: #fff;
+}

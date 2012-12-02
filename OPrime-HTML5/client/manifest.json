@@ -1,10 +1,10 @@
 {
-  "name": "DyslexDisorthGame Tests",
+  "name": "OPrime",
   "version": "1.0",
-  "description": "An chrome extension for the developers to test the DyslexDisorthGame App",
+  "description": "OpenSource Experimentation for Android Tablets or Chrome Apps (offline data collection, manipulation and analysis)",
   "app": {
     "launch": {
-      "local_path": "./tests/jasmine.html"
+      "local_path": "index.html"
     }
   },
   "offline_enabled": true,
@@ -14,6 +14,7 @@
   ],
    "icons": { 
 
-  }
-  
+  },
+   "manifest_version" : 2,
+  "content_security_policy" : "default-src 'self' https://cesine.iriscouch.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://themes.googleusercontent.com; "
 }
