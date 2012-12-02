@@ -455,9 +455,9 @@ public class JavaScriptInterface implements Serializable {
       }
     }
   }
-  
-  protected void authenticate(String username, String password){
-    //TODO look in database for user, and then publish result
+
+  protected void authenticate(String username, String password) {
+    // TODO look in database for user, and then publish result
   }
 
   public class ListenForEndAudioInterval extends AsyncTask<Void, Void, String> {
@@ -586,6 +586,7 @@ public class JavaScriptInterface implements Serializable {
       return 0;
     }
   }
+
   public void setD(boolean d) {
     D = d;
   }
@@ -622,4 +623,19 @@ public class JavaScriptInterface implements Serializable {
     this.mAssetsPrefix = mAssetsPrefix;
   }
 
+  public void getConectivityType() {
+    String connectivityType = "WiFi";
+    LoadUrlToWebView v = new LoadUrlToWebView();
+    v.setMessage("javascript:OPrime.hub.publish('connectivityType','"
+        + connectivityType + "');");
+    v.execute();
+  }
+
+  public void getHardwareDetails() {
+    String deviceType = "{name: 'Acer Nexus 7', model: 'Nexus 7', version: '4.2', identifier: 'TODOgetandroiddeviceid'}";
+    LoadUrlToWebView v = new LoadUrlToWebView();
+    v.setMessage("javascript:OPrime.hub.publish('hardwareDetails',\"" + deviceType
+        + "\");");
+    v.execute();
+  }
 }

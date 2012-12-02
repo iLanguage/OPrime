@@ -2,5 +2,5 @@
 <resources>
 
 	<string name="app_name">HTML5Offline</string>
-	
+	<string name="startup_message">Loading...</string>
 </resources>
