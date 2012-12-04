@@ -16,5 +16,5 @@
 
   },
    "manifest_version" : 2,
-  "content_security_policy" : "default-src 'self' https://cesine.iriscouch.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://themes.googleusercontent.com; "
+  "content_security_policy" : "default-src 'self' 'unsafe-eval' https://cesine.iriscouch.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://themes.googleusercontent.com; "
 }
