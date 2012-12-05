@@ -1,0 +1,113 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="./../css/main.css">
+<title>Bilingual Aphasia Test Scorer</title>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push([ '_setAccount', 'UA-30895446-1' ]);
+  _gaq.push([ '_trackPageview' ]);
+
+  (function() {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+        : 'http://www')
+        + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+
+	<h1>Bilingual Aphasia Test Scorer</h1>
+
+	<div class="hidden" id="score_zone">
+
+		<h2>Patient Profile Visualization:</h2>
+		<div id="viz"></div>
+    <h2>Patient Profile in Numbers:</h2>
+
+	</div>
+
+
+
+
+	<hr />
+	<img width="600" align="right"
+		src="./../images/spreadsheet_to_profile.png" />
+	<h1>Instructions</h1>
+	<h1>Step 2: import the spreadsheets</h1>
+
+
+
+	<h3>(Optional: 2.0 Export)</h3>
+	<p>(If you used the Online Forms in Step 1, use the links in orange
+		below to open them, and save them as spreadsheets to your computer as
+		a .csv file (see illustration to the right). If you used Excel,
+		OpenOffice or LibreOffice in Step 1 you already have the spreadsheets
+		on your computer.)</p>
+
+	<ul>
+		<li><a target="top"
+			href="https://docs.google.com/spreadsheet/ccc?key=0AjJz4n1qwkYAdHZZcEw1MWh6X1Y4VXJkQ0E2dl9GblE">Spreadsheet 1: Questions
+				1. - 190.</a></li>
+		<li><a target="top"
+			href="https://docs.google.com/spreadsheet/ccc?key=0AjJz4n1qwkYAdGMwbkhPWmZ2Z090RE5XZG1BclRfVmc">Spreadsheet 2: Questions
+				191. - 427.</a></li>
+	</ul>
+
+	<h3>2.1 Drag and drop</h3>
+	<ul>
+		<li>Drag and drop the first file anywhere on this page, it will
+			put the text below. Click on Button 1. <input type="button"
+			onclick="importFromCSV()" value="1" />
+		</li>
+		<li>Drag and drop the second file anywhere on this page. Click on
+			Button 1.</li>
+	</ul>
+
+
+	<h3>2.2 Combine</h3>
+
+	<p>
+		Click on Button 2 to combine the spreadsheets. <input type="button"
+			onclick="combineSheets(0,1)" value="2" />
+	</p>
+
+	<h3>2.3 Convert</h3>
+
+	<p>
+		Click on Button 3 to convert the data into a patient. <input
+			type="button" class="purple" onclick="findQuestionsInRow(0)"
+			value="3" />
+	</p>
+
+
+	<h1>Step 3: get the patient's profile</h1>
+
+	<p>Refresh the page to see the patient's profile.</p>
+
+	<hr />
+	<h2>Patient's raw Data:</h2>
+
+	<div id="question_area"></div>
+	<div id="data_area"></div>
+	<output id="list">
+		<pre></pre>
+	</output>
+	<div id="world"></div>
+	<div id="byte_range"></div>
+	<div id="byte_content"></div>
+
+	<script type="text/javascript" charset="utf-8"
+		src="./../src/ImportFromCSV.js"></script>
+	<script type="text/javascript" src="./../lib/d3.js"></script>
+	<script type="text/javascript" src="./../lib/d3.layout.js"></script>
+	<script type="text/javascript" src="./../lib/colorbrewer.js"></script>
+	<script type="text/javascript" src="./../lib/donuts_multiple.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../src/Scorer.js"></script>
+
+</body>
+</html>
