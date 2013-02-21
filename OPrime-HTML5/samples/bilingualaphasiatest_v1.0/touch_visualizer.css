@@ -1,0 +1,17 @@
+#viewStimulus {
+	z-index: -1;
+	background: #999;
+	top: 60;
+	width: 1280;
+	height: 800;
+}
+
+.menu {
+	font-family: helvetica, sans-serif;
+	font-size: .75em;
+}
+
+#layer1 {
+	z-index: 10;
+	background: #ffa;
+}

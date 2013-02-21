@@ -1,0 +1,14 @@
+<div class="tile span10 offset1">
+  <h1>
+    Your Notifications <i class="icon-comments"></i>
+  </h1>
+  <a class="btn btn-danger pull-right" tabindex="-1" href="#/notifications/dismiss">Dismiss All
+    <i class="icon-remove"></i>
+  </a>
+
+  <ul class="unstyled pagination-center" ng-controller="NotificationsController">
+    <li></li>
+    <li ng-repeat="notification in auth.user.notifications"><i class="icon-comment"></i>
+      <span ng-bind-html-unsafe='notification.message'></span><i class="icon-remove" ng-click="removeNotification(notification)"></i></li>
+  </ul>
+</div>

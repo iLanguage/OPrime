@@ -1,0 +1,214 @@
+<!-- NOTE: Route controller ParticipantReportCtrl limits value of filterProp to unique sessionID from $routeParams throughout-->
+
+		<div class="well span12">
+
+			<div class="row-fluid">
+				<div class=" span6">
+					<a href="http://ilanguage.ca/phophlo"><img
+						src="img/phophlo.png" height="128" /></a>
+				</div>
+				<div class=" span6">
+					<p class="lead">PhoPhlo is a screening
+						test for early indications of reading troubles, before kids learn
+						to read.</p>
+				</div>
+			</div>
+			<div class="row-fluid">&nbsp;</div>
+			<div class="row-fluid">
+			
+			
+			
+<!-- Start edit form div -->
+
+				<div class="well span12" ng-repeat="child in childs.rows | filter: filterProp" ng-show="editing == 'true'">
+  
+				<form class="form-horizontal">  
+				        <fieldset>
+        				<h3>Child info</h3>    
+          				<div class="control-group">  
+            				<label class="control-label" for="firstName">First Name:</label>  
+            				<div class="controls">  
+              				<input type="text" class="input-large" ng-model="child.value.firstName" required><i class="icon-white icon-star"></i>  
+            				</div>  
+          				</div>    
+          				<div class="control-group">  
+            				<label class="control-label" for="child.value.lastName">Last Name:</label>  
+            				<div class="controls">  
+              				<input type="text" class="input-large" ng-model="child.value.lastName" required><i class="icon-white icon-star"></i>  
+            				</div>  
+          				</div>
+          				<div class="control-group">  
+            				<label class="control-label" for="select01">Date of Birth</label>  
+            				<div class="controls">  
+
+<!-- Change these to functions -->
+				          	<select id="select01" class="span3" ng-model="child.value.DOB.day">    
+               					<option value="" disabled="disabled" selected="selected">Day</option>
+ 								<option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]">{{i}}</option>
+			               	</select>    
+              				<select id="select02" class="span3" ng-model="child.value.DOB.month">    
+                				<option value="" disabled="disabled" selected="selected">Month</option>
+                				<option value="1">January
+								<option value="2">February
+								<option value="3">March
+								<option value="4">April
+								<option value="5">May
+								<option value="6">June
+								<option value="7">July
+								<option value="8">August
+								<option value="9">September
+								<option value="10">October
+								<option value="11">November
+								<option value="12">December 
+              				</select>
+              				<select id="select03" class="span3" ng-model="child.value.DOB.year">    
+                				<option value="" disabled="disabled" selected="selected">Year</option>
+                				<option value="2018">2018
+								<option value="2017">2017
+								<option value="2016">2016
+								<option value="2015">2015  
+                				<option value="2018">2014
+								<option value="2017">2013
+								<option value="2016">2012
+								<option value="2015">2011  
+                				<option value="2018">2010
+								<option value="2017">2009
+								<option value="2016">2008
+								<option value="2015">2007  
+                				<option value="2018">2006
+								<option value="2017">2005
+								<option value="2016">2004
+								<option value="2015">2003  
+                				<option value="2018">2002
+								<option value="2017">2001
+								<option value="2016">2000
+								<option value="2015">1999  
+                				<option value="2018">1998
+								<option value="2017">1997
+								<option value="2016">1996
+								<option value="2015">1995  
+                				<option value="2018">1994
+								<option value="2017">1993
+								<option value="2016">1992
+								<option value="2015">1991  
+                				<option value="2018">1990
+								<option value="2017">1989
+								<option value="2016">1988
+								<option value="2015">1987  
+                				<option value="2018">1986
+								<option value="2017">1985
+								<option value="2016">1984
+								<option value="2015">1983  
+                				<option value="2018">1982
+								<option value="2017">1981
+								<option value="2016">1980
+								<option value="2015">1979  
+                				<option value="2018">1978
+								<option value="2017">1977
+								<option value="2016">1976
+								<option value="2015">1975  
+                				<option value="2018">1974
+								<option value="2017">1973
+								<option value="2016">1972
+								<option value="2015">1971
+								<option value="2015">1970  
+              				</select>  
+            				</div>  
+          				</div>  
+          				<div class="control-group">  
+            				<label class="control-label" for="notes">Notes:</label>  
+            				<div class="controls">  
+              				<textarea class="input-xlarge" ng-model="child.value.notes" rows="3"></textarea>  
+            				</div>  
+          				</div>
+          				<div class="control-group">
+          					<label class="control-label" for="new_field"></label>  
+            				<div class="controls">    
+            				<button class="btn btn-inverse" ng-click="">Add new field</button>
+            				</div>
+          				</div>  
+          				<div class="well form-actions">   
+            				<button class="btn" ng-click="cancel()">Cancel</button>
+            				<button class="btn btn-primary" ng-click="saveRecord(child.value)">Save</button>   
+          				</div>  
+        				</fieldset>  
+				</form>  
+		</div>
+		
+<!-- End edit form div -->		
+					
+		<div class="well span6 report" ng-repeat="child in childs.rows | filter: filterProp" ng-show="editing == 'false'">
+			<h3>Child info</h3>
+			<span>Participant ID: {{child.value.participantID}}</span><br>
+			<span>Name: {{child.value.firstName}} {{child.value.lastName}}</span><br>
+			<span>Date of birth (<i>dd/mm/yy</i>): {{child.value.DOB.day}}-{{child.value.DOB.month}}-{{child.value.DOB.year}}</span><br>
+			<span>Notes: {{child.value.notes}}</span><br /><br />   
+            	<button id="edit_button" type="button" class="btn btn-info" ng-click="edit()">Edit</button>   
+		</div>			
+				
+		<div class="well span5 report" ng-show="editing=='false'">
+			<h3><span>School/Clinic</span> info</h3>
+			<ul>
+				<li><address>
+						<strong><span>St. Marie's Elementary School</span></strong><br>
+						<span>1 Main St</span><br>
+						<span>Montreal QC H3G 1M8</span><br> <abbr title="Phone">P:</abbr>
+						<span> (123) 456-7890</span>
+					</address>
+				<li><span>Contact Person:</span><br />
+				<address>
+					<strong><span>Julie Smith</span></strong><br>
+					<a href="mailto:#"><span>j_smith@stmaries.ca</span></a>
+				</address>
+				</li>
+				<li><span>TesterId: 122293780</span></li>
+				<li><span>Add new: another field here</span></li>
+			</ul>
+		</div>
+	</div>	
+			<h3>
+				Results <small>Oct 22, 2012</small>
+			</h3>
+			<div class="row-fluid">
+
+				<div id="report_text" class="well span12 report">
+
+<!-- Generate session reports -->					
+
+					<ul class=" unstyled experiment_description">
+						<li ng-repeat="session in sessions.rows | filter: filterProp"><h3>{{session.value.testType}}</h3><br />
+							<img class="gravatar  pull-right"ng-src="img/ic_{{session.value.testName}}128.png" />
+							<span>Session ID: <a href="#/sessions/{{session.value.sessionID}}">{{session.value.sessionID}}</span></a><br />
+							<span>Description: {{session.value.descriptionEdit}}</span><br />
+							<span>Discussion: {{session.value.discussionEdit}}</span>
+							<progress max="100" value="20"></progress><br /><br /></li>
+							
+					</ul>
+
+				<hr>
+					<div class="pagination-centered">
+						<button type="button" class="btn btn-inverse" ng-click="loadReport('organization', filterProp)">Organization Report</button> <button type="button" class="btn btn-inverse" ng-click="loadReport('parents', filterProp)">Parents Report</button> <button type="button" class="btn btn-inverse" ng-click="loadReport('child', filterProp)">Child Report</button> 
+					</div>
+				</div>
+
+			</div>
+
+			<div class="credits">
+
+				<p>
+					<span>PhoPhlo was designed by Dr. Rvachew<sup>a</sup>
+						and Dr. Royle<sup>b</sup> and their research assistants. It was
+						validated in collaboration with Laval elementary schools,
+						illustrated by Edith Lebel<sup>c</sup> and gamified by iLanguage
+						Lab Ltd.<sup>d</sup>
+					<br> (<sup>a</sup><a
+						href="http://www.medicine.mcgill.ca/srvachew/">McGill, Faculty
+						of Medicine</a>, <sup>b</sup>&Eacute;cole d'orthophonie et d'audiologie
+					Universit&eacute; de Montr&eacute;al, <sup>c</sup><a
+						href="http://edithlebel.blogspot.ca/">
+						http://edithlebel.blogspot.ca</a>, <sup>d</sup><a
+						href="http://ilanguage.ca">http://ilanguage.ca</a>)</span>
+				</p>
+			</div>
+		</div>
+

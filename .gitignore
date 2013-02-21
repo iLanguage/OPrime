@@ -3,6 +3,20 @@ NonPublicConstants.java
 assets/analytics_website_script.html
 *nonpublic*
 
+
+# Stimuli #
+##########
+*.png
+*.wav
+*.mp3
+*.jpg
+*.bmp
+*.ogg
+*.mov
+*.mp4
+stimuli
+stimulus
+
 .project
 .settings
 .classpath

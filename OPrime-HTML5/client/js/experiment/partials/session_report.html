@@ -1,0 +1,142 @@
+<!-- NOTE: Route controller SessionReportCtrol limits value of filterProp to unique sessionID from $routeParams throughout-->
+		<div class="well span12">
+
+			<div class="row-fluid">
+				<div class=" span6">
+					<a href="http://ilanguage.ca/phophlo"><img
+						src="img/phophlo.png" height="128" /></a>
+				</div>
+				<div class=" span6">
+					<p class="lead">PhoPhlo is a screening
+						test for early indications of reading troubles, before kids learn
+						to read.</p>
+				</div>
+			</div>
+
+			<div class="row-fluid report">
+				<div class="well span6">
+					<h3>Child info</h3>
+					<p>
+					<div>
+						<div ng-repeat="session in sessions.rows | filter: filterProp">
+							<ul class='unstyled' ng-repeat="child in childs.rows | filter: session.value.participantID">
+								<li>Participant Id: <span class=""><a href="#/participants/{{session.value.participantID}}">{{session.value.participantID}}</a></span></li>
+								<li>First Name: <span class="">{{child.value.firstName}}</span></li>
+								<li>Last Name: <span class="">{{child.value.lastName}}</span></li>
+								<li>Date of Birth(<i>dd/mm/yy</i>): <span class="">{{child.value.DOB.day}}-{{child.value.DOB.month}}-{{child.value.DOB.year}}</span></li>
+								<li>Notes: <span class="">{{child.value.notes}}</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="well span6">
+					<h3><span>School/Clinic</span> info</h3>
+					<ul class='unstyled'>
+						<li><address>
+								<strong><span>St. Marie's
+										Elementary School</span></strong><br> <span>
+									1 Main St</span><br> <span>
+									Montreal QC H3G 1M8</span><br> <abbr title="Phone">P:</abbr><span> (123) 456-7890</span>
+							</address>
+						<li>Contact Person:<br />
+							<address>
+								<strong><span>Julie Smith</span></strong><br>
+								<a href="mailto:#"><span>j_smith@stmaries.ca</span></a>
+							</address>
+						</li>
+						<li>TesterId: <span>122293780</span></li>
+						<li><span>Add new:</span> <span>another field here</span></li>
+					</ul>
+				</div>
+			</div>
+			<h3>
+				Detailed report for session {{filterProp}}: <small>Oct 22, 2012</small>
+			</h3>
+			<div class ="well row-fluid report" ng-repeat="session in sessions.rows | filter: filterProp" ng-show="editing == 'true'">
+				<form class="form-horizontal">  
+				        <fieldset>
+				        <legend><h3>Perception</h3></legend>   
+          				<div class="control-group">  
+            				<label class="control-label">Test:</label>  
+            				<div class="controls">  
+              				{{session.value.title}} 
+            				</div>  
+          				</div>
+     				           				
+						<div class="control-group">  
+            				<label class="control-label">Touches:</label>
+							<div class="controls">
+							<ul ng-repeat="stimulus in session.value.stimuli"><li ng-repeat="touch in stimulus.touches">[x: {{touch.x}} y: {{touch.y}}]<br />Total reaction time for this stimulus: {{stimulus.totalReactionTime}} </li></ul><br />
+							</div>
+						</div>
+
+						<div class="control-group">  
+            				<label class="control-label">Description:</label>  
+            				<div class="controls">  
+              				<textarea class="input-xlarge" ng-model="session.value.descriptionEdit" rows="4"></textarea> 
+            				</div>  
+          				</div>
+          				
+          				<div class="control-group">  
+            				<label class="control-label">Discussion:</label>  
+            				<div class="controls">  
+              				<textarea class="input-xlarge" ng-model="session.value.discussionEdit" rows="4"></textarea> 
+            				</div>  
+          				</div>
+          				
+          				<div class="control-group">
+          					<label class="control-label" for="new_field"></label>  
+            				<div class="controls">    
+            				<button class="btn btn-inverse" ng-click="">Add new field</button>
+            				</div>
+          				</div>  
+          				
+           				<div class="well form-actions">   
+            				<button class="btn" ng-click="cancel()"">Cancel</button>
+            				<button class="btn btn-primary" ng-click="saveRecord(session.value)">Save</button>   
+          				</div>  
+        				</fieldset>  
+				</form>
+			
+			</div>
+			
+			
+			<div class="row-fluid report">
+
+
+				<div id="report_text" class="well span12" ng-show="editing == 'false'">
+					<h3>Perception</h3>
+					<ul class=" unstyled experiment_description" ng-repeat="session in sessions.rows | filter: filterProp">
+						<li><img class="gravatar  pull-right" ng-src="img/ic_{{session.value.testName}}128.png" />
+							Session ID: <span class="">{{session.value.sessionID}}</span><br />
+							Test: <span class="">{{session.value.title}}</span><br />
+							Touches: <ul ng-repeat="stimulus in session.value.stimuli"><li ng-repeat="touch in stimulus.touches">[x: {{touch.x}} y: {{touch.y}}]<br />Total reaction time for this stimulus: {{stimulus.totalReactionTime}} </li></ul><br />
+							Description: <span class="">{{session.value.descriptionEdit}}</span><br />
+							Discussion: <span class="">{{session.value.discussionEdit}}</span> <progress max="100" value="70"></progress></li><br />			
+							<div id="edit" ng-show="editing == 'false'">
+								<button id="edit_button" type="button" class="btn btn-primary" ng-click="edit()">Edit</button>
+							</div>
+					</ul>
+
+				</div>
+
+			</div>
+
+			<div class="credits">
+
+				<p>
+					<span class="">PhoPhlo was designed by Dr. Rvachew<sup>a</sup>
+						and Dr. Royle<sup>b</sup> and their research assistants. It was
+						validated in collaboration with Laval elementary schools,
+						illustrated by Edith Lebel<sup>c</sup> and gamified by iLanguage
+						Lab Ltd.<sup>d</sup>
+					</span><br> (<sup>a</sup><a
+						href="http://www.medicine.mcgill.ca/srvachew/">McGill, Faculty
+						of Medicine</a>, <sup>b</sup>&Eacute;cole d'orthophonie et d'audiologie
+					Universit&eacute; de Montr&eacute;al, <sup>c</sup><a
+						href="http://edithlebel.blogspot.ca/">
+						http://edithlebel.blogspot.ca</a>, <sup>d</sup><a
+						href="http://ilanguage.ca">http://ilanguage.ca</a>)
+				</p>
+			</div>
+		</div>

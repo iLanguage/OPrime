@@ -1,0 +1,125 @@
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@font-face {
+	font-family: 'Waiting for the Sunrise';
+	font-style: normal;
+	font-weight: 400;
+	src: url(../fonts/WaitingfortheSunrise.ttf);
+}
+
+.bluebody {
+	background-color: #0176A0;
+	background-image: -moz-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: -webkit-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: -o-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: -ms-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr= 
+		       '#029CC9', endColorstr='#005077', GradientType=0 );
+}
+
+.orangebody {
+	background-color: #f6e6b4;
+	background-image: -moz-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: -webkit-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: -o-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: -ms-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6e6b4',
+		endColorstr='#ed9017', GradientType=0 );
+}
+
+.greybody {
+	background-color: #fff;
+	background-image: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #999999 100%);
+	background-image: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%, #999999 100%);
+	background-image: -o-radial-gradient(center, ellipse cover, #ffffff 0%, #999999 100%);
+	background-image: -ms-radial-gradient(center, ellipse cover, #ffffff 0%, #999999 100%);
+	background-image: radial-gradient(center, ellipse cover, #ffffff 0%, #999999 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',
+		endColorstr='#999999', GradientType=0 );
+}
+
+h1,h2,h3,h4 {
+	font-family: 'Waiting for the Sunrise', normal;
+	color: #fff;
+}
+
+.nav-header{
+	color: #fff; 
+}
+
+.tile {
+	color: #fff;
+	background-color: rgba(255, 255, 255, 0.3);
+	/* padding: .3em;
+	margin-top: .3em; */
+	padding: 1em;
+	border: 1px solid #E3E3E3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	border: 1px solid #E3E3E3;
+}
+
+.dark-tile {
+	color: #fff;
+	background-color: rgba(0, 0, 0, 0.3);
+	/* padding: .3em;*/
+	margin-top: .3em;
+	padding: 1em;
+	border: 1px solid #E3E3E3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.orange-tile {
+  color: #555;
+  background-color: rgba(255, 165, 0, 0.3);
+  /* padding: .3em;*/
+  margin-top: .3em;
+  padding: 1em;
+  border: 1px solid #E3E3E3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.hero-unit {
+	color: #333;
+	/* padding: .3em;*/
+	margin-top: .3em;
+	padding: 1em;
+	border: 1px solid #E3E3E3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark-tile a {
+	color: #ddd;
+}
+
+.dark-tile a:hover {
+	color: #000;
+}
