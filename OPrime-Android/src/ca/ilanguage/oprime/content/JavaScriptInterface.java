@@ -39,6 +39,7 @@ public abstract class JavaScriptInterface implements Serializable,
   protected String mAudioPlaybackFileUrl;
   protected String mAudioRecordFileUrl;
   protected String mTakeAPictureFileUrl;
+  protected DeviceDetails mDeviceDetails;
 
   /**
    * Can pass in all or none of the parameters. Expects the caller to set the
@@ -588,6 +589,11 @@ public abstract class JavaScriptInterface implements Serializable,
   }
 
   @JavascriptInterface
+  public void setD(boolean newvalue) {
+    getUIParent().D = newvalue;
+  }
+
+  @JavascriptInterface
   public String getOutputDir() {
     return mOutputDir;
   }
@@ -624,10 +630,14 @@ public abstract class JavaScriptInterface implements Serializable,
 
   @JavascriptInterface
   public void getHardwareDetails() {
-    String deviceType = "{name: 'Acer Nexus 7', model: 'Nexus 7', version: '4.2', identifier: 'TODOgetandroiddeviceid'}";
+    if (mDeviceDetails == null) {
+      mDeviceDetails = new DeviceDetails(getUIParent(), D, TAG);
+    }
+    String deviceType = mDeviceDetails.getCurrentDeviceDetails();
+
     LoadUrlToWebView v = new LoadUrlToWebView();
-    v.setMessage("javascript:OPrime.hub.publish('hardwareDetails',\""
-        + deviceType + "\");");
+    v.setMessage("javascript:OPrime.hub.publish('hardwareDetails',"
+        + deviceType + ");");
     v.execute();
   }
 

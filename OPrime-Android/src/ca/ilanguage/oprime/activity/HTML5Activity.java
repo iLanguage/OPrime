@@ -1,6 +1,9 @@
 package ca.ilanguage.oprime.activity;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,6 +58,7 @@ public abstract class HTML5Activity extends Activity {
   protected String mInitialAppServerUrl;
   public WebView mWebView;
   protected String mWebAppBaseDir;
+  protected String logs;
 
   /** Called when the activity is first created. */
   @Override
@@ -157,6 +161,8 @@ public abstract class HTML5Activity extends Activity {
       mWebView.setWebViewClient(new OPrimeWebViewClient());
     }
 
+    if (D)
+      Log.i(TAG, "Loading " + mInitialAppServerUrl);
     mWebView.loadUrl(mInitialAppServerUrl);
   }
 
@@ -263,6 +269,64 @@ public abstract class HTML5Activity extends Activity {
     return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
   }
 
+  public String getAppLogs(String type) {
+    String logcatArgs = "";
+    int processID = android.os.Process.myPid();
+    if (type == null) {
+      logcatArgs = "logcat -d TDDatabase:W " + TAG + ":W dalvikvm:W  *:S ";// |
+                                                                           // grep
+                                                                           // "
+      // + processID;
+    } else {
+      // logcatArgs = "-v time "+TAG+" TDDatabase dalvikvm *:S";
+      logcatArgs = "logcat -d TDDatabase:I " + TAG
+          + ":I dalvikvm:D  *:S | grep " + processID;
+    }
+    Process mLogcatProc = null;
+    BufferedReader reader = null;
+    this.logs = "Error collecting logs for " + TAG;
+    try {
+      mLogcatProc = Runtime.getRuntime().exec(logcatArgs.split(" "));
+
+      reader = new BufferedReader(new InputStreamReader(
+          mLogcatProc.getInputStream()));
+
+      String line;
+      final StringBuilder log = new StringBuilder();
+      String separator = System.getProperty("line.separator");
+
+      for (int l = 0; l < 20; l++) {
+        // while ((line = reader.readLine()) != null &&
+        // System.currentTimeMillis() - previoustimestamp < 500) {
+        line = reader.readLine();
+        if (line == null) {
+          break;
+        }
+        log.append(line);
+        // Log.d(TAG, "Log for bug report: " + line);
+        log.append(separator);
+
+      }
+      this.logs = log.toString();
+    }
+
+    catch (IOException e) {
+      Log.d(TAG, "Unable to collect logs for " + TAG);
+    }
+
+    finally {
+      if (reader != null)
+        try {
+          reader.close();
+        } catch (IOException e) {
+          Log.d(TAG, "Unable to collect logs for " + TAG);
+        }
+
+    }
+    return this.logs;
+
+  }
+
   class MyWebChromeClient extends WebChromeClient {
     public Activity mParentActivity;
 
@@ -279,9 +343,9 @@ public abstract class HTML5Activity extends Activity {
       if (cm.message() == null) {
         return true;
       }
-      if (D)
-        Log.d(TAG, cm.message() + " -- From line " + cm.lineNumber() + " of "
-            + cm.sourceId());
+      // if (D)
+      Log.d(TAG, cm.message() + " -- From line " + cm.lineNumber() + " of "
+          + cm.sourceId());
 
       /*
        * Handle CORS server refusal to connect by telling user the entire error.
@@ -303,16 +367,14 @@ public abstract class HTML5Activity extends Activity {
 
     /**
      * 
-     * Could override like this, but that woudl make the saveApp funciton obligatory on the apps
-     *  if it has been 30 seconds, then save the app, and redirect back to here after its done 
-      if(mLastUnloadSaveAppCalledTimestamp - System.currentTimeMillis() > 30000){
-        Log.d(TAG, "Calling window.saveApp("+url+")");
-        view.loadUrl("javascript:window.saveApp("+url+")");
-        mLastUnloadSaveAppCalledTimestamp = System.currentTimeMillis();
-        return true;
-      }else{
-        return super.onJsBeforeUnload(view, url, message, result);
-      }
+     * Could override like this, but that woudl make the saveApp funciton
+     * obligatory on the apps if it has been 30 seconds, then save the app, and
+     * redirect back to here after its done if(mLastUnloadSaveAppCalledTimestamp
+     * - System.currentTimeMillis() > 30000){ Log.d(TAG,
+     * "Calling window.saveApp("+url+")");
+     * view.loadUrl("javascript:window.saveApp("+url+")");
+     * mLastUnloadSaveAppCalledTimestamp = System.currentTimeMillis(); return
+     * true; }else{ return super.onJsBeforeUnload(view, url, message, result); }
      */
     @Override
     public boolean onJsBeforeUnload(WebView view, String url, String message,
@@ -335,6 +397,28 @@ public abstract class HTML5Activity extends Activity {
                   result.confirm();
                 }
               }).setCancelable(false).create().show();
+
+      return true;
+    }
+
+    @Override
+    public boolean onJsConfirm(WebView view, String url, String message,
+        final JsResult result) {
+      new AlertDialog.Builder(HTML5Activity.this)
+          .setTitle("")
+          .setMessage(message)
+          .setPositiveButton(android.R.string.ok,
+              new AlertDialog.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                  result.confirm();
+                }
+              })
+          .setNegativeButton(android.R.string.cancel,
+              new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                  result.cancel();
+                }
+              }).create().show();
 
       return true;
     }
@@ -388,8 +472,7 @@ public abstract class HTML5Activity extends Activity {
 
         // Ensure that he window.prompt even cancels successfully when the user
         // clicks "Cancel"
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-            getString(R.string.cancel_label),
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Unknown",
             new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
@@ -428,7 +511,8 @@ public abstract class HTML5Activity extends Activity {
         }
 
         if (message.toLowerCase().endsWith("number")) {
-          userInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+          userInput.setInputType(InputType.TYPE_CLASS_NUMBER
+              | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
         TextView prompt = (TextView) promptsView.findViewById(R.id.prompt);
         prompt.setText(message);
