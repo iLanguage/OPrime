@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
@@ -39,6 +40,7 @@ public abstract class JavaScriptInterface implements Serializable,
   protected String mAudioPlaybackFileUrl;
   protected String mAudioRecordFileUrl;
   protected String mTakeAPictureFileUrl;
+  protected DeviceDetails mDeviceDetails;
 
   /**
    * Can pass in all or none of the parameters. Expects the caller to set the
@@ -105,6 +107,12 @@ public abstract class JavaScriptInterface implements Serializable,
     return versionName;
   }
 
+  @JavascriptInterface
+  public void openExternalLink(String url ){
+    Uri uri = Uri.parse(url);
+    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    getUIParent().startActivity(intent);
+  }
   @JavascriptInterface
   public void pauseAudio() {
     if (mMediaPlayer != null) {
@@ -469,10 +477,11 @@ public abstract class JavaScriptInterface implements Serializable,
 
     protected void onPostExecute(String result) {
       if (getUIParent() != null && getUIParent().mWebView != null) {
-        Log.d(
-            TAG,
-            "\tPost execute LoadUrlToWebView task. Now trying to send a pubsub message to the webview."
-                + mMessage);
+        if (D)
+          Log.d(
+              TAG,
+              "\tPost execute LoadUrlToWebView task. Now trying to send a pubsub message to the webview."
+                  + mMessage);
         getUIParent().mWebView.loadUrl(mMessage);
       }
     }
@@ -588,6 +597,11 @@ public abstract class JavaScriptInterface implements Serializable,
   }
 
   @JavascriptInterface
+  public void setD(boolean newvalue) {
+    getUIParent().D = newvalue;
+  }
+
+  @JavascriptInterface
   public String getOutputDir() {
     return mOutputDir;
   }
@@ -624,10 +638,14 @@ public abstract class JavaScriptInterface implements Serializable,
 
   @JavascriptInterface
   public void getHardwareDetails() {
-    String deviceType = "{name: 'Acer Nexus 7', model: 'Nexus 7', version: '4.2', identifier: 'TODOgetandroiddeviceid'}";
+    if (mDeviceDetails == null) {
+      mDeviceDetails = new DeviceDetails(getUIParent(), D, TAG);
+    }
+    String deviceType = mDeviceDetails.getCurrentDeviceDetails();
+
     LoadUrlToWebView v = new LoadUrlToWebView();
-    v.setMessage("javascript:OPrime.hub.publish('hardwareDetails',\""
-        + deviceType + "\");");
+    v.setMessage("javascript:OPrime.hub.publish('hardwareDetails',"
+        + deviceType + ");");
     v.execute();
   }
 

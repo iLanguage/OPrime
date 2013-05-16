@@ -1,6 +1,7 @@
 package ca.ilanguage.oprime.offline.content;
 
 import android.content.Context;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import ca.ilanguage.oprime.activity.HTML5Activity;
 import ca.ilanguage.oprime.content.JavaScriptInterface;
@@ -28,6 +29,12 @@ public abstract class ReplicatingJavaScriptInterface extends
   @JavascriptInterface
   public void setCredentials(String dbname, String username, String password,
       String couchDBServerDomain) {
+    if (password.contains("@")) {
+      Log.d(
+          TAG,
+          "The users password has a @ this wont work with couchdb replication. Refusing to set their password.");
+      return;
+    }
     getUIParent().setCouchInfoBasedOnUserDb(dbname, username, password,
         couchDBServerDomain);
   }
@@ -41,12 +48,22 @@ public abstract class ReplicatingJavaScriptInterface extends
     setCredentials(dbname, username, password, couchDBServerDomain);
     turnOnReplication();
   }
-  
+
   @JavascriptInterface
-  public int getTouchDBListenerPort(){
+  public void addSuccessfulOfflineDatabase(String dbname) {
+    getUIParent().addSuccessfulOfflineDatabase(dbname);
+  }
+
+  @JavascriptInterface
+  public String getOfflineDBs() {
+    return getUIParent().getOfflineDBs();
+  }
+
+  @JavascriptInterface
+  public int getTouchDBListenerPort() {
     return getUIParent().getTouchDBListenerPort();
   }
-  
+
   @JavascriptInterface
   public String getLocalCouchAppURL() {
     return getUIParent().getLocalCouchAppInitialURL();
