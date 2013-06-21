@@ -1,4 +1,4 @@
-stimuli <- read.csv(file="stimuli.csv",head=TRUE,sep=",")
+stimuli <- read.csv(file="sample_stimuli.csv",head=TRUE,sep=",")
 images <- stimuli$Image.File
 library(tools)
 copyimages <- function (imagelist,...) {
