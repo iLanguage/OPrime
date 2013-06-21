@@ -16,8 +16,12 @@ assets/libs/bootstrap
 *.ogg
 *.mov
 *.mp4
-stimuli
-stimulus
+*stimuli*
+*stimulus*
+
+# Dont ignore Stock audio #
+!gammatone.wav	
+!pageflip2.mp3
 
 .project
 .settings
@@ -60,8 +64,10 @@ target
 
 # OS generated files #
 ######################
-.DS_Store?
-.DS_Store
+*.DS_Store?
+
+*/.DS_Store
+*.DS_Store
 ehthumbs.db
 Icon?
 Thumbs.db
