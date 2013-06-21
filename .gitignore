@@ -19,6 +19,10 @@ assets/libs/bootstrap
 *stimuli*
 *stimulus*
 
+# Dont ignore Stock audio #
+!gammatone.wav	
+!pageflip2.mp3
+
 .project
 .settings
 .classpath
