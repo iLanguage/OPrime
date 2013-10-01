@@ -10,8 +10,10 @@ var Component = require("montage/ui/component").Component;
  */
 exports.User = Component.specialize( /** @lends User# */ {
     constructor: {
-        value: function User() {
+        value: function User(options) {
+            console.log("Creating user ",options);
             this.super();
+            this.id = Date.now();
         }
     },
     id: {
@@ -46,7 +48,7 @@ exports.User = Component.specialize( /** @lends User# */ {
     name: {
         get: function() {
             var firstnameLastname = (this.firstname + " " + this.lastname).replace(/null/g, "").trim();
-            return this._name || firstnameLastname || this.username || this.id;
+            return  this.id;//this._name || firstnameLastname || this.username || this.id;
         },
         set: function(name) {
             this._name = name;

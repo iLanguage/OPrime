@@ -53,7 +53,7 @@
                 "element": {"#": "participants"}
             },
             "bindings": {
-                "content": {"<-": "@owner.participants"}
+                 "contentController": {"<->": "@owner.participantsController"}
             }
         },
         "title": {
@@ -73,12 +73,12 @@
         <h1 data-montage-id="title"></h1>
         <span data-montage-id="description"></span>
         <ul data-montage-id="experimenters">
-            <li> 
+            <li>Experimenter: 
                 <div data-montage-id="experimenter"></div>
             </li>
         </ul>
         <ul data-montage-id="participants">
-            <li> 
+            <li>Participant: 
                 <div data-montage-id="participant"></div>
             </li>
         </ul>
