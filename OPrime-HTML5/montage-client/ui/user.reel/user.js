@@ -11,10 +11,22 @@ var Component = require("montage/ui/component").Component;
 exports.User = Component.specialize( /** @lends User# */ {
     constructor: {
         value: function User(options) {
-            console.log("Creating user ",options);
+            console.log("Creating user ", options);
             this.super();
-            this.id = Date.now();
+            if(!this.id){
+                this.id = Date.now();
+            }
+            if(!this.username){
+                if(!window[this.jsonType+"Count"]){
+                    window[this.jsonType+"Count"] = 0;
+                }
+                window[this.jsonType+"Count"]++;
+                this.username = this.jsonType + window[this.jsonType+"Count"];
+            }
         }
+    },
+    jsonType: {
+        value: "user"
     },
     id: {
         value: null
@@ -48,7 +60,7 @@ exports.User = Component.specialize( /** @lends User# */ {
     name: {
         get: function() {
             var firstnameLastname = (this.firstname + " " + this.lastname).replace(/null/g, "").trim();
-            return  this.id;//this._name || firstnameLastname || this.username || this.id;
+            return  this._name || firstnameLastname || this.username || this.id;
         },
         set: function(name) {
             this._name = name;

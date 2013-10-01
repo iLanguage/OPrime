@@ -14,7 +14,6 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
     constructor: {
         value: function Experiment() {
             this.super();
-            this.load();
         }
     },
 
@@ -22,12 +21,10 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
         value: function() {
             var participant1 = new Participant();
             participant1.username = "why doesnt any thing show up?";
-            console.log("participant1", participant1);
+            console.log("Charles", participant1);
             window.participant1 = participant1;
             this.participantsController = RangeController.create().initWithContent([{
-                username: "participant1"
-            },{
-                username: "participant2"
+                username: "Adam"
             }]);
             this.participantsController.add(participant1);
             // this.participantsController.add({
@@ -41,6 +38,20 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 
         }
     },
+
+    didCreate: {
+        value: function() {
+            console.log("Did create experiment");
+            this.experimentersController = RangeController.create().initWithContent(this.experimenters);
+            this.load();
+
+        }
+    },
+
+    experimentersController: {
+        value: null
+    },
+
     participantsController: {
         value: null
     },

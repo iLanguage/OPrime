@@ -26,7 +26,7 @@
                 "element": {"#": "experimenter"}
             },
             "bindings": {
-                "value": {"<-": "@owner.experimenters.objectAtCurrentIteration"}
+                "value": {"<-": "@experimenters.objectAtCurrentIteration"}
             }
         },
         "experimenters": {
@@ -35,7 +35,7 @@
                 "element": {"#": "experimenters"}
             },
             "bindings": {
-                "content": {"<-": "@owner.experimenters"}
+                "contentController": {"<->": "@owner.experimentersController"}
             }
         },
         "participant": {
@@ -44,7 +44,7 @@
                 "element": {"#": "participant"}
             },
             "bindings": {
-                "value": {"<-": "@owner.participants.objectAtCurrentIteration"}
+                "value": {"<-": "@participants.objectAtCurrentIteration"}
             }
         },
         "participants": {

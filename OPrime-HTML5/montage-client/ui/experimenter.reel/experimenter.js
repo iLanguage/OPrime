@@ -15,6 +15,10 @@ exports.Experimenter = User.specialize(/** @lends Experimenter# */ {
         }
     },
 
+    jsonType: {
+        value: "experimenter"
+    },
+
     templateModuleId: {
         value: "ui/user.reel/user.html"
     }

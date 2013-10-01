@@ -14,7 +14,11 @@ exports.Participant = User.specialize(/** @lends Participant# */ {
             this.super();
         }
     },
-    
+
+    jsonType: {
+        value: "participant"
+    },
+
     templateModuleId: {
         value: "ui/user.reel/user.html"
     }
