@@ -10,16 +10,19 @@
     "undef": true,
     "unused": "paramsignore",
     "trailing": true,
-    "indent": 4,
+    "indent": 2,
     "boss": true,
     "eqnull": true,
-    "es5": true,
+    "es5": false,
     "browser": true,
     "predef": [
         "CustomEvent",
         "WebSocket",
 
         "require",
-        "exports"
+        "exports",
+        
+        "module",
+        "console"
     ]
 }
