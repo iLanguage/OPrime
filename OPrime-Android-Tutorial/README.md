@@ -1,0 +1,13 @@
+This presents a story book to pre-k children to elicit sentences. It does eye gaze and audio recording. The children or experimentor can turn the page. It will show a page turning animation which was built by harism and his collaborators https://github.com/harism/android_page_curl
+
+
+The audience of this project:
+
+* open source programmers
+* researchers who program, or have a programmer in their team who can adapt the code to their needs
+
+
+The next steps:
+
+To encourage us  you can "watch" our project, "fork" the code, and even send us "pull requests" if you want to contribute your modifications.
+
