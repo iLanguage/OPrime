@@ -30,7 +30,7 @@ module.exports = function(grunt) {
       },
       ios: {
         cmd: function() {
-          return 'cordova build ios && ./platforms/ios/cordova/run ';
+          return 'cordova build ios && env DEVICE_FAMILY=ipad ./platforms/ios/cordova/emulate';
         }
       },
       ios_test: {
