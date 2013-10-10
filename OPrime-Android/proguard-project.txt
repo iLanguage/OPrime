@@ -15,8 +15,6 @@
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
--keep public class ca.ilanguage.oprime.content.NonObfuscateable
--keep public class * implements ca.ilanguage.oprime.content.NonObfuscateable
--keepclassmembers class * implements ca.ilanguage.oprime.content.NonObfuscateable {
-   public *;
-}
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
