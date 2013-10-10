@@ -1,3 +1,6 @@
+# generated apps
+myapps
+
 # copied assets (originals are in www)
 platforms/android/res/drawable*
 platforms/android-test/res/drawable*

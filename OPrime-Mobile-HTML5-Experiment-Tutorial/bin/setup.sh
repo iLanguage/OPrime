@@ -38,6 +38,12 @@ lowercaseappname=`echo $lowercaseappname | tr '[:upper:]' '[:lower:]'`
 echo "Using: "$lowercaseappname
 echo ""
 
+echo "Putting your apps in a folder called 'myapps' "
+mkdir myapps ||{
+    echo ""
+}
+cd myapps
+
 cordova create $lowercaseappname $cleanedpackagename"."$lowercaseappname $appname || {
     echo "Opps something went wrong.. maybe your app names you chose aren't going to work. You will have to read the Cordova instructions";
     echo "http://cordova.apache.org/docs/en/3.1.0/guide_cli_index.md.html#The%20Command-line%20Interface"
@@ -62,7 +68,7 @@ echo "cordova run android"
 cordova run android
 
 echo "cordova platform add ios"
-# cordova platform add ios
+cordova platform add ios
 echo "If you have signed up to be an Apple developer, you can also run your app on an attached iPad"
 echo "cordova build ios && ./platforms/ios/cordova/run"
 # sudo npm install -g ios-sim
