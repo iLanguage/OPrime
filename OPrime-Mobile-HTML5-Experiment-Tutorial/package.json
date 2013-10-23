@@ -1,0 +1,40 @@
+{
+  "name": "OPrime-Mobile-HTML5-Experiment-Tutorial",
+  "description": "A tutorial for how to create mobile html5 experiments or gamified experiments.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/iLanguage/OPrime",
+  "author": {
+    "name": "OPrime",
+    "email": "cesine@yahoo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iLanguage/OPrime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iLanguage/OPrime/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "https://github.com/iLanguage/OPrime/blob/master/LICENSE"
+    }
+  ],
+  "main": "bin/setup.sh",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "devDependencies": {
+    "grunt-exec": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-nodeunit": "*",
+    "grunt-contrib-watch": "*",
+    "grunt": "*"
+  },
+  "keywords": []
+}

@@ -1,0 +1,22 @@
+{
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+  "trailing": true,
+  "indent": 2,
+  "boss": true,
+  "globals": {
+    "require": false,
+    "exports": false,
+    "global": false,
+    "console": false
+  },
+  "eqnull": true,
+  "node": true
+}
