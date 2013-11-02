@@ -51,7 +51,6 @@
         <activity
             android:name="ca.ilanguage.oprime.ui.ExperimentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
             android:label="@string/app_name"
             android:parentActivityName="ca.ilanguage.oprime.ui.ExperimentListActivity" >
 
@@ -66,6 +65,10 @@
         </activity>
         <activity
             android:name="ca.ilanguage.oprime.ui.ExperimentListActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="ca.ilanguage.oprime.ui.SubExperiment"
             android:exported="false"
             android:label="@string/app_name" >
         </activity>
@@ -78,12 +81,18 @@
             <!-- ca.ilanguage.oprime.intent.action.TAKE_PICTURE -->
         </activity>
         <activity
+            android:name="ca.ilanguage.oprime.datacollection.StopAudioRecorder"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="ca.ilanguage.oprime.datacollection.VideoRecorder"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
             android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="ca.ilanguage.oprime.intent.action.START_VIDEO_RECORDING_SERVICE" />
 
-            <!-- ca.ilanguage.oprime.intent.action.START_VIDEO_RECORDING_SERVICE -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <!-- All services must be listed in the manifest before they can be used -->
@@ -92,8 +101,11 @@
             <!-- ca.ilanguage.oprime.intent.action.SAVE_SUB_EXPERIMENT_JSON -->
         </service>
         <service android:name="ca.ilanguage.oprime.datacollection.AudioRecorder" >
+            <intent-filter>
+                <action android:name="ca.ilanguage.oprime.intent.action.START_AUDIO_RECORDING_SERVICE" />
 
-            <!-- ca.ilanguage.oprime.intent.action.START_AUDIO_RECORDING_SERVICE -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </service>
     </application>
 
