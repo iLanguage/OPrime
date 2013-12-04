@@ -3,6 +3,9 @@
 }
 .Stimulus-prime-image {
 	width: 10%;
+  position: absolute;
+  right: 30%;
+
 }
 
 .Stimulus-choose-image {
@@ -15,4 +18,13 @@
 
 .Stimulus-touchable {
 	
+}
+
+.Stimulus-previous-arrow { 
+  background-color: red;
+  float: left;
+}
+.Stimulus-next-arrow { 
+  background-color: blue;
+  float: right;
 }
