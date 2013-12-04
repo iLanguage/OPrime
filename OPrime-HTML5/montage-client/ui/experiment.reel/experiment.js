@@ -9,54 +9,47 @@ var Component = require("montage/ui/component").Component;
  * @extends Component
  */
 exports.Experiment = Component.specialize( /** @lends Experiment# */ {
+
+	_currentStimulus: {
+		value: null
+	},
+
+	_currentTestBlock: {
+		value: null
+	},
+
 	constructor: {
 		value: function Experiment() {
 			this.super();
-
-			if (!this._locale) {
-				this._locale = "en";
-				var browserCurrentLanguage = (navigator.userLanguage || navigator.language).toLowerCase();
-				var availableLocale = this.availableLocales.indexOf(browserCurrentLanguage);
-
-				if (availableLocale > -1) {
-					this._locale = browserCurrentLanguage;
-				}
-			}
-
+			this._currentStimulus = {
+				"auditoryStimuli": "auditory_stimuli_1",
+				"audioFile": "1.wav",
+				"primeImage": "animal1.png",
+				"targetImage": "04_scie.png",
+				"distractorImages": ["01_feu.png", "03_but.png", "02_chat.png"],
+				"responses": [{
+					"reactionTimeAudioOffset": null,
+					"reactionTimeAudioOnset": null,
+					"x": null,
+					"y": null
+				}]
+			};
 		}
 	},
 
-	availableLocales: {
-		value: ["en", "en-gb", "fr", "fr-ca"]
+	run: {
+		value: function() {}
 	},
 
-	_locale: {
-		value: null
+	next: {
+		value: function() {}
 	},
 
-	locale: {
-		get: function() {
-			return this._locale;
-		},
-		set: function(value) {
-			if (this.availableLocales.indexOf(value) === -1) {
-				throw ("Request for unknown locale " + value);
-			}
-			this._locale = value;
-		}
+	previous: {
+		value: function() {}
 	},
 
-	_description: {
-		value: null
-	},
-
-	description: {
-		get: function() {
-			return this._description[this._locale];
-		},
-		set: function(value) {
-			this._description = this._description || {};
-			this._description[this._locale] = value;
-		}
+	pause: {
+		value: function() {}
 	}
 });

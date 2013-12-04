@@ -5,10 +5,20 @@
     <link rel="stylesheet" type="text/css" href="experiment.css">
     <script type="text/montage-serialization">
     {
-        
         "owner": {
+            "prototype": "ui/experiment.reel",
             "properties": {
                 "element": {"#": "experiment"}
+            }
+        },
+        "rangeController1": {
+            "prototype": "montage/core/range-controller"
+        },
+
+        "currentStimulus": {
+            "prototype": "ui/stimulus.reel",
+            "properties": {
+                "element": {"#": "stimulus"}
             }
         },
 
@@ -16,20 +26,17 @@
             "prototype": "montage/ui/text.reel",
             "properties": {
                 "element": {"#": "toggleLanguage"}
-            },
-            "localizations": {
-                "value": {
-                    "key": "change_language"
-                }
             }
         }
-        
     }
     </script>
 </head>
 <body>
     <div data-montage-id="experiment" class="Experiment">
-        <div data-montage-id="toggleLanguage">Localize</div>
+        <div data-montage-id="toggleLanguage">
+            Change Stimuli Language
+        </div>
+        <div data-montage-id="stimulus"></div>
     </div>
 </body>
 </html>
