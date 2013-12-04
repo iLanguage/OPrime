@@ -19,36 +19,36 @@
                 "src": "../../assets/stimuli/image/animal1.png"
             }
         },
-        "targetImage": {
+        "chooseImage1": {
             "prototype": "digit/ui/image.reel",
             "properties": {
-                "element": {"#": "targetImage"},
-                "crossOrigin": null,
-                 "src": "../../assets/stimuli/image/04_scie.png"
-            }
-        },
-        "distractorImage1": {
-            "prototype": "digit/ui/image.reel",
-            "properties": {
-                "element": {"#": "distractorImage1"},
+                "element": {"#": "chooseImage1"},
                 "crossOrigin": null,
                  "src": "../../assets/stimuli/image/01_feu.png"
             }
         },
-        "distractorImage2": {
+        "chooseImage2": {
             "prototype": "digit/ui/image.reel",
             "properties": {
-                "element": {"#": "distractorImage2"},
+                "element": {"#": "chooseImage2"},
                 "crossOrigin": null,
                  "src": "../../assets/stimuli/image/03_but.png"
             }
         },
-        "distractorImage3": {
+        "chooseImage3": {
             "prototype": "digit/ui/image.reel",
             "properties": {
-                "element": {"#": "distractorImage3"},
+                "element": {"#": "chooseImage3"},
                 "crossOrigin": null,
                  "src": "../../assets/stimuli/image/02_chat.png"
+            }
+        },
+        "chooseImage4": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "chooseImage4"},
+                "crossOrigin": null,
+                 "src": "../../assets/stimuli/image/04_scie.png"
             }
         }
     }
@@ -56,11 +56,13 @@
 </head>
 <body>
     <div data-montage-id="stimulus" class="Stimulus">
-        <img data-montage-id="primeImage" src="">
-        <img data-montage-id="targetImage" src="">
-        <img data-montage-id="distractorImage1" src="">
-        <img data-montage-id="distractorImage2" src="">
-        <img data-montage-id="distractorImage3" src="">
+        <img data-montage-id="primeImage"  class="Stimulus-prime-image" src="">
+        <div class="Stimulus-choose-area Stimulus-touchable">
+            <img data-montage-id="chooseImage1" class="Stimulus-choose-image" src="">
+            <img data-montage-id="chooseImage2" class="Stimulus-choose-image" src="">
+            <img data-montage-id="chooseImage3" class="Stimulus-choose-image" src="">
+            <img data-montage-id="chooseImage4" class="Stimulus-choose-image" src="">
+        </div>
     </div>
 </body>
 </html>
