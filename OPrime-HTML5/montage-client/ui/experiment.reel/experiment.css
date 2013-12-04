@@ -1,3 +1,19 @@
 .Experiment {
 
 }
+
+.Experiment-previous-button {
+    float: left;
+    text-align: left;
+    font-size: 5em;
+    font-weight: 700;
+    width: 40%;
+}
+
+.Experiment-next-button {
+    float: right;
+    text-align: right;
+    font-size: 5em;
+    font-weight: 700;
+    width: 40%;
+}

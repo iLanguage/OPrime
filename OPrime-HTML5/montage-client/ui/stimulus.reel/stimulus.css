@@ -1,63 +1,18 @@
-body {
-    font-size: 62.5%;
-}
-
-#maincontainer {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 2em;
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-}
-
-#content-container {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-}
-
-#nav-left {
-    float: left;
-    text-align: left;
-    font-size: 5em;
-    font-weight: 700;
-    width: 40%;
-}
-
-#nav-right {
-    float: right;
-    text-align: right;
-    font-size: 5em;
-    font-weight: 700;
-    width: 40%;
-}
-
-#nav-center {
-    display: block;
-    overflow: auto;
-}
-
-#nav-center img {
-    width: 50%;
-}
-
-#main-content-left {
+.Stimulus-content-left {
     float: left;
     width: 49%;
 }
 
-#main-content-left img {
+.Stimulus-content-left img {
     width: 40%;
 }
 
-#main-content-right {
+.Stimulus-content-right {
     float: right;
     width: 49%;
 }
 
-#main-content-right img {
+.Stimulus-content-right img {
     width: 80%;
 }
 
@@ -65,8 +20,13 @@ body {
 
 }
 
-.Stimulus-prime-image {
+.Stimulus-prime-image-area {
+    display: block;
+    overflow: auto;
+}
 
+.Stimulus-prime-image {
+    width: 50%;
 }
 
 .Stimulus-choose-image {
