@@ -5,83 +5,31 @@
     <link rel="stylesheet" type="text/css" href="experiment.css">
     <script type="text/montage-serialization">
     {
+        
         "owner": {
-            "prototype": "ui/experiment.reel",
             "properties": {
                 "element": {"#": "experiment"}
             }
         },
-        "description": {
-            "prototype": "digit/ui/text.reel",
+
+        "toggleLanguage": {
+            "prototype": "montage/ui/text.reel",
             "properties": {
-                "element": {"#": "description"}
+                "element": {"#": "toggleLanguage"}
             },
-            "bindings": {
-                "value": {"<-": "@owner.description"}
-            }
-        },
-        "experimenter": {
-            "prototype": "ui/experimenter.reel",
-            "properties": {
-                "element": {"#": "experimenter"}
-            },
-            "bindings": {
-                "value": {"<-": "@experimenters.objectAtCurrentIteration"}
-            }
-        },
-        "experimenters": {
-            "prototype": "montage/ui/repetition.reel",
-            "properties": {
-                "element": {"#": "experimenters"}
-            },
-            "bindings": {
-                "contentController": {"<->": "@owner.experimentersController"}
-            }
-        },
-        "participant": {
-            "prototype": "ui/participant.reel",
-            "properties": {
-                "element": {"#": "participant"}
-            },
-            "bindings": {
-                "value": {"<-": "@participants.objectAtCurrentIteration"}
-            }
-        },
-        "participants": {
-            "prototype": "montage/ui/repetition.reel",
-            "properties": {
-                "element": {"#": "participants"}
-            },
-            "bindings": {
-                 "contentController": {"<->": "@owner.participantsController"}
-            }
-        },
-        "title": {
-            "prototype": "digit/ui/title.reel",
-            "properties": {
-                "element": {"#": "title"}
-            },
-            "bindings": {
-                "value": {"<-": "@owner.title"}
+            "localizations": {
+                "value": {
+                    "key": "change_language"
+                }
             }
         }
+        
     }
     </script>
 </head>
 <body>
     <div data-montage-id="experiment" class="Experiment">
-        <h1 data-montage-id="title"></h1>
-        <span data-montage-id="description"></span>
-        <ul data-montage-id="experimenters">
-            <li>Experimenter: 
-                <div data-montage-id="experimenter"></div>
-            </li>
-        </ul>
-        <ul data-montage-id="participants">
-            <li>Participant: 
-                <div data-montage-id="participant"></div>
-            </li>
-        </ul>
+        <div data-montage-id="toggleLanguage">Localize</div>
     </div>
 </body>
 </html>

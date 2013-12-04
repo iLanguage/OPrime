@@ -8,6 +8,10 @@
 
     <script type="text/montage-serialization">
         {
+            "localizer": {
+                "object": "montage/core/localizer[defaultLocalizer]"
+            },
+
             "owner": {
                 "properties": {
                     "element": {"#": "main"}
@@ -19,12 +23,20 @@
                 "properties": {
                     "element": {"#": "montageVersion"}
                 }
+            },
+
+            "experiment": {
+                "prototype": "ui/experiment.reel",
+                "properties": {
+                    "element": {"#": "experiment"}
+                }
             }
         }
     </script>
 </head>
 <body>
     <div data-montage-id="main" data-montage-skin="light" class="Main">
+        <div data-montage-id="experiment"></div>
         <div data-montage-id="montageVersion"></div>
     </div>
 </body>
