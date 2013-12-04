@@ -23,7 +23,6 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 				}
 			}
 
-
 		}
 	},
 
@@ -33,14 +32,6 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 
 	_locale: {
 		value: null
-	},
-
-	runLocalizer: {
-		value : function(){
-			return defaultLocalizer.localize("num_updates").then(function (messageFn) {
-			    return messageFn({updates:Object.keys(updates).length});
-			});
-		}
 	},
 
 	locale: {
