@@ -431,6 +431,7 @@ body {
 
 #nav-left {
     float: left;
+    text-align: left;
     font-size: 5em;
     font-weight: 700;
     width: 40%;
@@ -438,6 +439,7 @@ body {
 
 #nav-right {
     float: right;
+    text-align: right;
     font-size: 5em;
     font-weight: 700;
     width: 40%;
@@ -449,7 +451,7 @@ body {
 }
 
 #nav-center img {
-    width: 30%;
+    width: 50%;
 }
 
 #main-content-left {
