@@ -1,3 +1,7 @@
+.Stimulus {
+	z-index: 10;
+}
+
 .Stimulus-content-left {
     float: left;
     width: 49%;
@@ -14,10 +18,6 @@
 
 .Stimulus-content-right img {
     width: 80%;
-}
-
-.Stimulus {
-
 }
 
 .Stimulus-prime-image-area {

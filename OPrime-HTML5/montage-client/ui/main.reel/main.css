@@ -2,12 +2,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 2em;
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
+    min-height: 100%;
 }
-
 
 .Main-content-container {
     width: 100%;
