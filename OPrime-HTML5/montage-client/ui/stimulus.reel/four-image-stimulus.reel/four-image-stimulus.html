@@ -11,6 +11,13 @@
             }
         },
 
+        "stimulus": {
+            "prototype": "ui/stimulus.reel",
+            "properties": {
+                "element": {"#": "stimulus"}
+            }
+        },
+
         "chooseImage1": {
             "prototype": "digit/ui/image.reel",
             "properties": {
@@ -52,26 +59,24 @@
 </head>
 <body>
     <div data-montage-id="fourImageStimulus" class="FourImageStimulus Main-content-container">
+        <div data-montage-id="stimulus"> <!-- <- incuding the extension as the content of stimulus  -->
 
-        <div class="FourImageStimulus-prime-image-area">
-            <img data-montage-id="visualPrime" class="FourImageStimulus-Stimulus-prime-image" src=""/>
-        </div>
-
-        <div class="Stimulus-content-left">
-            <div class="Stimulus-choose-area Stimulus-touchable">
-                <img data-montage-id="chooseImage1" class="Stimulus-choose-image" src="">
-                <img data-montage-id="chooseImage2" class="Stimulus-choose-image" src="">
-                <img data-montage-id="chooseImage3" class="Stimulus-choose-image" src="">
-                <img data-montage-id="chooseImage4" class="Stimulus-choose-image" src="">
+            <div class="Stimulus-content-left">
+                <div class="Stimulus-choose-area Stimulus-touchable">
+                    <img data-montage-id="chooseImage1" class="Stimulus-choose-image" src="">
+                    <img data-montage-id="chooseImage2" class="Stimulus-choose-image" src="">
+                    <img data-montage-id="chooseImage3" class="Stimulus-choose-image" src="">
+                    <img data-montage-id="chooseImage4" class="Stimulus-choose-image" src="">
+                </div>
             </div>
-        </div>
 
-        <div class="Stimulus-content-right">
-            <div class="Stimulus-reinforcement-area">
-                <img src="http://fc02.deviantart.net/fs70/f/2013/011/e/5/rarity_by_krusiu42-d5r5qso.svg">
+            <div class="Stimulus-content-right">
+                <div class="Stimulus-reinforcement-area">
+                    <img src="http://fc02.deviantart.net/fs70/f/2013/011/e/5/rarity_by_krusiu42-d5r5qso.svg">
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </body>
 </html>
