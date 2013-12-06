@@ -11,10 +11,14 @@
             }
         },
 
-        "stimulus": {
-            "prototype": "ui/stimulus.reel",
+        "visualPrime": {
+            "prototype": "digit/ui/image.reel",
             "properties": {
-                "element": {"#": "stimulus"}
+                "element": {"#": "visualPrime"},
+                "crossOrigin": null
+            },
+            "bindings": {
+                "src": {"<-": "@owner.primeImage"}
             }
         }
 
@@ -23,7 +27,9 @@
 </head>
 <body>
     <div data-montage-id="oneImageStimulus" class="OneImageStimulus">
-        <div data-montage-id="stimulus"></div>
+        <div class="Stimulus-prime-image-area">
+            <img data-montage-id="visualPrime" class="Stimulus-prime-image" src="">
+        </div>
     </div>
 </body>
 </html>

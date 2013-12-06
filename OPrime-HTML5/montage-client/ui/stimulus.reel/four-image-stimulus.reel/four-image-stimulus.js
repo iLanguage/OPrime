@@ -3,13 +3,13 @@
  * @requires montage/ui/component
  */
 var Component = require("montage/ui/component").Component,
-	Stimulus = require("ui/stimulus.reel").Stimulus;
+	AbstractStimulus = require("core/abstract-stimulus").AbstractStimulus;
 
 /**
  * @class FourImageStimulus
- * @extends Stimulus
+ * @extends AbstractStimulus
  */
-exports.FourImageStimulus = Stimulus.specialize( /** @lends FourImageStimulus# */ {
+exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageStimulus# */ {
 	constructor: {
 		value: function FourImageStimulus() {
 			this.super();
