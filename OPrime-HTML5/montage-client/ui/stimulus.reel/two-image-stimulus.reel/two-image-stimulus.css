@@ -1,0 +1,14 @@
+@import url("../../stimulus.reel/stimulus.css");
+
+.TwoImageStimulus {
+
+}
+
+.TwoImageStimulus .Stimulus-prime-image-area {
+	display: none;
+}
+
+.TwoImageStimulus .Stimulus-content-left img {
+    width: 60%;
+    border: 1px solid black;
+}

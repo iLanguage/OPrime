@@ -1,0 +1,21 @@
+@import url("../../stimulus.reel/stimulus.css");
+
+.FourImageStimulus {
+
+}
+
+.FourImageStimulus .Stimulus-prime-image-area {
+	min-height:20%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	position: absolute;
+	top: -10%;
+	opacity: .9;
+}
+
+.FourImageStimulus .Stimulus-prime-image-area img {
+	margin-left: auto;
+	margin-right: auto;
+	width: 20%;
+}

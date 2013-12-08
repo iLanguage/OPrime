@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="two-image-stimulus.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "twoImageStimulus"}
+            }
+        },
+
+        "chooseImage1": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "chooseImage1"},
+                "crossOrigin": null,
+                "src": "../../../assets/stimuli/image/01_feu.png"
+            }
+        },
+
+        "chooseImage2": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "chooseImage2"},
+                "crossOrigin": null,
+                "src": "../../../assets/stimuli/image/03_but.png"
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="twoImageStimulus" class="TwoImageStimulus Main-content-container">
+
+        <div class="Stimulus-content-left">
+            <div class="Stimulus-choose-area Stimulus-touchable">
+                <img data-montage-id="chooseImage1" class="Stimulus-choose-image" src="">
+                <br/>
+                <img data-montage-id="chooseImage2" class="Stimulus-choose-image" src="">
+            </div>
+        </div>
+
+        <div class="Stimulus-content-right">
+            <div class="Stimulus-reinforcement-area">
+                <img src="http://fc02.deviantart.net/fs70/f/2013/011/e/5/rarity_by_krusiu42-d5r5qso.svg">
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

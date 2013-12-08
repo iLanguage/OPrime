@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="user.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "prototype": "ui/user.reel",
+            "properties": {
+                "element": {"#": "user"}
+            }
+        },
+        "gravatar": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "gravatar"}
+            },
+            "bindings": {
+                "src": {"<-": "@owner.gravatarUrl"}
+            }
+        },
+        "name": {
+            "prototype": "digit/ui/text.reel",
+            "properties": {
+                "element": {"#": "name"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.name"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="user" class="User">
+        <img data-montage-id="gravatar" >
+        <span data-montage-id="name"></span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+@import url("../../stimulus.reel/stimulus.css");
+
+.OneImageStimulus {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: -10%;
+}
+.OneImageStimulus img {
+  width: 80%;
+}
