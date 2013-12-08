@@ -1,0 +1,21 @@
+language: java
+
+node_js:
+  - 0.10
+
+jdk: oraclejdk7
+
+# whitelist
+branches:
+  only:
+    - travis
+
+before_install:
+  # Download and configure android among other deps
+  - ../Scripts/set_up_new_machine.sh
+ 
+before_script:
+  # Make sure the emulator has started before running tests
+  - ../Scripts/wait_for_emulator.sh
+
+script: grunt travis
