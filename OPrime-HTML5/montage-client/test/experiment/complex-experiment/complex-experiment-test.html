@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../../node_modules/montage/montage.js" data-package="../../../"></script>
+    <script type="text/montage-serialization">
+        {
+            "test": {
+                "prototype": "test/experiment/complex-experiment/complex-experiment-test",
+                "properties": {
+                    "experiment": {"@": "experiment1"}
+                }
+            },
+
+            "experiment1": {
+                "prototype": "ui/experiment.reel",
+                "properties": {
+                    "element": {"#": "experiment"}
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div data-montage-id="experiment" class="experiment"></div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+.Experiment {
+    /* creates space for footer */
+    height:80%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    opacity: .9;
+}
+
+.Experiment-previous-button {
+    float: left;
+    text-align: left;
+    font-size: 2em;
+    margin: 10px;
+    font-weight: 700;
+    width: 40%;
+}
+
+.Experiment-next-button {
+    float: right;
+    text-align: right;
+    font-size: 2em;
+    margin: 10px;
+    font-weight: 700;
+    width: 40%;
+}
+
+.Experiment-content-container {
+    position: absolute;
+    top: 10%;
+}
+
+/* creates space for an overlay header with experiment controls */
+.Experiment header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    background: #333333;
+    color: #ffffff;
+    height: 10%;
+    opacity: .5;
+    z-index: 200;
+}
+
+/* creates space for an overlay footer with experiment details */
+.Experiment footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: #333333;
+    color: #ffffff;
+    height: 10%;
+    opacity: .5;
+    z-index: 200;
+}

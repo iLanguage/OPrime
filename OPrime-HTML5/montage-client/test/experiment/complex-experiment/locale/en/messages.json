@@ -1,0 +1,7 @@
+{
+	"localized_title": "Name the ducky!",
+	"localized_description_for_teacher": "This games lets the child practice s-like sounds",
+	"localized_instructions_for_teacher": "A pre-recorded instruction audio will ask the child to name the duck presented on the screen. There are x practice items and x test items, with a comprehension distractor between the two test blocks. The game shows a reinforcment counter which helps a child's interest and reduce squirming during the tasks. The entire 'game' takes 45 seconds to play. The child's score is automaticaly determined by the game and is exportable in a few formats for the child's school records.",
+	"localized_practice_instructions_for_child" : "Let's start off with some practice. I can help yo on these first five if you need help, okay?",
+	"localized_end_instructions_for_child": "Good work!"
+}

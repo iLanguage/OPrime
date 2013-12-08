@@ -1,0 +1,28 @@
+{
+    "montage_manifest_version": 1,
+    "files": {
+        "locale": {
+            "directory": true,
+            "files": {
+                "en": {
+                    "directory": true,
+                    "files": {
+                        "messages.json": null
+                    }
+                },
+                "fr": {
+                    "directory": true,
+                    "files": {
+                        "messages.json": null
+                    }
+                },
+                "iu": {
+                    "directory": true,
+                    "files": {
+                        "messages.json": null
+                    }
+                }
+            }
+        }
+    }
+}
