@@ -16,4 +16,5 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 			this.primeImage = "http://fc09.deviantart.net/fs71/f/2012/338/2/1/wat__dash_by_reallyunimportant-d5gl3y0.png";
 		}
 	}
+
 });
