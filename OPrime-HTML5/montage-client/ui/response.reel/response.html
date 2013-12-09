@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="response.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "response"}
+            }
+        },
+
+        "x": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "x"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.x"}
+            }
+        },
+
+        "y": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "y"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.y"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="response" class="Response">
+        X: <span data-montage-id="x"></span>
+        Y: <span data-montage-id="y"></span>
+    </div>
+</body>
+</html>

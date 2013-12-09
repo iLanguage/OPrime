@@ -17,7 +17,7 @@
         },
 
         "currentStimulus": {
-            "prototype": "ui/stimulus.reel/one-image-stimulus.reel",
+            "prototype": "ui/stimulus.reel/four-image-stimulus.reel",
             "properties": {
                 "element": {"#": "stimulus"}
             }
@@ -27,6 +27,26 @@
             "prototype": "montage/ui/text.reel",
             "properties": {
                 "element": {"#": "toggleLanguage"}
+            }
+        },
+
+        "responses": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "responses"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@currentStimulus.rangeController"}
+            }
+        },
+
+        "response": {
+            "prototype": "ui/response.reel",
+            "properties": {
+                "element": {"#": "response"}
+            },
+            "bindings": {
+                "json": {"<-": "@responses.objectAtCurrentIteration"}
             }
         }
     }
@@ -48,6 +68,9 @@
             <div data-montage-id="toggleLanguage">
                 Change Stimuli Language
             </div>
+            <ul data-montage-id="responses">
+                <li data-montage-id="response"></li>
+            </ul>
         </footer>
 
     </div>
