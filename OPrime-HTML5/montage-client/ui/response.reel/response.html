@@ -17,7 +17,7 @@
                 "element": {"#": "x"}
             },
             "bindings": {
-                "value": {"<-": "@owner.json.x"}
+                "value": {"<-": "@owner.json.pageX"}
             }
         },
 
@@ -27,16 +27,15 @@
                 "element": {"#": "y"}
             },
             "bindings": {
-                "value": {"<-": "@owner.json.y"}
+                "value": {"<-": "@owner.json.pageY"}
             }
         }
     }
     </script>
 </head>
 <body>
-    <div data-montage-id="response" class="Response">
-        X: <span data-montage-id="x"></span>
-        Y: <span data-montage-id="y"></span>
-    </div>
+    <span data-montage-id="response" class="Response">
+        <span data-montage-id="x"></span>, <span data-montage-id="y"></span>
+    </span>
 </body>
 </html>

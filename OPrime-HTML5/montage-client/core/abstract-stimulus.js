@@ -26,15 +26,18 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	},
 
 	addResponse: {
-		value: function(target, stimulusId) {
-			if (!target) {
-				throw "Cannot add response without the x y information found in the touch/click target";
+		value: function(responseEvent, stimulusId) {
+			if (!responseEvent) {
+				throw "Cannot add response without the x y information found in the touch/click responseEvent";
 			}
+			var reactionTimeEnd = Date.now();
 			var response = {
-				"reactionTimeAudioOffset": null,
-				"reactionTimeAudioOnset": null,
-				"x": target.x,
-				"y": target.y,
+				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart,
+				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
+				"x": responseEvent.x,
+				"y": responseEvent.y,
+				"pageX": responseEvent.pageX,
+				"pageY": responseEvent.pageY,
 				"chosenVisualStimulus": stimulusId,
 				"responseScore": 1
 			};
@@ -44,15 +47,18 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	},
 
 	addNonResponse: {
-		value: function(target) {
-			if (!target) {
-				throw "Cannot add response without the x y information found in the touch/click target";
+		value: function(responseEvent) {
+			if (!responseEvent) {
+				throw "Cannot add response without the x y information found in the touch/click responseEvent";
 			}
+			var reactionTimeEnd = Date.now();
 			var response = {
-				"reactionTimeAudioOffset": null,
-				"reactionTimeAudioOnset": null,
-				"x": target.x,
-				"y": target.y,
+				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart,
+				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
+				"x": responseEvent.x,
+				"y": responseEvent.y,
+				"pageX": responseEvent.pageX,
+				"pageY": responseEvent.pageY,
 				"chosenVisualStimulus": "none",
 				"responseScore": -1
 			};
@@ -63,8 +69,8 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 	/*
 	 * Machinery for Recording stimuli responses.
-	 * 
-	 * Inspired by the digit video reel: 
+	 *
+	 * Inspired by the digit video reel:
 	 * https://github.com/montagejs/digit/tree/master/ui/video.reel
 	 */
 	enterDocument: {
@@ -75,6 +81,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				this.setupFirstPlay();
 				this.addOwnPropertyChangeListener("src", this);
 			}
+			this.reactionTimeStart = Date.now();
 		}
 	},
 
@@ -82,9 +89,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		value: function(e) {
 			console.log("The stimulus has been pressed: ");
 			if (e && e.targetElement && e.targetElement.dataset && e.targetElement.dataset.montageId && e.targetElement.classList.contains("Stimulus-record-touch-response")) {
-				this.addResponse(e.targetElement, e.targetElement.dataset.montageId);
+				this.addResponse(e.event, e.targetElement.dataset.montageId);
 			} else {
-				this.addNonResponse(e.targetElement);
+				this.addNonResponse(e.event);
 			}
 		}
 	},

@@ -36,8 +36,7 @@
     top: 0;
     width: 100%;
     text-align: center;
-    background: #333333;
-    color: #ffffff;
+    background: #cccccc;
     height: 10%;
     opacity: .5;
     z-index: 200;
@@ -49,9 +48,12 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    background: #333333;
-    color: #ffffff;
+    background: #cccccc;
     height: 10%;
     opacity: .5;
     z-index: 200;
 }
+.Experiment-response-debug {
+    margin-left: 1em;
+}
+
