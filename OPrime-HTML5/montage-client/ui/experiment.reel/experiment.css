@@ -53,7 +53,31 @@
     opacity: .5;
     z-index: 200;
 }
+
 .Experiment-response-debug {
     margin-left: 1em;
+}
+
+/* creates a transparent overlay which talks about the experiment, useful for tutorial mode */
+.Experiment-details {
+    opacity: .8;
+    position: absolute;
+    background-color: #fff;
+    color: #333;
+    top: 0;
+    right: 0;
+    height: 100%;
+    text-align: right;
+    font-size: 1.5em;
+    padding: 2em;
+    z-index: 300;
+}
+
+.Experiment-start-pause-button {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 10%;
+    min-width: 2em;
 }
 

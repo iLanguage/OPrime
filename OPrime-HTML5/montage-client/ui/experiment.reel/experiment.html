@@ -9,27 +9,46 @@
             "prototype": "ui/experiment.reel",
             "properties": {
                 "element": {"#": "experiment"}
+            },
+            "bindings": {
+                "targetAudience": {"<->": "@targetAudience.selected"}
             }
         },
-
-        "rangeController1": {
-            "prototype": "montage/core/range-controller"
-        },
-
         "currentStimulus": {
             "prototype": "ui/stimulus.reel/four-image-stimulus.reel",
             "properties": {
                 "element": {"#": "stimulus"}
             }
         },
-
-        "toggleLanguage": {
-            "prototype": "montage/ui/text.reel",
+        "description": {
+            "prototype": "digit/ui/text.reel",
             "properties": {
-                "element": {"#": "toggleLanguage"}
+                "element": {"#": "description"},
+                "value": "Text"
+            },
+            "bindings": {
+                "value": {"<-": "@owner.description"}
             }
         },
-
+        "playGame": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "playGame"},
+                "enabled": true
+            },
+            "bindings": {
+                "src": {"<-": "@owner.iconSrc"}
+            }
+        },
+        "response": {
+            "prototype": "ui/response.reel",
+            "properties": {
+                "element": {"#": "response"}
+            },
+            "bindings": {
+                "json": {"<-": "@responses.objectAtCurrentIteration"}
+            }
+        },
         "responses": {
             "prototype": "montage/ui/repetition.reel",
             "properties": {
@@ -39,14 +58,50 @@
                 "contentController": {"<-": "@currentStimulus.rangeController"}
             }
         },
-
-        "response": {
-            "prototype": "ui/response.reel",
+        "showGameCondition": {
+            "prototype": "montage/ui/condition.reel",
             "properties": {
-                "element": {"#": "response"}
+                "element": {"#": "showGameCondition"},
+                "removalStrategy": "hide"
             },
             "bindings": {
-                "json": {"<-": "@responses.objectAtCurrentIteration"}
+                "condition": {"<-": "@playGame.pressed"}
+            }
+        },
+        "showGameDetailsCondition": {
+            "prototype": "montage/ui/condition.reel",
+            "properties": {
+                "element": {"#": "showGameDetailsCondition"},
+                "removalStrategy": "hide"
+            }
+        },
+        "targetAudience": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "targetAudience"},
+                "contentController": {"@": "audiences"},
+                "labelPropertyName": "gameLabel"
+            }
+        },
+        "audiences": {
+            "prototype": "montage/core/range-controller",
+            "properties": {
+                "selection": []
+            }
+        },
+        "title": {
+            "prototype": "digit/ui/title.reel",
+            "properties": {
+                "element": {"#": "title"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.title"}
+            }
+        },
+        "toggleLanguage": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "toggleLanguage"}
             }
         }
     }
@@ -54,25 +109,38 @@
 </head>
 <body>
     <div data-montage-id="experiment" class="Experiment">
-
         <header class="Main-content-container">
-            <div class="Experiment-previous-button">&lt;</div>
-            <div class="Experiment-next-button">&gt;</div>
+            <div class="Experiment-previous-button">
+                <
+            </div>
+            <div class="Experiment-next-button">
+                >
+            </div>
         </header>
 
-        <div class="Experiment-content-container Main-content-container">
-            <div data-montage-id="stimulus"></div>
+        <button data-montage-id="playGame" class="Experiment-start-pause-button"></button>
+
+        <div data-montage-id="showGameCondition">
+            <div class="Experiment-content-container Main-content-container">
+                <div data-montage-id="stimulus"></div>
+            </div>
         </div>
 
-        <footer>Progress Information
+        <div data-montage-id="showGameDetailsCondition" class="Experiment-details">
+            <h1 data-montage-id="title"></h1>
+            <span data-montage-id="description"></span>
+        </div>
+
+        <footer>
+            Progress Information
             <div data-montage-id="toggleLanguage">
                 Change Stimuli Language
             </div>
+            View game as: <select data-montage-id="targetAudience"></select>
             <div data-montage-id="responses" class="Experiment-responses-display">
                 <span data-montage-id="response" class="Experiment-response-debug"></span>
             </div>
         </footer>
-
     </div>
 </body>
 </html>

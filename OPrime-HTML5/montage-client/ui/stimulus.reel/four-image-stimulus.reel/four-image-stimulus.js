@@ -20,5 +20,4 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 			this.visualChoiceD = "http://th01.deviantart.net/fs70/PRE/f/2012/291/0/f/annoyed_smart_cookie_by_silentmatten-d5i7448.png";
 		}
 	}
-
 });
