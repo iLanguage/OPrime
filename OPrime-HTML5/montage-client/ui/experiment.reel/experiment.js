@@ -4,7 +4,7 @@
  */
 var Component = require("montage/ui/component").Component,
 	experimentalDesign = require("../../../assets/stimuli/tcpp_design.json"),
-	Map = require("collections/map");
+	RangeController = require("montage/core/range-controller").RangeController;
 /**
  * @class Experiment
  * @extends Component
@@ -22,20 +22,31 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 	constructor: {
 		value: function Experiment() {
 			this.super();
+			
 			this.experimentalDesignSrc = "../../../assets/stimuli/tcpp_design.json";
 			this.experimentalDesign = require(this.experimentalDesignSrc);
+
 			this.iconSrc = "../../../assets/img/ic_tcpp128.png";
 			this.gamify = true;
-		}
-	},
 
-
-	templateDidLoad: {
-		value: function() {
-			this.templateObjects.audiences.content = this.audiences;
-			//Observe the selection for changes
-			this.templateObjects.audiences.addRangeAtPathChangeListener(
+			this.audiencesController = RangeController.create().initWithContent(this.audiences);
+			this.audiencesController.selection = [];
+			this.audiencesController.addRangeAtPathChangeListener(
 				"selection", this, "handleAudienceChange");
+
+			this.localesController = RangeController.create().initWithContent([{
+				"iso": "en",
+				"label": "English",
+			}, {
+				"iso": "fr",
+				"label": "français",
+			}, {
+				"iso": "iu",
+				"label": "ᐃᓄᒃᑎᑐᑦ",
+			}]);
+			this.localesController.selection = [];
+			this.localesController.addRangeAtPathChangeListener(
+				"selection", this, "handleLocaleChange");
 		}
 	},
 
@@ -59,7 +70,7 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 
 	/* Using an object and a select: http://montagejs.github.io/mfiddle/#!/7884716 */
 	_targetAudience: {
-		value : null
+		value: null
 	},
 	targetAudience: {
 		get: function() {
@@ -104,11 +115,14 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 	 *
 	 * References:
 	 * https://github.com/montagejs/montage/pull/1103
-	 * 
+	 *
 	 * @type {Object}
 	 */
 	handleAudienceChange: {
 		value: function(now, previous) {
+			if (!now || now.length == 0 || !now[0]) {
+				return;
+			}
 			var label = this.gamify ? "gameLabel" : "experimentLabel";
 			console.log("Audience changed from: " + (previous[0] ? previous[0][label] : "nothing") + " -> " + (now[0] ? now[0][label] : "nothing"));
 			this.targetAudience = now[0].key;
@@ -118,6 +132,14 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 		}
 	},
 
+	handleLocaleChange: {
+		value: function(now, previous) {
+			if (!now || now.length == 0 || !now[0]) {
+				return;
+			}
+			console.log("Locale changed from: " + (previous[0] ? previous[0].label : "nothing") + " -> " + (now[0] ? now[0].label : "nothing"));
+		}
+	},
 	/*
 	TODO change the labelPropertyName to use an FRB contingent on gamify
 	 */
@@ -177,7 +199,7 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 
 	handleAction: {
 		value: function(e) {
-			console.log("The select targetAudience has been pressed: ");
+			console.log("handleAction has been triggered: ", e);
 
 		}
 	}

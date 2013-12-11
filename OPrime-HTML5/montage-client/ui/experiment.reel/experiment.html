@@ -9,9 +9,17 @@
             "prototype": "ui/experiment.reel",
             "properties": {
                 "element": {"#": "experiment"}
+            }
+        },
+        "chooseLanguage": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "chooseLanguage"}
             },
-            "bindings": {
-                "targetAudience": {"<->": "@targetAudience.selected"}
+            "localizations": {
+                "value": {
+                    "key": "change_language"
+                }
             }
         },
         "currentStimulus": {
@@ -28,6 +36,15 @@
             },
             "bindings": {
                 "value": {"<-": "@owner.description"}
+            }
+        },
+        "locales": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "locales"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.localesController"}
             }
         },
         "playGame": {
@@ -79,8 +96,10 @@
             "prototype": "digit/ui/select.reel",
             "properties": {
                 "element": {"#": "targetAudience"},
-                "contentController": {"@": "audiences"},
                 "labelPropertyName": "gameLabel"
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.audiencesController"}
             }
         },
         "audiences": {
@@ -97,12 +116,6 @@
             "bindings": {
                 "value": {"<-": "@owner.title"}
             }
-        },
-        "toggleLanguage": {
-            "prototype": "montage/ui/text.reel",
-            "properties": {
-                "element": {"#": "toggleLanguage"}
-            }
         }
     }
     </script>
@@ -110,12 +123,8 @@
 <body>
     <div data-montage-id="experiment" class="Experiment">
         <header class="Main-content-container">
-            <div class="Experiment-previous-button">
-                <
-            </div>
-            <div class="Experiment-next-button">
-                >
-            </div>
+            <div class="Experiment-previous-button">&lt;</div>
+            <div class="Experiment-next-button">&gt;</div>
         </header>
 
         <button data-montage-id="playGame" class="Experiment-start-pause-button"></button>
@@ -132,10 +141,9 @@
         </div>
 
         <footer>
-            Progress Information
-            <div data-montage-id="toggleLanguage">
-                Change Stimuli Language
-            </div>
+            <span>Progress Information</span>
+            <span data-montage-id="chooseLanguage">Change Stimuli Language</span>
+            <select data-montage-id="locales"></select>
             View game as: <select data-montage-id="targetAudience"></select>
             <div data-montage-id="responses" class="Experiment-responses-display">
                 <span data-montage-id="response" class="Experiment-response-debug"></span>
