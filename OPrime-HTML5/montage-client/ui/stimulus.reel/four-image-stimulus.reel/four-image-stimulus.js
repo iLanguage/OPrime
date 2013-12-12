@@ -19,12 +19,12 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 		value: function FourImageStimulus() {
 			this.super();
 			this.confirmResponseChoiceMessage = "Are you sure?";
-			// this.primeImage = "http://fc09.deviantart.net/fs71/f/2012/338/2/1/wat__dash_by_reallyunimportant-d5gl3y0.png";
-			// this.visualChoiceA = "http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png";
-			// this.visualChoiceB = "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg";
-			// this.visualChoiceC = "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png";
-			// this.visualChoiceD = "http://th01.deviantart.net/fs70/PRE/f/2012/291/0/f/annoyed_smart_cookie_by_silentmatten-d5i7448.png";
-			// this.audioFile = "http://www.freesound.org/data/previews/210/210107_2973509-lq.mp3";
+			this.primeImage = "";
+			this.visualChoiceA = "";
+			this.visualChoiceB = "";
+			this.visualChoiceC = "";
+			this.visualChoiceD = "";
+			this.audioFile = "";
 		}
 	},
 
@@ -64,7 +64,48 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 			stimulus.audioFile = audioPath + stimulus.audioFile;
 			stimulus.primeImage = imagePath + stimulus.primeImage;
 
+			this.showVisualTargets = false;
+			/* Dont draw the images yet, wait until we say its time */
+			this.templateObjects.visualPrime.element.hidden = true;
+			// this.templateObjects.visualPrime.canDrawGate.setField("allowed", false);
+
+			this.templateObjects.showVisualTargetCondition.element.hidden = true;
+			// this.templateObjects.showVisualTargetCondition.canDrawGate.setField("allowed", false);
+			// this.templateObjects.visualReinforcement.canDrawGate.setField("allowed", false);
+
+			var cueToShowPrime = stimulus.cueToShowPrime;
+			var self = this;
+			setTimeout(function() {
+				self.animateVisualPrime();
+			}, cueToShowPrime);
+
+			var cueToShowTargets = stimulus.cueToShowTargets;
+			var self = this;
+			setTimeout(function() {
+				self.animateVisualTargets();
+			}, cueToShowTargets);
+
 			this.super(stimulus);
+		}
+	},
+
+	animateVisualPrime: {
+		value: function() {
+			console.log("animating visual prime");
+			// this.templateObjects.visualPrime.canDrawGate.setField("allowed", true);
+			this.templateObjects.visualPrime.element.hidden = false;
+		}
+	},
+
+	animateVisualTargets: {
+		value: function() {
+			console.log("animating visual targets");
+			this.showVisualTargets = true;
+
+			this.templateObjects.showVisualTargetCondition.element.hidden = false;
+			// this.templateObjects.showVisualTargetCondition.canDrawGate.setField("allowed", true);
+			// this.templateObjects.visualReinforcement.canDrawGate.setField("allowed", false);
+
 		}
 	}
 });

@@ -20,6 +20,16 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		}
 	},
 
+	/**
+	 *  dont draw automatically refs: http://montagejs.github.io/mfiddle/#!/7932746
+	 * @type {Object}
+	 */
+	// willDraw: {
+ //        value: function() {
+ //        	console.log("Stimulus does not draw automatically, instead it is drawn in steps by its child classes.");
+ //        }
+ //    },
+
 	rangeController: {
 		value: null
 	},
@@ -203,6 +213,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		}
 	},
 
+
 	load: {
 		value: function(details) {
 			for (var d in details) {
@@ -220,11 +231,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			this.rangeController = new RangeController().initWithContent(this.responses);
 
 			var self = this;
-			// setTimeout(function() {
-			/* TODO use an actual montage component */
+
+			/* TODO use an actual montage component for audio */
 			this.audioElement.src = this.audioFile;
-			self.playAudio();
-			// }, 2000);
+			this.playAudio();
 		}
 	}
 

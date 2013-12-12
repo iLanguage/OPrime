@@ -10,6 +10,16 @@
                 "element": {"#": "fourImageStimulus"}
             }
         },
+        "showVisualTargetCondition": {
+            "prototype": "montage/ui/condition.reel",
+            "properties": {
+                "element": {"#": "showVisualTargetCondition"},
+                "removalStrategy": "hide"
+            },
+            "bindings": {
+                "hidden": {"<-": "!@owner.showVisualTargets"}
+            }
+        },
         "visualChoiceA": {
             "prototype": "digit/ui/image.reel",
             "properties": {
@@ -75,7 +85,7 @@
             <img data-montage-id="visualPrime" class="Stimulus-prime-image" src="">
         </div>
         <div class="Stimulus-content-left">
-            <div class="Stimulus-choose-area Stimulus-touchable">
+            <div data-montage-id="showVisualTargetCondition"  class="Stimulus-choose-area Stimulus-touchable">
                 <img data-montage-id="visualChoiceA" class="Stimulus-choose-image Stimulus-record-touch-response" src="">
                 <img data-montage-id="visualChoiceB" class="Stimulus-choose-image Stimulus-record-touch-response" src="">
                 <img data-montage-id="visualChoiceC" class="Stimulus-choose-image Stimulus-record-touch-response" src="">
