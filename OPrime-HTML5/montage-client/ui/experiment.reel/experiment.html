@@ -11,6 +11,20 @@
                 "element": {"#": "experiment"}
             }
         },
+        "audiences": {
+            "prototype": "montage/core/range-controller",
+            "properties": {
+                "selection": []
+            }
+        },
+        "showTutorial": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "showTutorial"},
+                "enabled": true,
+                "label": "Tutorial"
+            }
+        },
         "chooseLanguage": {
             "prototype": "montage/ui/text.reel",
             "properties": {
@@ -22,8 +36,6 @@
         },
         "chooseLanguagePromiseController": {
             "prototype": "montage/core/promise-controller",
-            "properties": {
-            },
             "bindings": {
                 "value": {"<-": "@owner.contextualizer.localize('change_experiment_language')"}
             }
@@ -46,8 +58,6 @@
         },
         "descriptionPromiseController": {
             "prototype": "montage/core/promise-controller",
-            "properties": {
-            },
             "bindings": {
                 "value": {"<-": "@owner.description"}
             }
@@ -110,6 +120,9 @@
             "properties": {
                 "element": {"#": "showGameDetailsCondition"},
                 "removalStrategy": "hide"
+            },
+            "bindings": {
+                "condition": {"<-": "@showTutorial.pressed"}
             }
         },
         "targetAudience": {
@@ -120,12 +133,6 @@
             },
             "bindings": {
                 "contentController": {"<-": "@owner.audiencesController"}
-            }
-        },
-        "audiences": {
-            "prototype": "montage/core/range-controller",
-            "properties": {
-                "selection": []
             }
         },
         "title": {
@@ -139,8 +146,6 @@
         },
         "titlePromiseController": {
             "prototype": "montage/core/promise-controller",
-            "properties": {
-            },
             "bindings": {
                 "value": {"<-": "@owner.title"}
             }
@@ -151,32 +156,37 @@
 <body>
     <div data-montage-id="experiment" class="Experiment">
         <header class="Main-content-container">
-            <div class="Experiment-previous-button">&lt;</div>
-            <div class="Experiment-next-button">&gt;</div>
+            <div class="Experiment-previous-button">
+                <
+            </div>
+            <div class="Experiment-next-button">
+                >
+            </div>
         </header>
-
         <button data-montage-id="playGame" class="Experiment-start-pause-button"></button>
-
         <div data-montage-id="showGameCondition">
             <div class="Experiment-content-container Main-content-container">
                 <div data-montage-id="stimulus"></div>
             </div>
         </div>
-
         <div data-montage-id="showGameDetailsCondition" class="Experiment-details">
             <h1 data-montage-id="title"></h1>
             <span data-montage-id="description"></span>
         </div>
-
-        <div >
+        <div>
             <div data-montage-id="resultReport"></div>
         </div>
-
         <footer>
-            <span>Progress Information</span>
-            <span data-montage-id="chooseLanguage">Change Stimuli Language</span>
+            <span>
+                Progress Information
+            </span>
+            <button data-montage-id="showTutorial"></button>
+            <span data-montage-id="chooseLanguage">
+                Change Stimuli Language
+            </span>
             <select data-montage-id="locales"></select>
-            View game as: <select data-montage-id="targetAudience"></select>
+            View game as:
+            <select data-montage-id="targetAudience"></select>
             <div data-montage-id="responses" class="Experiment-responses-display">
                 <span data-montage-id="response" class="Experiment-response-debug"></span>
             </div>
