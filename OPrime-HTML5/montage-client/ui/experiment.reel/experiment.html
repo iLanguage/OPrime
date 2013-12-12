@@ -47,6 +47,15 @@
                 "element": {"#": "stimulus"}
             }
         },
+        "currentTestBlockLabel": {
+            "prototype": "digit/ui/text.reel",
+            "properties": {
+                "element": {"#": "currentTestBlockLabel"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner._currentTestBlock.label"}
+            }
+        },
         "description": {
             "prototype": "digit/ui/text.reel",
             "properties": {
@@ -232,9 +241,7 @@
             <div data-montage-id="resultReport"></div>
         </div>
         <footer>
-            <span>
-                Progress Information
-            </span>
+            <span data-montage-id="currentTestBlockLabel"></span>
             <output data-montage-id="currentStimulusIndexBadge"></output>
             <button data-montage-id="showTutorial"></button>
             <span data-montage-id="chooseLanguage">

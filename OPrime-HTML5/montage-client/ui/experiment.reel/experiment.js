@@ -243,6 +243,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
 			if (stimulus) {
+				stimulus.id = this._currentTestBlock.label + this._currentStimulusIndex;
 				this._currentStimulus.load(stimulus);
 				if (this.autoPlaySlideshowOfStimuli) {
 					var self = this;
