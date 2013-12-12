@@ -17,14 +17,6 @@
                 "selection": []
             }
         },
-        "showTutorial": {
-            "prototype": "digit/ui/button.reel",
-            "properties": {
-                "element": {"#": "showTutorial"},
-                "enabled": true,
-                "label": "Tutorial"
-            }
-        },
         "chooseLanguage": {
             "prototype": "montage/ui/text.reel",
             "properties": {
@@ -38,6 +30,15 @@
             "prototype": "montage/core/promise-controller",
             "bindings": {
                 "value": {"<-": "@owner.contextualizer.localize('change_experiment_language')"}
+            }
+        },
+        "currentStimulusIndexBadge": {
+            "prototype": "digit/ui/badge.reel",
+            "properties": {
+                "element": {"#": "currentStimulusIndexBadge"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner._currentStimulusIndex"}
             }
         },
         "currentStimulus": {
@@ -71,6 +72,31 @@
                 "contentController": {"<-": "@owner.localesController"}
             }
         },
+        "nextActionEventListener": {
+            "prototype": "montage/core/event/action-event-listener",
+            "properties": {
+                "action": "nextStimulus",
+                "handler": {"@": "owner"}
+            },
+            "_dev": {
+                "isHidden": true
+            }
+        },
+        "nextButton": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "nextButton"},
+                "enabled": true,
+                "label": ">"
+            },
+            "listeners": [
+                {
+                    "type": "action",
+                    "useCapture": false,
+                    "listener": {"@": "nextActionEventListener"}
+                }
+            ]
+        },
         "playGame": {
             "prototype": "digit/ui/image.reel",
             "properties": {
@@ -80,6 +106,31 @@
             "bindings": {
                 "src": {"<-": "@owner.iconSrc"}
             }
+        },
+        "previousActionEventListener": {
+            "prototype": "montage/core/event/action-event-listener",
+            "properties": {
+                "action": "previousStimulus",
+                "handler": {"@": "owner"}
+            },
+            "_dev": {
+                "isHidden": true
+            }
+        },
+        "previousButton": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "previousButton"},
+                "enabled": true,
+                "label": "<"
+            },
+            "listeners": [
+                {
+                    "type": "action",
+                    "useCapture": false,
+                    "listener": {"@": "previousActionEventListener"}
+                }
+            ]
         },
         "response": {
             "prototype": "ui/response.reel",
@@ -125,6 +176,14 @@
                 "hidden": {"<-": "!@owner.tutorialMode"}
             }
         },
+        "showTutorial": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "showTutorial"},
+                "enabled": true,
+                "label": "Tutorial"
+            }
+        },
         "targetAudience": {
             "prototype": "digit/ui/select.reel",
             "properties": {
@@ -156,12 +215,8 @@
 <body>
     <div data-montage-id="experiment" class="Experiment">
         <header class="Main-content-container">
-            <div class="Experiment-previous-button">
-                <
-            </div>
-            <div class="Experiment-next-button">
-                >
-            </div>
+            <button data-montage-id="previousButton" class="Experiment-previous-button"></button>
+            <button data-montage-id="nextButton" class="Experiment-next-button"></button>
         </header>
         <button data-montage-id="playGame" class="Experiment-start-pause-button"></button>
         <div data-montage-id="showGameCondition">
@@ -180,6 +235,7 @@
             <span>
                 Progress Information
             </span>
+            <output data-montage-id="currentStimulusIndexBadge"></output>
             <button data-montage-id="showTutorial"></button>
             <span data-montage-id="chooseLanguage">
                 Change Stimuli Language

@@ -44,7 +44,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				/* set the current test block if any*/
 				if (self.experimentalDesign.subexperiments && self.experimentalDesign.subexperiments.length > 0 && self.experimentalDesign.subexperiments[0]) {
 					self._currentTestBlockIndex = 0;
-					
+
 					/* find the test block inside the subexperiment */
 					self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
 					// for(var blockName in blockDetails){
@@ -81,7 +81,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			}]);
 
 
-			
+
 			this.gamify = true;
 			this.tutorialMode = false;
 			this.currentlyPlaying = false;
@@ -213,7 +213,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this._currentStimulus = this.templateObjects.currentStimulus;
 			this._currentStimulus.imageAssetsPath = this.experimentalDesign.imageAssetsPath;
 			this._currentStimulus.audioAssetsPath = this.experimentalDesign.audioAssetsPath;
-			this.next();
+			this.nextStimulus();
 		}
 	},
 
@@ -236,10 +236,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	 * 
 	 * @type {Object}
 	 */
-	next: {
+	nextStimulus: {
 		value: function() {
 			this._currentStimulusIndex++;
-			console.log("Showing stimulus "+ this._currentStimulusIndex + " of block "+ this._currentTestBlockIndex);
+			console.log("Showing stimulus " + this._currentStimulusIndex + " of block " + this._currentTestBlockIndex);
 
 			var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
 			if (stimulus) {
@@ -248,7 +248,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 					var self = this;
 					window.setTimeout(function() {
 						console.log("Slideshow play...");
-						self.next();
+						self.nextStimulus();
 					}, 5000);
 				}
 
@@ -265,8 +265,20 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: null
 	},
 
-	previous: {
-		value: function() {}
+	previousStimulus: {
+		value: function() {
+			this._currentStimulusIndex--;
+			console.log("Showing stimulus " + this._currentStimulusIndex + " of block " + this._currentTestBlockIndex);
+
+			var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
+			if (stimulus) {
+				this._currentStimulus.load(stimulus);
+			} else {
+				/* TODO, go to the previous test block */
+				alert("At the beginning!");
+			}
+
+		}
 	},
 
 	pause: {
