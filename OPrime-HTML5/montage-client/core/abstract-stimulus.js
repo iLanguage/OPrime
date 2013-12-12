@@ -3,7 +3,7 @@
  * @requires montage/ui/component
  */
 var Component = require("montage/ui/component").Component,
-	Confirm = require("matte/ui/popup/confirm.reel").Confirm,
+	Confirm = require("ui/confirm.reel").Confirm,
 	Response = require("ui/response.reel").Response,
 	PressComposer = require("montage/composer/press-composer").PressComposer,
 	RangeController = require("montage/core/range-controller").RangeController,
@@ -36,11 +36,11 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 			this.pauseAudio();
 
-			var confirmChoice = this.confirmResponseChoiceMessage;
+			var confirmChoicePrompt = this.confirmResponseChoiceMessage;
 			var continueToNextStimulus = Promise.defer();
-			if (confirmChoice) {
+			if (confirmChoicePrompt) {
 				var options = {
-					message: confirmChoice,
+					message: confirmChoicePrompt,
 					okLabel: "Yes",
 					cancelLabel: "Changed my mind"
 				};
