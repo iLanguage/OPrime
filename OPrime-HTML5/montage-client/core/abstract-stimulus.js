@@ -163,6 +163,16 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			document.getElementById('audio').pause();
 			document.getElementById('audio').currentTime = 0;
 		}
+	},
+
+	load: {
+		value: function(details){
+			for(var d in details){
+				if(details.hasOwnProperty(d)){
+					this[d] = details[d];
+				}
+			}
+		}
 	}
 
 

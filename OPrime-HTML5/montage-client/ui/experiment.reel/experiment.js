@@ -4,6 +4,7 @@
  */
 var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
 	experimentalDesign = require("../../../assets/stimuli/tcpp_design.json"),
+	PressComposer = require("montage/composer/press-composer").PressComposer,
 	RangeController = require("montage/core/range-controller").RangeController,
 	PromiseController = require("montage/core/promise-controller").PromiseController;
 
@@ -21,16 +22,53 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: null
 	},
 
+	_currentStimulusIndex: {
+		value: null
+	},
+
+	_currentTestBlockIndex: {
+		value: null
+	},
+
 	constructor: {
 		value: function Experiment() {
 			this.super();
 
 			this.experimentalDesignSrc = "../../../assets/stimuli/tcpp_design.json";
-			this.experimentalDesign = require(this.experimentalDesignSrc);
+			var self = this;
+			this.designHasBeenLoaded = require.read(this.experimentalDesignSrc).then(function(contents) {
+				console.log(" Loaded in the experimental Design." + this.experimentalDesignSrc);
+				self.experimentalDesign = JSON.parse(contents);
 
+				self.iconSrc = self.experimentalDesign.iconSrc;
+				/* set the current test block if any*/
+				if (self.experimentalDesign.subexperiments && self.experimentalDesign.subexperiments.length > 0 && self.experimentalDesign.subexperiments[0]) {
+					self._currentTestBlockIndex = 0;
+					
+					/* find the test block inside the subexperiment */
+					self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
+					// for(var blockName in blockDetails){
+					// 	if(blockDetails.hasOwnProperty(blockName)){
+					// 		if(blockDetails[blockName].trials){
+					// 			self._currentTestBlock = blockDetails[blockName];
+					// 			break;
+					// 		}
+					// 	}
+					// }
+
+				}
+
+				/* set the current stimulus index if any */
+				if (self._currentTestBlock && self._currentTestBlock.trials && self._currentTestBlock.trials.length > 0) {
+					self._currentStimulusIndex = -1;
+				}
+
+			}, function(reason) {
+				alert("Unable to load the experiment, please report this.");
+			});
 			/*
 			load experiment messages
-			 */
+			*/
 			var doneYet = window.contextualizer.addFiles([{
 				"path": "../assets/stimuli/locale/en/messages.json",
 				"localeCode": "en"
@@ -43,8 +81,13 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			}]);
 
 
-			this.iconSrc = "../../../assets/img/ic_tcpp128.png";
+			
 			this.gamify = true;
+			this.tutorialMode = false;
+			this.currentlyPlaying = false;
+
+			/* This makes essentially a slideshow of images, useful for debugging and reviewing */
+			this.autoPlaySlideshowOfStimuli = true;
 
 			this.audiencesController = RangeController.create().initWithContent(this.audiences);
 			this.audiencesController.selection = [];
@@ -67,13 +110,159 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		}
 	},
 
-
-	run: {
-		value: function() {}
+	draw: {
+		value: function() {
+			this.super();
+			var self = this;
+			window.setTimeout(function() {
+				/* hack to make the tutorial mode seem like its working */
+				if (!self.currentlyPlaying) {
+					var showTutorialMode = confirm("Do you want to have a tutorial?");
+					if (showTutorialMode) {
+						console.log("Showing tutorial mode");
+						self.toggleTutorialArea();
+					}
+				}
+			}, 10000);
+		}
 	},
 
+
+	/*
+	 * Machinery for Recording stimuli responses.
+	 *
+	 * Inspired by the digit video reel:
+	 * https://github.com/montagejs/digit/tree/master/ui/video.reel
+	 */
+	enterDocument: {
+		value: function(firstTime) {
+			this.super();
+
+			if (firstTime) {
+				this.setupFirstDisplay();
+				// this.addOwnPropertyChangeListener("src", this);
+			}
+			this.experimentDisplayTimeStart = Date.now();
+		}
+	},
+
+	handlePress: {
+		value: function(e) {
+			console.log("The experiment has been pressed: ");
+			if (e.targetElement.dataset.montageId === "playGame") {
+				this.run();
+			}
+			if (e.targetElement.dataset.montageId === "showTutorial") {
+				this.toggleTutorialArea();
+			}
+
+			/* if the user touches the screen, stop slideshow */
+			this.autoPlaySlideshowOfStimuli = false;
+		}
+	},
+
+	prepareForActivationEvents: {
+		value: function() {
+			this._pressComposer.addEventListener("pressStart", this, false);
+			this._pressComposer.addEventListener("press", this, false);
+			this._pressComposer.addEventListener("pressCancel", this, false);
+		}
+	},
+
+	setupFirstDisplay: {
+		value: function() {
+			this.element.removeEventListener("touchstart", this, false);
+			this.element.removeEventListener("mousedown", this, false);
+			// this._firstPlay = true;
+			// this.videoController.stop();
+
+			// this.classList.add("digit-Video--firstPlay");
+			// this.classList.remove("digit-Video--showControls");
+
+			this._pressComposer = PressComposer.create();
+			this._pressComposer.identifier = "experiment";
+			/* TODO try to make this listen to only what needs a press composer? */
+			this.addComposerForElement(this._pressComposer, this.element);
+			this.showPlayButton();
+		}
+	},
+
+	showPlayButton: {
+		value: function() {
+			this.templateObjects.playGame.element.hidden = false;
+			/*TODO the conditions dont seem to have any connection to hiding and showing their elements 
+			this is a brute force hack to make them not show. */
+			this.templateObjects.showGameCondition.element.hidden = true;
+			this.templateObjects.showGameDetailsCondition.element.hidden = true;
+		}
+	},
+
+	toggleTutorialArea: {
+		value: function() {
+			this.showTutorial = !this.showTutorial;
+			this.templateObjects.showGameDetailsCondition.element.hidden = !this.showTutorial;
+			console.log("Show tutorial:" + this.showTutorial);
+		}
+	},
+
+	run: {
+		value: function() {
+			this.currentlyPlaying = true;
+			this.templateObjects.showGameCondition.element.hidden = false;
+			this.templateObjects.playGame.element.hidden = true;
+			this._currentStimulus = this.templateObjects.currentStimulus;
+			this._currentStimulus.imageAssetsPath = this.experimentalDesign.imageAssetsPath;
+			this._currentStimulus.audioAssetsPath = this.experimentalDesign.audioAssetsPath;
+			this.next();
+		}
+	},
+
+	/**
+	 * 
+	 *
+	    var example = {
+			"auditoryStimulus": "practice_1_auditory_stimuli",
+			"audioFile": "1.wav",
+			"primeImage": "animal1.png",
+			"targetImage": "practice1.png",
+			"distractorImages": ["distractor1.png", "distractor2.png", "distractor3.png"],
+			"response": {
+				"reactionTimeAudioOffset": -234,
+				"reactionTimeAudioOnset": 123,
+				"x": 43,
+				"y": 23
+			}
+		}
+	 * 
+	 * @type {Object}
+	 */
 	next: {
-		value: function() {}
+		value: function() {
+			this._currentStimulusIndex++;
+			console.log("Showing stimulus "+ this._currentStimulusIndex + " of block "+ this._currentTestBlockIndex);
+
+			var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
+			if (stimulus) {
+				this._currentStimulus.load(stimulus);
+				if (this.autoPlaySlideshowOfStimuli) {
+					var self = this;
+					window.setTimeout(function() {
+						console.log("Slideshow play...");
+						self.next();
+					}, 5000);
+				}
+
+			} else {
+				/* TODO, go to the next test block */
+
+				alert("Good work!");
+			}
+
+		}
+	},
+
+	autoPlaySlideshowOfStimuli: {
+		value: null
 	},
 
 	previous: {
@@ -159,7 +348,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	},
 	/*
 	TODO change the labelPropertyName to use an FRB contingent on gamify
-	 */
+	*/
 	gamify: {
 		value: null
 	},
