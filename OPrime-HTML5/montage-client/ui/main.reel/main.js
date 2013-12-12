@@ -11,7 +11,7 @@ var Component = require("montage/ui/component").Component;
 exports.Main = Component.specialize(/** @lends Main# */ {
     constructor: {
         value: function Main() {
-        	localStorage.setItem("montage_locale", "fr");
+        	// localStorage.setItem("montage_locale", "fr");
             this.super();
         }
     }

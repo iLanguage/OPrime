@@ -4,12 +4,7 @@
  */
 var Component = require("montage/ui/component").Component,
 	experimentalDesign = require("../../../assets/stimuli/tcpp_design.json"),
-	ExperimentLocalizer = require("core/experiment-localizer"),
 	RangeController = require("montage/core/range-controller").RangeController;
-
-var defaultExperimentLocalizer = ExperimentLocalizer.defaultExperimentLocalizer,
-	_ = defaultExperimentLocalizer.localizeSync.bind(defaultExperimentLocalizer);
-
 /**
  * @class Experiment
  * @extends Component
@@ -26,11 +21,8 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 
 	constructor: {
 		value: function Experiment() {
-			this.localizer = defaultExperimentLocalizer;
-			this.waitForLocalizerMessages = true;
-			
 			this.super();
-
+			
 			this.experimentalDesignSrc = "../../../assets/stimuli/tcpp_design.json";
 			this.experimentalDesign = require(this.experimentalDesignSrc);
 
