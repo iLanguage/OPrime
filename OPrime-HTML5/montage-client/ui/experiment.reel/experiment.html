@@ -23,7 +23,7 @@
                 "element": {"#": "chooseLanguage"}
             },
             "bindings": {
-                "value": {"<-": "@chooseLanguagePromiseController"}
+                "value": {"<-": "@chooseLanguagePromiseController.state"}
             }
         },
         "chooseLanguagePromiseController": {
@@ -32,6 +32,15 @@
                 "value": {"<-": "@owner.contextualizer.localize('change_experiment_language')"}
             }
         },
+
+        "confirmDialogOverlay": {
+            "prototype": "montage/ui/overlay.reel",
+            "properties": {
+                "element": {"#": "confirmDialogOverlay"},
+                "delegate": {"@": "owner"}
+            }
+        },
+
         "currentStimulusIndexBadge": {
             "prototype": "digit/ui/badge.reel",
             "properties": {
@@ -63,7 +72,7 @@
                 "value": "Text"
             },
             "bindings": {
-                "value": {"<-": "@descriptionPromiseController"}
+                "value": {"<-": "@descriptionPromiseController.state"}
             }
         },
         "descriptionPromiseController": {
@@ -99,11 +108,11 @@
                 "label": ">"
             },
             "listeners": [
-                {
-                    "type": "action",
-                    "useCapture": false,
-                    "listener": {"@": "nextActionEventListener"}
-                }
+            {
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "nextActionEventListener"}
+            }
             ]
         },
         "playGame": {
@@ -134,11 +143,11 @@
                 "label": "<"
             },
             "listeners": [
-                {
-                    "type": "action",
-                    "useCapture": false,
-                    "listener": {"@": "previousActionEventListener"}
-                }
+            {
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "previousActionEventListener"}
+            }
             ]
         },
         "response": {
@@ -209,7 +218,7 @@
                 "element": {"#": "title"}
             },
             "bindings": {
-                "value": {"<-": "@titlePromiseController"}
+                "value": {"<-": "@titlePromiseController.state"}
             }
         },
         "titlePromiseController": {
@@ -240,6 +249,7 @@
         <div>
             <div data-montage-id="resultReport"></div>
         </div>
+        <div data-montage-id="confirmDialogOverlay"> </div>
         <footer>
             <span data-montage-id="currentTestBlockLabel"></span>
             <output data-montage-id="currentStimulusIndexBadge"></output>
