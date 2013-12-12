@@ -22,9 +22,24 @@ exports.Experiment = Component.specialize( /** @lends Experiment# */ {
 	constructor: {
 		value: function Experiment() {
 			this.super();
-			
+
 			this.experimentalDesignSrc = "../../../assets/stimuli/tcpp_design.json";
 			this.experimentalDesign = require(this.experimentalDesignSrc);
+
+			/*
+			load experiment messages
+			 */
+			var doneYet = window.contextualizer.addFiles([{
+				"path": "../assets/stimuli/locale/en/messages.json",
+				"localeCode": "en"
+			}, {
+				"path": "../assets/stimuli/locale/fr/messages.json",
+				"localeCode": "fr"
+			}, {
+				"path": "../assets/stimuli/locale/iu/messages.json",
+				"localeCode": "iu"
+			}]);
+
 
 			this.iconSrc = "../../../assets/img/ic_tcpp128.png";
 			this.gamify = true;
