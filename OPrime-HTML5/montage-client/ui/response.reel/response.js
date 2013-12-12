@@ -1,14 +1,14 @@
 /**
  * @module ui/response.reel
- * @requires montage/ui/component
+ * @requires core/contextualizable-component
  */
-var Component = require("montage/ui/component").Component;
+var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent;
 
 /**
  * @class Response
- * @extends Component
+ * @extends ContextualizableComponent
  */
-exports.Response = Component.specialize( /** @lends Response# */ {
+exports.Response = ContextualizableComponent.specialize( /** @lends Response# */ {
 	constructor: {
 		value: function Response() {
 			this.super();

@@ -1,15 +1,15 @@
 /**
  * @module ui/main.reel
- * @requires montage/ui/component
+ * @requires core/contextualizable-component
  */
-var Component = require("montage/ui/component").Component,
+var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
 	Contextualizer = require("core/contextualizer").Contextualizer;
 
 /**
  * @class Main
- * @extends Component
+ * @extends ContextualizableComponent
  */
-exports.Main = Component.specialize( /** @lends Main# */ {
+exports.Main = ContextualizableComponent.specialize( /** @lends Main# */ {
 	constructor: {
 		value: function Main() {
 			// localStorage.setItem("montage_locale", "fr");

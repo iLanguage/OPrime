@@ -1,15 +1,15 @@
 /**
  * @module ui/experiment.reel
- * @requires montage/ui/component
+ * @requires core/contextualizable-component
  */
-var Component = require("montage/ui/component").Component,
+var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
 	experimentalDesign = require("../../../assets/stimuli/tcpp_design.json"),
 	RangeController = require("montage/core/range-controller").RangeController;
 /**
  * @class Experiment
- * @extends Component
+ * @extends ContextualizableComponent
  */
-exports.Experiment = Component.specialize( /** @lends Experiment# */ {
+exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment# */ {
 
 	_currentStimulus: {
 		value: null

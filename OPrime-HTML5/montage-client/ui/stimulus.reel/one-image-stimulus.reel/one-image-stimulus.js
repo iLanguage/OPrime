@@ -1,8 +1,8 @@
 /**
  * @module ui/one-image-stimulus.reel
- * @requires montage/ui/component
+ * @requires core/contextualizable-component
  */
-var Component = require("montage/ui/component").Component,
+var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
 	AbstractStimulus = require("core/abstract-stimulus").AbstractStimulus;
 
 /**
