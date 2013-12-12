@@ -80,6 +80,12 @@
                 "contentController": {"<-": "@currentStimulus.rangeController"}
             }
         },
+        "resultReport": {
+            "prototype": "ui/report.reel",
+            "properties": {
+                "element": {"#": "resultReport"}
+            }
+        },
         "showGameCondition": {
             "prototype": "montage/ui/condition.reel",
             "properties": {
@@ -143,6 +149,10 @@
         <div data-montage-id="showGameDetailsCondition" class="Experiment-details">
             <h1 data-montage-id="title"></h1>
             <span data-montage-id="description"></span>
+        </div>
+
+        <div >
+            <div data-montage-id="resultReport"></div>
         </div>
 
         <footer>

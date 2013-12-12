@@ -34,7 +34,9 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 				return self.addMessagesToContextualizedStrings(contents, localeCode);
 			};
 			for (var f = 0; f < files.length; f++) {
-				console.log("Loading " + files[f]);
+				window.ContextualizedStrings.data[files[f].localeCode] = window.ContextualizedStrings.data[files[f].localeCode] || {};
+
+				console.log("Loading " + files[f].path);
 				var promise = this._require.read(files[f].path);
 				(function(localeCode) {
 					promise.then(function(contents) {
@@ -57,7 +59,7 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 					return;
 				}
 				localeData = JSON.parse(localeData);
-				window.ContextualizedStrings.data[localeCode] = window.ContextualizedStrings.data[localeCode] || {};
+				
 				/* make sure the get function works now that there is data */
 				window.ContextualizedStrings.get = function(message) {
 					return window.ContextualizedStrings.data[window.currentLocale][message].message;
