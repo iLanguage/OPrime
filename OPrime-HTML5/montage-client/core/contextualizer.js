@@ -8,14 +8,15 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 			this.super();
 
 			this.defaultLocale = "en";
-			window.currentLocale = this.defaultLocale;
+			this.currentLocale = this.defaultLocale;
 			/* TODO get this out of the window */
-			window.ContextualizedStrings = window.ContextualizedStrings || {
+			this._contextualizationHolder = this._contextualizationHolder || {
 				"data": {},
-				"get": function(message) {
+				"gimme": function(message) {
 					return message;
 				}
 			};
+			// window.ContextualizedStrings = this._contextualizationHolder;
 			window.contextualizer = this;
 
 			return this;
@@ -26,6 +27,10 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 		value: (typeof global !== "undefined") ? global.require : (typeof window !== "undefined") ? window.require : null
 	},
 
+	_contextualizationHolder: {
+		value: null
+	},
+	
 	addFiles: {
 		value: function(files) {
 			var allDone = [];
@@ -34,7 +39,7 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 				return self.addMessagesToContextualizedStrings(contents, localeCode);
 			};
 			for (var f = 0; f < files.length; f++) {
-				window.ContextualizedStrings.data[files[f].localeCode] = window.ContextualizedStrings.data[files[f].localeCode] || {};
+				this._contextualizationHolder.data[files[f].localeCode] = this._contextualizationHolder.data[files[f].localeCode] || {};
 
 				console.log("Loading " + files[f].path);
 				var promise = this._require.read(files[f].path);
@@ -53,6 +58,7 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 		value: function(localeData, localeCode) {
 			var deferred = Q.defer();
 
+			var self = this;
 			window.setTimeout(function() {
 				if (!localeData) {
 					deferred.reject("No data");
@@ -61,12 +67,12 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 				localeData = JSON.parse(localeData);
 				
 				/* make sure the get function works now that there is data */
-				window.ContextualizedStrings.get = function(message) {
-					return window.ContextualizedStrings.data[window.currentLocale][message].message;
+				self._contextualizationHolder.gimme = function(message) {
+					return self._contextualizationHolder.data[self.currentLocale][message].message;
 				};
 				for (var message in localeData) {
 					if (localeData.hasOwnProperty(message)) {
-						window.ContextualizedStrings.data[localeCode][message] = localeData[message];
+						self._contextualizationHolder.data[localeCode][message] = localeData[message];
 					}
 				}
 				deferred.resolve("Okay");
