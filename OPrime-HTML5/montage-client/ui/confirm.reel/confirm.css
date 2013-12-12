@@ -1,18 +1,19 @@
 
 .Confirm {
-	background-color: red;
+
 }
-.matte-Popup-header{
+.Confirm-header{
 	display: none;
 }
 .matte-Confirm-dialog {
 	min-width: 300px;
 }
-.matte-Confirm-dialog Confirm-content {
+.Confirm-content {
 	font-size: 1.3em;
+	text-align: center;
 	padding: 3em;
 }
-.matte-Confirm-dialog Confirm-actions {
-	float: right;
+.Confirm-actions {
+	text-align: center;
 }
 

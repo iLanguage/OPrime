@@ -165,6 +165,7 @@ var Confirm = exports.Confirm = Component.specialize(/** @lends module:"matte/ui
                 confirm.okLabel = "OK";
                 confirm.cancelLabel = "Cancel";
             } else {
+                confirm.iconSrc = options.iconSrc;
                 confirm.msg = options.message;
                 confirm.okLabel = options.okLabel || "OK";
                 confirm.cancelLabel = options.cancelLabel || "Cancel";

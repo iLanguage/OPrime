@@ -40,9 +40,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			var continueToNextStimulus = Promise.defer();
 			if (confirmChoicePrompt) {
 				var options = {
+					iconSrc: "../../../assets/img/ic_tcpp128.png",
 					message: confirmChoicePrompt,
 					okLabel: "Yes",
-					cancelLabel: "Changed my mind"
+					cancelLabel: "No"
 				};
 				Confirm.show(options, function() {
 					continueToNextStimulus.resolve();
