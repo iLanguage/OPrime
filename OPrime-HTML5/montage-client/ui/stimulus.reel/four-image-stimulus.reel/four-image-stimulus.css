@@ -1,8 +1,7 @@
 @import url("../../stimulus.reel/stimulus.css");
 
 .FourImageStimulus {
-	-webkit-animation: Diagonal-load .4s cubic-bezier(0, 0.7, 0.3, 1);
-	background-color: red;
+
 }
 
 .FourImageStimulus .Stimulus-prime-image-area {
@@ -19,8 +18,6 @@
 	margin-left: auto;
 	margin-right: auto;
 	width: 15%;
-	-webkit-animation: Diagonal-load .4s cubic-bezier(0, 0.7, 0.3, 1);
-
 }
 .Stimulus-choose-area {
 	/*background-color: #FFFFCC;
