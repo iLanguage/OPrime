@@ -177,7 +177,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			if (!description) {
 				description = this.experimentalDesign.description["default"] || "";
 			}
-			return description;
+			var localized = this.contextualizer.localize(description);
+			return localized;
 		},
 		set: function(value) {
 			if (this._description === value) {
@@ -202,7 +203,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			if (!title) {
 				title = this.experimentalDesign.title["default"] || "";
 			}
-			return title;
+			var localized = this.contextualizer.localize(title);
+			return localized;
 		},
 		set: function(value) {
 			if (this._title === value) {

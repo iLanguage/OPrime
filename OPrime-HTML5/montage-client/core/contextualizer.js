@@ -30,7 +30,13 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 	_contextualizationHolder: {
 		value: null
 	},
-	
+
+	localize: {
+		value: function(key) {
+			return this._contextualizationHolder.gimme(key);
+		}
+	},
+
 	addFiles: {
 		value: function(files) {
 			var allDone = [];
@@ -65,10 +71,16 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 					return;
 				}
 				localeData = JSON.parse(localeData);
-				
+
 				/* make sure the get function works now that there is data */
 				self._contextualizationHolder.gimme = function(message) {
-					return self._contextualizationHolder.data[self.currentLocale][message].message;
+					var result = message;
+					if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
+						result = self._contextualizationHolder.data[self.currentLocale][message].message;
+					} else if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined) {
+						self._contextualizationHolder.data[self.currentLocale][message].message;
+					}
+					return result;
 				};
 				for (var message in localeData) {
 					if (localeData.hasOwnProperty(message)) {

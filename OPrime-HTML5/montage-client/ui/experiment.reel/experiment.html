@@ -12,19 +12,13 @@
             }
         },
 
-        "localizer": {
-            "object": "montage/core/localizer[defaultLocalizer]"
-        },
-
         "chooseLanguage": {
             "prototype": "montage/ui/text.reel",
             "properties": {
                 "element": {"#": "chooseLanguage"}
             },
-            "localizations": {
-                "value": {
-                    "key": "change_experiment_language"
-                }
+            "bindings": {
+                "value": {"<-": "@owner.contextualizer.localize('change_experiment_language')"}
             }
         },
         "currentStimulus": {
