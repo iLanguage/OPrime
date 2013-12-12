@@ -10,10 +10,22 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 			this.defaultLocale = "en";
 			this.currentLocale = this.defaultLocale;
 			/* TODO get this out of the window */
+			var self = this;
 			this._contextualizationHolder = this._contextualizationHolder || {
 				"data": {},
 				"gimme": function(message) {
-					return message;
+					var def = Q.defer();
+					window.setTimeout(function() {
+						var result = message;
+						if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
+							result = self._contextualizationHolder.data[self.currentLocale][message].message;
+						} else if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined) {
+							self._contextualizationHolder.data[self.currentLocale][message].message;
+						}
+						def.resolve(result);
+						return;
+					}, 1000);
+					return def.promise;
 				}
 			};
 			// window.ContextualizedStrings = this._contextualizationHolder;
@@ -72,16 +84,6 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 				}
 				localeData = JSON.parse(localeData);
 
-				/* make sure the get function works now that there is data */
-				self._contextualizationHolder.gimme = function(message) {
-					var result = message;
-					if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
-						result = self._contextualizationHolder.data[self.currentLocale][message].message;
-					} else if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined) {
-						self._contextualizationHolder.data[self.currentLocale][message].message;
-					}
-					return result;
-				};
 				for (var message in localeData) {
 					if (localeData.hasOwnProperty(message)) {
 						self._contextualizationHolder.data[localeCode][message] = localeData[message];

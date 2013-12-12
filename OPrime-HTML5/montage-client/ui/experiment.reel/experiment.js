@@ -178,6 +178,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				description = this.experimentalDesign.description["default"] || "";
 			}
 			var localized = this.contextualizer.localize(description);
+			localized.then(function(resolved) {
+				console.log("resolved description " + description + " as " + resolved);
+				return resolved;
+			});
 			return localized;
 		},
 		set: function(value) {
@@ -204,6 +208,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				title = this.experimentalDesign.title["default"] || "";
 			}
 			var localized = this.contextualizer.localize(title);
+			localized.then(function(resolved) {
+				console.log("resolved title " + title + " as " + resolved);
+				return resolved;
+			});
 			return localized;
 		},
 		set: function(value) {
