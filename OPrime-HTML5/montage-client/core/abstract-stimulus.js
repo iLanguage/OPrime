@@ -34,8 +34,16 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				throw "Cannot add response without the x y information found in the touch/click responseEvent";
 			}
 
+			var reactionTimeEnd = Date.now();
+			var audioDuration = this.audioElement.duration || 0;
+			if (audioDuration) {
+				audioDuration = audioDuration * 1000;
+			} else {
+				console.log("The audio has no duration.. This is strange.");
+			}
 			this.pauseAudio();
 
+			var self = this;
 			var confirmChoicePrompt = this.confirmResponseChoiceMessage;
 			var continueToNextStimulus = Promise.defer();
 			if (confirmChoicePrompt) {
@@ -54,16 +62,16 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				continueToNextStimulus.resolve();
 			}
 			continueToNextStimulus.promise.then(function() {
-				this.stopAudio();
-				//TODO ask the experiemnt to advance to the next stimulus
+				self.stopAudio();
+				self.ownerComponent.nextStimulus();
 			}, function(reason) {
 				console.log("Not continuing to next stimulus");
-				this.playAudio();
+				self.playAudio();
 			});
 
 			var reactionTimeEnd = Date.now();
 			var response = {
-				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart,
+				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
 				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
 				"x": responseEvent.x,
 				"y": responseEvent.y,
@@ -113,6 +121,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				this.addOwnPropertyChangeListener("src", this);
 			}
 			this.reactionTimeStart = Date.now();
+			this.audioElement = document.getElementById('audio');
 		}
 	},
 
@@ -150,35 +159,47 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			this.addComposerForElement(this._pressComposer, this.element);
 			// this.showPoster();
 
-			var self = this;
-			setTimeout(function() {
-				self.playAudio();
-			}, 2000);
 
 
 		}
 	},
 
+	/**
+	 *  TODO try using a media controller later montage/ui/controller/media-controller
+	 * @type {Object}
+	 */
 	playAudio: {
 		value: function() {
-			document.getElementById('audio').play();
+			var audioEndListener = function() {
+				var audiourl = this.getAttribute("src");
+				console.log("audiourl is done " + audiourl);
+			};
+			this.audioElement.removeEventListener('ended', audioEndListener);
+			this.audioElement.addEventListener('ended', audioEndListener);
+
+			this.audioElement.play();
+			this.audioPlayStarted = Date.now();
 		}
+	},
+
+	/* TODO use an actual montage component */
+	audioElement: {
+		value: null
 	},
 
 	pauseAudio: {
 		value: function() {
-			document.getElementById('audio').pause();
-			if (document.getElementById('audio').currentTime > 0.05) {
-				document.getElementById('audio').currentTime =
-					document.getElementById('audio').currentTime - 0.05;
+			this.audioElement.pause();
+			if (this.audioElement.currentTime > 0.05) {
+				this.audioElement.currentTime = this.audioElement.currentTime - 0.05;
 			}
 		}
 	},
 
 	stopAudio: {
 		value: function() {
-			document.getElementById('audio').pause();
-			document.getElementById('audio').currentTime = 0;
+			this.audioElement.pause();
+			this.audioElement.currentTime = 0;
 		}
 	},
 
@@ -197,6 +218,13 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 			this.nonResponses = [];
 			this.rangeController = new RangeController().initWithContent(this.responses);
+
+			var self = this;
+			// setTimeout(function() {
+			/* TODO use an actual montage component */
+			this.audioElement.src = this.audioFile;
+			self.playAudio();
+			// }, 2000);
 		}
 	}
 

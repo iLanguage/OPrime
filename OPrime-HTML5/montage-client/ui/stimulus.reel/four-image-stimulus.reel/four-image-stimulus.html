@@ -58,12 +58,14 @@
             "prototype": "digit/ui/image.reel",
             "properties": {
                 "element": {"#": "visualPrime"},
-                "crossOrigin": null
+                "crossOrigin": null,
+                "src" :""
             },
             "bindings": {
                 "src": {"<-": "@owner.primeImage"}
             }
         }
+       
     }
     </script>
 </head>
@@ -85,7 +87,21 @@
                 <img src="http://fc02.deviantart.net/fs70/f/2013/011/e/5/rarity_by_krusiu42-d5r5qso.svg">
             </div>
         </div>
-        <audio id="audio" src="http://www.freesound.org/data/previews/210/210107_2973509-lq.mp3"></audio>        
+        <!-- TODO 
+         "auditoryPrime": {
+            "prototype": "digit/ui/video.reel",
+            "properties": {
+                "element": {"#": "auditoryPrime"},
+                "crossOrigin": null,
+                "hidden":true
+            },
+            "bindings": {
+                "src": {"<-": "@owner.audioFile"}
+            }
+        }
+        -->
+        <video data-montage-id="auditoryPrime" hidden src=""/>        
+        <audio id="audio" src=""></audio>        
     </div>
 </body>
 </html>
