@@ -15,7 +15,8 @@
     "montage": "~0.13.9",
     "digit": "~0.4.0",
     "collections": "~0.2.2",
-    "q": "~0.9.7"
+    "q": "~0.9.7",
+    "matte": "~0.1.4"
   },
   "devDependencies": {
     "montage-testing": "~0.2.0",

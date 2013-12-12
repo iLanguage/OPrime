@@ -3,9 +3,11 @@
  * @requires montage/ui/component
  */
 var Component = require("montage/ui/component").Component,
+	Confirm = require("matte/ui/popup/confirm.reel").Confirm,
 	Response = require("ui/response.reel").Response,
 	PressComposer = require("montage/composer/press-composer").PressComposer,
-	RangeController = require("montage/core/range-controller").RangeController;
+	RangeController = require("montage/core/range-controller").RangeController,
+	Promise = require("montage/core/promise").Promise;
 
 /**
  * @class Stimulus
@@ -15,13 +17,14 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	constructor: {
 		value: function Stimulus() {
 			this.super();
-			this.responses = [];
-			this.nonResponses = [];
-			this.rangeController = new RangeController().initWithContent(this.responses);
 		}
 	},
 
 	rangeController: {
+		value: null
+	},
+
+	responses: {
 		value: null
 	},
 
@@ -33,16 +36,29 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 			this.pauseAudio();
 
-			/*TODO 
-			 * pause audio
-			 * confirm box, if true then go to next stimulus if false, then continue playing.
-			 */
-			var conf = confirm("Are you sure?");
-			if (conf == true) {
-				this.stopAudio();
+			var confirmChoice = this.confirmResponseChoiceMessage;
+			var continueToNextStimulus = Promise.defer();
+			if (confirmChoice) {
+				var options = {
+					message: confirmChoice,
+					okLabel: "Yes",
+					cancelLabel: "Changed my mind"
+				};
+				Confirm.show(options, function() {
+					continueToNextStimulus.resolve();
+				}, function() {
+					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));
+				});
 			} else {
-				this.playAudio();
+				continueToNextStimulus.resolve();
 			}
+			continueToNextStimulus.promise.then(function() {
+				this.stopAudio();
+				//TODO ask the experiemnt to advance to the next stimulus
+			}, function(reason) {
+				console.log("Not continuing to next stimulus");
+				this.playAudio();
+			});
 
 			var reactionTimeEnd = Date.now();
 			var response = {
@@ -166,12 +182,20 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	},
 
 	load: {
-		value: function(details){
-			for(var d in details){
-				if(details.hasOwnProperty(d)){
+		value: function(details) {
+			for (var d in details) {
+				if (details.hasOwnProperty(d)) {
 					this[d] = details[d];
 				}
 			}
+			if (this.responses === null) {
+				this.responses = [];
+			}
+			if (this.nonResponses === null) {
+				this.nonResponses = [];
+			}
+			this.nonResponses = [];
+			this.rangeController = new RangeController().initWithContent(this.responses);
 		}
 	}
 
