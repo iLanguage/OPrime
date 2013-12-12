@@ -15,16 +15,30 @@ exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
 				"data": {},
 				"gimme": function(message) {
 					var def = Q.defer();
+					var result = message;
+
 					window.setTimeout(function() {
-						var result = message;
 						if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
 							result = self._contextualizationHolder.data[self.currentLocale][message].message;
-						} else if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined) {
-							self._contextualizationHolder.data[self.currentLocale][message].message;
+							console.log("Resolving localization quickly", result);
+							def.resolve(result);
+						} else {
+
+							window.setTimeout(function() {
+								if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
+									result = self._contextualizationHolder.data[self.currentLocale][message].message;
+								} else if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined) {
+									self._contextualizationHolder.data[self.currentLocale][message].message;
+								}
+								console.log("Resolving localization slowly", result);
+								def.resolve(result);
+								return;
+							}, 1000);
+							return;
+
 						}
-						def.resolve(result);
-						return;
-					}, 1000);
+					}, 100);
+
 					return def.promise;
 				}
 			};
