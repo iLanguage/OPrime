@@ -4,7 +4,9 @@
  */
 var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
 	experimentalDesign = require("../../../assets/stimuli/tcpp_design.json"),
-	RangeController = require("montage/core/range-controller").RangeController;
+	RangeController = require("montage/core/range-controller").RangeController,
+	PromiseController = require("montage/core/promise-controller").PromiseController;
+
 /**
  * @class Experiment
  * @extends ContextualizableComponent
@@ -178,10 +180,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				description = this.experimentalDesign.description["default"] || "";
 			}
 			var localized = this.contextualizer.localize(description);
-			localized.then(function(resolved) {
-				console.log("resolved description " + description + " as " + resolved);
-				return resolved;
-			});
 			return localized;
 		},
 		set: function(value) {
@@ -208,10 +206,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				title = this.experimentalDesign.title["default"] || "";
 			}
 			var localized = this.contextualizer.localize(title);
-			localized.then(function(resolved) {
-				console.log("resolved title " + title + " as " + resolved);
-				return resolved;
-			});
 			return localized;
 		},
 		set: function(value) {

@@ -17,6 +17,14 @@
                 "element": {"#": "chooseLanguage"}
             },
             "bindings": {
+                "value": {"<-": "@chooseLanguagePromiseController.state"}
+            }
+        },
+        "chooseLanguagePromiseController": {
+            "prototype": "montage/core/promise-controller",
+            "properties": {
+            },
+            "bindings": {
                 "value": {"<-": "@owner.contextualizer.localize('change_experiment_language')"}
             }
         },
@@ -31,6 +39,14 @@
             "properties": {
                 "element": {"#": "description"},
                 "value": "Text"
+            },
+            "bindings": {
+                "value": {"<-": "@descriptionPromiseController.state"}
+            }
+        },
+        "descriptionPromiseController": {
+            "prototype": "montage/core/promise-controller",
+            "properties": {
             },
             "bindings": {
                 "value": {"<-": "@owner.description"}
@@ -116,6 +132,14 @@
             "prototype": "digit/ui/title.reel",
             "properties": {
                 "element": {"#": "title"}
+            },
+            "bindings": {
+                "value": {"<-": "@titlePromiseController.state"}
+            }
+        },
+        "titlePromiseController": {
+            "prototype": "montage/core/promise-controller",
+            "properties": {
             },
             "bindings": {
                 "value": {"<-": "@owner.title"}
