@@ -87,7 +87,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this.currentlyPlaying = false;
 
 			/* This makes essentially a slideshow of images, useful for debugging and reviewing */
-			this.autoPlaySlideshowOfStimuli = true;
+			this.autoPlaySlideshowOfStimuli = false;
 
 			this.audiencesController = RangeController.create().initWithContent(this.audiences);
 			this.audiencesController.selection = [];
@@ -123,7 +123,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 						self.toggleTutorialArea();
 					}
 				}
-			}, 10000);
+			}, 30000);
 		}
 	},
 
