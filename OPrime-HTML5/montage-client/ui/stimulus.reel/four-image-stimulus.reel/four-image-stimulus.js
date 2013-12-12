@@ -5,6 +5,11 @@
 var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
 	AbstractStimulus = require("core/abstract-stimulus").AbstractStimulus;
 
+/** dealy audio autoplay 
+ * Reference from
+ * http://stackoverflow.com/questions/11973673/have-audio-tag-play-after-a-delay
+ */
+
 /**
  * @class FourImageStimulus
  * @extends AbstractStimulus
@@ -18,6 +23,7 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 			this.visualChoiceB = "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg";
 			this.visualChoiceC = "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png";
 			this.visualChoiceD = "http://th01.deviantart.net/fs70/PRE/f/2012/291/0/f/annoyed_smart_cookie_by_silentmatten-d5i7448.png";
+			this.audioFile = "http://www.freesound.org/data/previews/210/210107_2973509-lq.mp3";
 		}
 	}
 });
