@@ -7,6 +7,18 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %>\n' + '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' + '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' + ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     // Task configuration.
+    exec: {
+      reduceImageSize: {
+        cmd: function() {
+          return "cd assets/stimuli/image/ && mogrify -filter lanczos2 -resize '400x400>' *.png";
+        }
+      },
+      optimizeImages: {
+        cmd: function() {
+          return 'optipng assets/stimuli/image/*.png';
+        }
+      }
+    },
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -63,6 +75,7 @@ module.exports = function(grunt) {
   });
 
   // These plugins provide necessary tasks.
+  grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
@@ -70,6 +83,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
+  grunt.registerTask('reduceImageSize', ['exec:reduceImageSize', 'exec:optimizeImages']);
   grunt.registerTask('default', ['jshint', 'nodeunit', 'concat', 'uglify']);
 
 };

@@ -1,14 +1,14 @@
 /**
  * @module ui/user.reel
- * @requires montage/ui/component
+ * @requires core/contextualizable-component
  */
-var Component = require("montage/ui/component").Component;
+var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent;
 
 /**
  * @class User
- * @extends Component
+ * @extends ContextualizableComponent
  */
-exports.User = Component.specialize( /** @lends User# */ {
+exports.User = ContextualizableComponent.specialize( /** @lends User# */ {
     constructor: {
         value: function User(options) {
             console.log("Creating user ", options);

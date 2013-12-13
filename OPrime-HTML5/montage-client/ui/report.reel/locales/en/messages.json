@@ -1,0 +1,9 @@
+{
+	"score": {
+		"message": "Result Score",
+		"description": "An optional explaination of what this is for..."
+	},
+	"gamefied_score": {
+		"message": "Score"
+	}
+}
