@@ -256,7 +256,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			} else {
 				/* TODO, go to the next test block */
 
-				alert("Good work!");
+				alert("Ready for the real thing?");
 			}
 
 		}

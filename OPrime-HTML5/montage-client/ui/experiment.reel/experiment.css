@@ -10,19 +10,21 @@
 .Experiment-previous-button {
     float: left;
     text-align: left;
-    font-size: 2em;
     margin: 10px;
-    font-weight: 700;
     width: 40%;
 }
 
 .Experiment-next-button {
     float: right;
     text-align: right;
-    font-size: 2em;
     margin: 10px;
-    font-weight: 700;
     width: 40%;
+}
+
+.Experiment-next-button button , .Experiment-previous-button  button{
+    font-weight: 900;
+    font-size: 1.8em;
+    margin-top: 10px;
 }
 
 .Experiment-content-container {
@@ -36,7 +38,7 @@
     top: 0;
     width: 100%;
     text-align: center;
-    background: #cccccc;
+    /*background: #cccccc;*/
     height: 10%;
     opacity: .5;
     z-index: 200;
