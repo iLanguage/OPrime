@@ -17,6 +17,11 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	constructor: {
 		value: function Stimulus() {
 			this.super();
+
+			window.audioEndListener = function() {
+				var audiourl = this.getAttribute("src");
+				console.log("audiourl is done " + audiourl);
+			};
 		}
 	},
 
@@ -25,10 +30,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 * @type {Object}
 	 */
 	// willDraw: {
- //        value: function() {
- //        	console.log("Stimulus does not draw automatically, instead it is drawn in steps by its child classes.");
- //        }
- //    },
+	//        value: function() {
+	//        	console.log("Stimulus does not draw automatically, instead it is drawn in steps by its child classes.");
+	//        }
+	//    },
 
 	rangeController: {
 		value: null
@@ -37,7 +42,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	responses: {
 		value: null
 	},
-
+	pauseAudioWhenConfirmingResponse: {
+		value: null
+	},
 	addResponse: {
 		value: function(responseEvent, stimulusId) {
 			if (!responseEvent) {
@@ -51,7 +58,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			} else {
 				console.log("The audio has no duration.. This is strange.");
 			}
-			this.pauseAudio();
+			if (this.pauseAudioWhenConfirmingResponse) {
+				this.pauseAudio();
+			}
 
 			var self = this;
 			var confirmChoicePrompt = this.confirmResponseChoiceMessage;
@@ -76,7 +85,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				self.ownerComponent.nextStimulus();
 			}, function(reason) {
 				console.log("Not continuing to next stimulus");
-				self.playAudio();
+				if (this.pauseAudioWhenConfirmingResponse) {
+					self.playAudio();
+				}
 			});
 
 			var reactionTimeEnd = Date.now();
@@ -180,12 +191,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 */
 	playAudio: {
 		value: function() {
-			var audioEndListener = function() {
-				var audiourl = this.getAttribute("src");
-				console.log("audiourl is done " + audiourl);
-			};
-			this.audioElement.removeEventListener('ended', audioEndListener);
-			this.audioElement.addEventListener('ended', audioEndListener);
+
+			this.audioElement.removeEventListener('ended', window.audioEndListener);
+			this.audioElement.addEventListener('ended', window.audioEndListener);
 
 			this.audioElement.play();
 			this.audioPlayStarted = Date.now();

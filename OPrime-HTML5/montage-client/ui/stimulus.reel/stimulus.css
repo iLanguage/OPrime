@@ -44,3 +44,34 @@
  -o-transform:scale(0.9); 
  transform:scale(0.9);
 }
+
+
+
+@keyframes Introduce-target-image {
+  0%   {
+    width: 49%; 
+  }
+  50%  {
+    width: 52%;
+    opacity: .9;
+  }
+  100%   {
+    width: 49%;
+  }
+}
+
+@-webkit-keyframes Introduce-target-image /* Safari and Chrome */
+{
+  0%   {
+    width: 49%; 
+  }
+  50%  {
+    width: 52%;
+    opacity: .9;
+  }
+  100%   {
+    width: 49%;
+  }
+}
+
+

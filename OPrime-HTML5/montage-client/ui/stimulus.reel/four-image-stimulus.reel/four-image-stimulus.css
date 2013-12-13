@@ -23,3 +23,15 @@
 	/*background-color: #FFFFCC;
 	border-radius: 150px;*/
 }
+
+@keyframes Four-image-stimulus-move-prime
+{
+	0%   {width: 50%;}
+	100%  {width: 15%;}
+}
+
+@-webkit-keyframes Four-image-stimulus-move-prime /* Safari and Chrome */
+{
+	0%   {width: 50%;}
+	100%  {width: 15%;}
+}
