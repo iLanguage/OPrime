@@ -1,0 +1,93 @@
+.Experiment {
+    /* creates space for footer */
+    height:80%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    opacity: .9;
+}
+
+.Experiment-previous-button {
+    float: left;
+    text-align: left;
+    margin: 10px;
+    width: 40%;
+}
+
+.Experiment-next-button {
+    float: right;
+    text-align: right;
+    margin: 10px;
+    width: 40%;
+}
+
+.Experiment-next-button button , .Experiment-previous-button  button{
+    font-weight: 900;
+    font-size: 1.8em;
+    margin-top: 10px;
+}
+
+.Experiment-content-container {
+    position: absolute;
+    top: 10%;
+}
+
+/* creates space for an overlay header with experiment controls */
+.Experiment header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    /*background: #cccccc;*/
+    height: 10%;
+    opacity: .5;
+    z-index: 200;
+}
+
+/* creates space for an overlay footer with experiment details */
+.Experiment footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: #cccccc;
+    height: 10%;
+    opacity: .5;
+    z-index: 400;
+}
+
+.Experiment-response-debug {
+    margin-left: 1em;
+}
+
+/* creates a transparent overlay which talks about the experiment, useful for tutorial mode */
+.Experiment-details {
+    opacity: .8;
+    position: absolute;
+    background-color: #fff;
+    color: #333;
+    top: 0;
+    right: 0;
+    height: 100%;
+    text-align: right;
+    font-size: 1.5em;
+    padding: 2em;
+    z-index: 300;
+}
+
+.Experiment-start-pause-button {
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    width: 10%;
+    min-width: 2em;
+}
+
+.Experiment-start-pause-button:active {
+ -webkit-transform:scale(0.9); 
+ -moz-transform:scale(0.9); 
+ -ms-transform:scale(0.9); 
+ -o-transform:scale(0.9); 
+ transform:scale(0.9);
+}
+

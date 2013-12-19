@@ -1,0 +1,41 @@
+{
+  "name": "oprime-montage",
+  "description": "OPrime HTML5 Experimentation libraries written in MontageJS",
+  "version": "0.0.1",
+  "author": "fielddb <opensource@fielddb.org>",
+  "homepage": "https://github.com/OpenSourceFieldlinguistics/OPrime/issues/milestones?state=closed",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/OpenSourceFieldlinguistics/OPrime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OpenSourceFieldlinguistics/OPrime/issues"
+  },
+  "dependencies": {
+    "montage": "~0.13.9",
+    "digit": "~0.4.0",
+    "collections": "~0.2.2",
+    "q": "~0.9.7",
+    "matte": "~0.1.4"
+  },
+  "devDependencies": {
+    "montage-testing": "~0.2.0",
+    "grunt-exec": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-nodeunit": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-watch": "*"
+  },
+  "exclude": [
+    "run-tests.html",
+    "test"
+  ],
+  "license": "Apache 2.0",
+  "licenses": [
+    {
+      "type": "Apache 2.0"
+    }
+  ],
+  "manifest": true
+}

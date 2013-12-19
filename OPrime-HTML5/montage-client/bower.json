@@ -1,0 +1,24 @@
+{
+  "name": "oprime-montage",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ProjetDeRechercheSurLecriture/OPrime",
+  "authors": [
+    "info@fielddb.org"
+  ],
+  "description": "\"Open Source Experimentation libraries in Montage.js\"",
+  "main": "dist/oprime-montage.js",
+  "keywords": [
+    "oprime"
+  ],
+  "license": "Apache",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-css": "~2.1.3"
+  }
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="experiment.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "prototype": "ui/experiment.reel",
+            "properties": {
+                "element": {"#": "experiment"}
+            }
+        },
+        "audiences": {
+            "prototype": "montage/core/range-controller",
+            "properties": {
+                "selection": []
+            }
+        },
+        "chooseLanguage": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "chooseLanguage"}
+            },
+            "bindings": {
+                "value": {"<-": "@chooseLanguagePromiseController.state"}
+            }
+        },
+        "chooseLanguagePromiseController": {
+            "prototype": "montage/core/promise-controller",
+            "bindings": {
+                "value": {"<-": "@owner.contextualizer.localize('change_experiment_language')"}
+            }
+        },
+
+        "confirmDialogOverlay": {
+            "prototype": "montage/ui/overlay.reel",
+            "properties": {
+                "element": {"#": "confirmDialogOverlay"},
+                "delegate": {"@": "owner"}
+            }
+        },
+
+        "currentStimulusIndexBadge": {
+            "prototype": "digit/ui/badge.reel",
+            "properties": {
+                "element": {"#": "currentStimulusIndexBadge"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner._currentStimulusIndex"}
+            }
+        },
+        "currentStimulus": {
+            "prototype": "ui/stimulus.reel/four-image-stimulus.reel",
+            "properties": {
+                "element": {"#": "stimulus"}
+            }
+        },
+        "currentTestBlockLabel": {
+            "prototype": "digit/ui/text.reel",
+            "properties": {
+                "element": {"#": "currentTestBlockLabel"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner._currentTestBlock.label"}
+            }
+        },
+        "description": {
+            "prototype": "digit/ui/text.reel",
+            "properties": {
+                "element": {"#": "description"},
+                "value": "Text"
+            },
+            "bindings": {
+                "value": {"<-": "@descriptionPromiseController.state"}
+            }
+        },
+        "descriptionPromiseController": {
+            "prototype": "montage/core/promise-controller",
+            "bindings": {
+                "value": {"<-": "@owner.description"}
+            }
+        },
+        "locales": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "locales"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.localesController"}
+            }
+        },
+        "nextActionEventListener": {
+            "prototype": "montage/core/event/action-event-listener",
+            "properties": {
+                "action": "nextStimulus",
+                "handler": {"@": "owner"}
+            },
+            "_dev": {
+                "isHidden": true
+            }
+        },
+        "nextButton": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "nextButton"},
+                "enabled": true,
+                "label": ">"
+            },
+            "listeners": [
+            {
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "nextActionEventListener"}
+            }
+            ]
+        },
+        "playGame": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "playGame"},
+                "enabled": true,
+                "src": ""
+            },
+            "bindings": {
+                "src": {"<-": "@owner.iconSrc"}
+            }
+        },
+        "previousActionEventListener": {
+            "prototype": "montage/core/event/action-event-listener",
+            "properties": {
+                "action": "previousStimulus",
+                "handler": {"@": "owner"}
+            },
+            "_dev": {
+                "isHidden": true
+            }
+        },
+        "previousButton": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "previousButton"},
+                "enabled": true,
+                "label": "<"
+            },
+            "listeners": [
+            {
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "previousActionEventListener"}
+            }
+            ]
+        },
+        "response": {
+            "prototype": "ui/response.reel",
+            "properties": {
+                "element": {"#": "response"}
+            },
+            "bindings": {
+                "json": {"<-": "@responses.objectAtCurrentIteration"}
+            }
+        },
+        "responses": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "responses"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@currentStimulus.rangeController"}
+            }
+        },
+        "resultReport": {
+            "prototype": "ui/report.reel",
+            "properties": {
+                "element": {"#": "resultReport"}
+            }
+        },
+        "showGameCondition": {
+            "prototype": "montage/ui/condition.reel",
+            "properties": {
+                "element": {"#": "showGameCondition"},
+                "removalStrategy": "hide"
+            },
+            "bindings": {
+                "hidden": {"<-": "!@owner.currentlyPlaying"}
+            }
+        },
+        "showGameDetailsCondition": {
+            "prototype": "montage/ui/condition.reel",
+            "properties": {
+                "element": {"#": "showGameDetailsCondition"},
+                "removalStrategy": "hide"
+            },
+            "bindings": {
+                "hidden": {"<-": "!@owner.tutorialMode"}
+            }
+        },
+        "showTutorial": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "showTutorial"},
+                "enabled": true,
+                "label": "Tutorial"
+            }
+        },
+        "targetAudience": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "targetAudience"},
+                "labelPropertyName": "gameLabel"
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.audiencesController"}
+            }
+        },
+        "title": {
+            "prototype": "digit/ui/title.reel",
+            "properties": {
+                "element": {"#": "title"}
+            },
+            "bindings": {
+                "value": {"<-": "@titlePromiseController.state"}
+            }
+        },
+        "titlePromiseController": {
+            "prototype": "montage/core/promise-controller",
+            "bindings": {
+                "value": {"<-": "@owner.title"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="experiment" class="Experiment">
+        <header class="Main-content-container">
+            <div class="Experiment-previous-button">
+                <button data-montage-id="previousButton"></button>
+            </div>
+            <div class="Experiment-next-button">
+                <button data-montage-id="nextButton"></button>
+            </div>
+        </header>
+        <button data-montage-id="playGame" class="Experiment-start-pause-button"></button>
+        <div data-montage-id="showGameCondition">
+            <div class="Experiment-content-container Main-content-container">
+                <div data-montage-id="stimulus"></div>
+            </div>
+        </div>
+        <div data-montage-id="showGameDetailsCondition" class="Experiment-details">
+            <h1 data-montage-id="title"></h1>
+            <span data-montage-id="description"></span>
+        </div>
+        <div>
+            <div data-montage-id="resultReport"></div>
+        </div>
+        <div data-montage-id="confirmDialogOverlay"> </div>
+        <footer>
+            <span data-montage-id="currentTestBlockLabel"></span>
+            <output data-montage-id="currentStimulusIndexBadge"></output>
+            <button data-montage-id="showTutorial"></button>
+            <span data-montage-id="chooseLanguage">
+                Change Stimuli Language
+            </span>
+            <select data-montage-id="locales"></select>
+            View game as:
+            <select data-montage-id="targetAudience"></select>
+            <div data-montage-id="responses" class="Experiment-responses-display">
+                <span data-montage-id="response" class="Experiment-response-debug"></span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

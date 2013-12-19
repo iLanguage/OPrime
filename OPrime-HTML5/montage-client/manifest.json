@@ -1,0 +1,24 @@
+{
+    "montage_manifest_version": 1,
+    "files": {
+        "locale": {
+            "directory": true,
+            "files": {
+                "en": {
+                    "directory": true,
+                    "files": {
+                        "messages.json": null,
+                        "/assets/stimuli/locale/en/messages.json" : null
+                    }
+                },
+                "fr": {
+                    "directory": true,
+                    "files": {
+                        "messages.json": null,
+                        "/assets/stimuli/locale/fr/messages.json" : null
+                    }
+                }
+            }
+        }
+    }
+}

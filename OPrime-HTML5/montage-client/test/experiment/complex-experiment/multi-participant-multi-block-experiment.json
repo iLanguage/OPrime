@@ -1,0 +1,251 @@
+{
+	"title": {
+		"default": "localized_title",
+		"gamified_title": "localized_gamified_title"
+	},
+	"participants": [{
+		"participant_code": "AA",
+		"age": 22.34,
+		"date_of_birth": 20101231,
+		"userid": 1234512345
+	}, {
+		"participant_code": "BB",
+		"age": 23.34,
+		"date_of_birth": 20101131,
+		"userid": 12347823930
+	}],
+	"experimenter": [{
+		"experimenter_code": "NN",
+		"role": "observer",
+		"userid": 1234512345
+	}, {
+		"experimenter_code": "RT",
+		"role": "test_administrator",
+		"userid": 12347823930
+	}],
+	"description": {
+		"default": "localized_description_for_teacher",
+		"for_child": "localized_description_for_child",
+		"for_parent": "localized_description_for_parent",
+		"for_teacher": "localized_description_for_teacher",
+		"for_school_records": "localized_description_for_school_record",
+		"for_slps": "localized_description_for_slp"
+	},
+	"instructions": {
+		"default": "localized_instructions_for_teacher",
+		"for_child": "localized_instructions_for_child",
+		"for_parent": "localized_instructions_for_parent",
+		"for_teacher": "localized_instructions_for_teacher",
+		"for_school_records": "localized_instructions_for_school_record",
+		"for_slps": "localized_instructions_for_slp"
+	},
+	"end_instructions": {
+		"default": "localized_end_instructions_for_teacher",
+		"for_child": "localized_end_instructions_for_child",
+		"for_teacher": "localized_end_instructions_for_teacher"
+	},
+	"scoreTotal": 0,
+	"subexperiments": [{
+		"label": "pratice",
+		"title": {
+			"default": "localized_practice",
+			"gamified_title": "localized_gamified_practice"
+		},
+		"participants": [{
+			"participant_code": "AA",
+			"age": 22.34,
+			"date_of_birth": 20101231,
+			"userid": 1234512345
+		}, {
+			"participant_code": "BB",
+			"age": 23.34,
+			"date_of_birth": 20101131,
+			"userid": 12347823930
+		}],
+		"experimenter": [{
+			"experimenter_code": "NN",
+			"role": "observer",
+			"userid": 1234512345
+		}, {
+			"experimenter_code": "RT",
+			"role": "test_administrator",
+			"userid": 12347823930
+		}],
+		"description": {
+			"default": ""
+		},
+		"instructions": {
+			"default": "localized_practice_instructions_for_child"
+		},
+		"trials": [{
+			"auditoryStimulus": "practice_1_auditory_stimuli",
+			"audioFile": "1.wav",
+			"primeImage": "animal1.png",
+			"targetImage": "practice1.png",
+			"distractorImages": ["distractor1.png", "distractor2.png", "distractor3.png"],
+			"responses": []
+		}, {
+			"auditoryStimulus": "practice_1_auditory_stimuli",
+			"audioFile": "1.wav",
+			"primeImage": "animal1.png",
+			"targetImage": "practice2.png",
+			"distractorImages": ["distractor5.png", "distractor8.png", "distractor7.png"],
+			"responses": []
+		}, {
+			"auditoryStimulus": "practice_1_auditory_stimuli",
+			"audioFile": "1.wav",
+			"primeImage": "animal1.png",
+			"targetImage": "practice3.png",
+			"distractorImages": ["distractor6.png", "distractor4.png", "distractor9.png"],
+			"responses": []
+		}],
+		"scoreSubTotal": 0
+	}, {
+		"label": "testBlock1",
+		"title": {
+			"default": "localized_title",
+			"gamified_title": "localized_gamified_title"
+		},
+		"participants": [{
+			"participant_code": "AA",
+			"age": 22.34,
+			"date_of_birth": 20101231,
+			"userid": 1234512345
+		}, {
+			"participant_code": "BB",
+			"age": 23.34,
+			"date_of_birth": 20101131,
+			"userid": 12347823930
+		}],
+		"experimenter": [{
+			"experimenter_code": "NN",
+			"role": "observer",
+			"userid": 1234512345
+		}, {
+			"experimenter_code": "RT",
+			"role": "test_administrator",
+			"userid": 12347823930
+		}],
+		"description": {
+			"default": ""
+		},
+		"instructions": {
+			"default": "localized_test_instructions_for_child"
+		},
+		"trials": [{
+			"auditoryStimulus": "test_1_auditory_stimuli",
+			"audioFile": "2.wav",
+			"primeImage": "animal2.png",
+			"targetImage": "test1.png",
+			"distractorImages": ["distractor10.png", "distractor11.png", "distractor12.png"],
+			"responses": []
+		}, {
+			"auditoryStimulus": "test_1_auditory_stimuli",
+			"audioFile": "2.wav",
+			"primeImage": "animal2.png",
+			"targetImage": "test2.png",
+			"distractorImages": ["distractor15.png", "distractor14.png", "distractor13.png"],
+			"responses": []
+		}],
+		"scoreSubTotal": 0
+	}, {
+		"label": "testBlock2",
+
+		"title": {
+			"default": "localized_story_break"
+		},
+		"participants": [{
+			"participant_code": "AA",
+			"age": 22.34,
+			"date_of_birth": 20101231,
+			"userid": 1234512345
+		}, {
+			"participant_code": "BB",
+			"age": 23.34,
+			"date_of_birth": 20101131,
+			"userid": 12347823930
+		}],
+		"experimenter": [{
+			"experimenter_code": "NN",
+			"role": "observer",
+			"userid": 1234512345
+		}, {
+			"experimenter_code": "RT",
+			"role": "test_administrator",
+			"userid": 12347823930
+		}],
+		"description": {
+			"default": ""
+		},
+		"instructions": {
+			"default": "localized_story_break_instructions_for_child"
+		},
+		"trials": [{
+			"auditoryStimulus": "story_break",
+			"audioFile": "3.wav",
+			"primeImage": "animal2.png",
+			"targetImage": "test1.png",
+			"distractorImages": ["distractor16.png", "distractor18.png", "distractor17.png"],
+			"responses": []
+
+		}, {
+			"auditoryStimulus": "story_break_comprehension_question",
+			"audioFile": "4.wav",
+			"primeImage": "animal3.png",
+			"targetImage": "story1.png",
+			"distractorImages": ["distractor19.png", "distractor20.png", "distractor21.png"],
+			"responses": []
+
+		}],
+		"scoreSubTotal": 0
+	}, {
+		"label": "testBlock3",
+		"title": {
+			"default": "localized_title",
+			"gamified_title": "localized_gamified_title"
+		},
+		"participants": [{
+			"participant_code": "AA",
+			"age": 22.34,
+			"date_of_birth": 20101231,
+			"userid": 1234512345
+		}, {
+			"participant_code": "BB",
+			"age": 23.34,
+			"date_of_birth": 20101131,
+			"userid": 12347823930
+		}],
+		"experimenter": [{
+			"experimenter_code": "NN",
+			"role": "observer",
+			"userid": 1234512345
+		}, {
+			"experimenter_code": "RT",
+			"role": "test_administrator",
+			"userid": 12347823930
+		}],
+		"description": {
+			"default": ""
+		},
+		"instructions": {
+			"default": "localized_test_instructions_for_child"
+		},
+		"trials": [{
+			"auditoryStimulus": "test_2_auditory_stimuli",
+			"audioFile": "5.wav",
+			"primeImage": "animal4.png",
+			"targetImage": "test3.png",
+			"distractorImages": ["distractor22.png", "distractor23.png", "distractor24.png"],
+			"responses": []
+		}, {
+			"auditoryStimulus": "test_1_auditory_stimuli",
+			"audioFile": "6.wav",
+			"primeImage": "animal5.png",
+			"targetImage": "test4.png",
+			"distractorImages": ["distractor26.png", "distractor27.png", "distractor28.png"],
+			"responses": []
+		}],
+		"scoreSubTotal": 0
+	}]
+
+};

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="experimenter.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "prototype": "ui/experimenter.reel",
+            "properties": {
+                "element": {"#": "experimenter"}
+            }
+        },
+        "template": {
+         "properties": {
+             "extends": {
+                 "templateModuleId": "ui/user.reel/user.html",
+                 "element": {"#": "user"},
+                 "instances": {
+                      "owner": {"@": "owner"}
+                  }
+              }
+          }
+      }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="user" class="Experimenter">
+        <span>Experimenter</span>
+        <div data-montage-id="experimenter" class="Experimenter">
+        </div>
+    </div>
+</body>
+</html>

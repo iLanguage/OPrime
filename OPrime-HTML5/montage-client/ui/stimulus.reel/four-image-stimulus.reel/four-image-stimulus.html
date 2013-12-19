@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="four-image-stimulus.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "fourImageStimulus"}
+            }
+        },
+        "showVisualTargetCondition": {
+            "prototype": "montage/ui/condition.reel",
+            "properties": {
+                "element": {"#": "showVisualTargetCondition"},
+                "removalStrategy": "hide"
+            },
+            "bindings": {
+                "hidden": {"<-": "!@owner.showVisualTargets"}
+            }
+        },
+        "visualChoiceA": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "visualChoiceA"},
+                "crossOrigin": null,
+                "src": ""
+            },
+            "bindings": {
+                "src": {"<-": "@owner.visualChoiceA"}
+            }
+        },
+        "visualChoiceB": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "visualChoiceB"},
+                "crossOrigin": null,
+                "src": ""
+            },
+            "bindings": {
+                "src": {"<-": "@owner.visualChoiceB"}
+            }
+        },
+        "visualChoiceC": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "visualChoiceC"},
+                "crossOrigin": null,
+                "src": ""
+            },
+            "bindings": {
+                "src": {"<-": "@owner.visualChoiceC"}
+            }
+        },
+        "visualChoiceD": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "visualChoiceD"},
+                "crossOrigin": null,
+                "src": ""
+            },
+            "bindings": {
+                "src": {"<-": "@owner.visualChoiceD"}
+            }
+        },
+        "visualPrime": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "visualPrime"},
+                "crossOrigin": null,
+                "src" :""
+            },
+            "bindings": {
+                "src": {"<-": "@owner.primeImage"}
+            }
+        }
+       
+    }
+    </script>
+</head>
+<body> 
+    <div data-montage-id="fourImageStimulus" class="FourImageStimulus Main-content-container">
+        <div class="Stimulus-prime-image-area">
+            <img data-montage-id="visualPrime" class="Stimulus-prime-image" src="">
+        </div>
+        <div class="Stimulus-content-left">
+            <div data-montage-id="showVisualTargetCondition"  class="Stimulus-choose-area Stimulus-touchable">
+                <img data-montage-id="visualChoiceA" class="Stimulus-choose-image Stimulus-record-touch-response" src="">
+                <img data-montage-id="visualChoiceB" class="Stimulus-choose-image Stimulus-record-touch-response" src="">
+                <img data-montage-id="visualChoiceC" class="Stimulus-choose-image Stimulus-record-touch-response" src="">
+                <img data-montage-id="visualChoiceD" class="Stimulus-choose-image Stimulus-record-touch-response" src="">
+            </div>
+        </div>
+        <div class="Stimulus-content-right">
+            <div class="Stimulus-reinforcement-area">
+                <img src="http://fc02.deviantart.net/fs70/f/2013/011/e/5/rarity_by_krusiu42-d5r5qso.svg" hidden>
+            </div>
+        </div>
+        <!-- TODO 
+         "auditoryPrime": {
+            "prototype": "digit/ui/video.reel",
+            "properties": {
+                "element": {"#": "auditoryPrime"},
+                "crossOrigin": null,
+                "hidden":true
+            },
+            "bindings": {
+                "src": {"<-": "@owner.audioFile"}
+            }
+        }
+        -->
+        <video data-montage-id="auditoryPrime" hidden src=""/>        
+        <audio id="audio" src=""></audio>        
+    </div>
+</body>
+</html>

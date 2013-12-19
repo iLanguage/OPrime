@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Main</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script type="text/montage-serialization">
+    {
+        "localizer": {
+            "object": "montage/core/localizer[defaultLocalizer]"
+        },
+
+        "owner": {
+            "properties": {
+                "element": {"#": "main"}
+            }
+        },
+
+        "montageVersion": {
+            "prototype": "ui/version.reel",
+            "properties": {
+                "element": {"#": "montageVersion"}
+            }
+        },
+
+        "experiment": {
+            "prototype": "ui/experiment.reel",
+            "properties": {
+                "element": {"#": "experiment"}
+            }
+        },
+
+        "chooseLanguage": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "chooseLanguage"}
+            },
+            "localizations": {
+                "value": {
+                    "key": "change_language"
+                }
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="main" data-montage-skin="light" class="Main">
+        <div data-montage-id="experiment"></div>
+        <div data-montage-id="montageVersion" hidden></div>
+        <div data-montage-id="chooseLanguage" hidden>Change Game Interface Language</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="one-image-stimulus.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "oneImageStimulus"}
+            }
+        },
+
+        "visualPrime": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "visualPrime"},
+                "crossOrigin": null
+            },
+            "bindings": {
+                "src": {"<-": "@owner.primeImage"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="oneImageStimulus" class="OneImageStimulus">
+        <div class="Stimulus-prime-image-area">
+            <img data-montage-id="visualPrime" class="Stimulus-prime-image" src="">
+        </div>
+    </div>
+</body>
+</html>

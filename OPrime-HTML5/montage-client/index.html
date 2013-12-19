@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>oprime</title>
+
+    <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
+    <link rel="stylesheet" href="/assets/style/style.css" />
+
+
+    <!-- Android install to homescreen options-->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="128x128" href="/assets/img/ic_tcpp128.png">
+
+    <!-- iOS install to homescreen options-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" sizes="128x128" href="/assets/img/ic_tcpp128.png">
+
+    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+
+    <script src="node_modules/montage/montage.js" async></script>
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "prototype": "montage/ui/loader.reel",
+            "properties": {
+                "mainModule": "ui/main.reel"
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <span class="loading"></span>
+</body>
+</html>
