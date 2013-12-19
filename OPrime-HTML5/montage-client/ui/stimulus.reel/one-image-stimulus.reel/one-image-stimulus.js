@@ -13,7 +13,7 @@ exports.OneImageStimulus = AbstractStimulus.specialize(/** @lends OneImageStimul
     constructor: {
         value: function OneImageStimulus() {
             this.super();
-            this.primeImage = "../../../assets/stimuli/image/01_PaulRejointSesAmisAuParcTousLesJours.jpg";
+            this.primeImage = "../../../sails_assets/stimuli/image/01_PaulRejointSesAmisAuParcTousLesJours.jpg";
         }
     }
 });

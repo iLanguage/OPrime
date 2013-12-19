@@ -3,7 +3,7 @@
  * @requires core/contextualizable-component
  */
 var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
-	experimentalDesign = require("/assets/stimuli/tcpp_design.json"),
+	experimentalDesign = require("/sails_assets/stimuli/sails_design.json"),
 	PressComposer = require("montage/composer/press-composer").PressComposer,
 	RangeController = require("montage/core/range-controller").RangeController,
 	PromiseController = require("montage/core/promise-controller").PromiseController;
@@ -34,7 +34,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function Experiment() {
 			this.super();
 
-			this.experimentalDesignSrc = "/assets/stimuli/tcpp_design.json";
+			this.experimentalDesignSrc = "/sails_assets/stimuli/sails_design.json";
 			var self = this;
 			this.designHasBeenLoaded = require.read(this.experimentalDesignSrc).then(function(contents) {
 				console.log(" Loaded in the experimental Design." + this.experimentalDesignSrc);
@@ -70,13 +70,13 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			load experiment messages
 			*/
 			var doneYet = window.contextualizer.addFiles([{
-				"path": "/assets/stimuli/locale/en/messages.json",
+				"path": "/sails_assets/stimuli/locale/en/messages.json",
 				"localeCode": "en"
 			}, {
-				"path": "/assets/stimuli/locale/fr/messages.json",
+				"path": "/sails_assets/stimuli/locale/fr/messages.json",
 				"localeCode": "fr"
 			}, {
-				"path": "/assets/stimuli/locale/iu/messages.json",
+				"path": "/sails_assets/stimuli/locale/iu/messages.json",
 				"localeCode": "iu"
 			}]);
 
