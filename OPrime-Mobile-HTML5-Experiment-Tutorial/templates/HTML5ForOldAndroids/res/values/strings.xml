@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">HTML5ForOldAndroids</string>
-    <string name="hello">Hello old android!</string>
     <string name="action_settings">Settings</string>
+    <string name="hello">Hello old android!</string>
 
 </resources>
