@@ -1,23 +1,17 @@
 package ca.ilanguage.html5foroldandroids;
 
+import ca.ilanguage.oprime.Config;
+import ca.ilanguage.oprime.ui.HTML5GameActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class HTML5ForOldAndroids extends Activity {
+public class HTML5ForOldAndroids extends HTML5GameActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_html5);
-    }
+	  @Override
+	  public void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+	    this.mWebView.loadUrl(Config.getStartUrl());
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.html5_for_old_androids, menu);
-        return true;
-    }
-    
+	  }
 }
