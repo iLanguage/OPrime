@@ -256,7 +256,30 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			} else {
 				/* TODO, go to the next test block */
 
-				alert("Ready for the real thing?");
+				alert("Break time?");
+
+				this._currentTestBlockIndex++; 
+				this._currentTestBlock = this.experimentalDesign.subexperiments[this._currentTestBlockIndex]; 
+				if (this._currentTestBlock && this._currentTestBlock.trials) {
+					this._currentStimulusIndex = 0; 
+					var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
+					if (stimulus) {
+						stimulus.id = this._currentTestBlock.label + this._currentStimulusIndex;
+						this._currentStimulus.load(stimulus);
+						if (this.autoPlaySlideshowOfStimuli) {
+							var self = this;
+							window.setTimeout(function() {
+								console.log("Slideshow play...");
+								self.nextStimulus();
+							}, 5000);
+						}
+
+					} else {
+						alert("Good job!");
+					}
+				} else {
+					alert("Good job!");
+				}
 			}
 
 		}
