@@ -190,13 +190,20 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 * @type {Object}
 	 */
 	playAudio: {
-		value: function() {
+		value: function(delay) {
 
 			this.audioElement.removeEventListener('ended', window.audioEndListener);
 			this.audioElement.addEventListener('ended', window.audioEndListener);
-
-			this.audioElement.play();
-			this.audioPlayStarted = Date.now();
+			if (!delay) {
+				this.audioElement.play();
+				this.audioPlayStarted = Date.now();
+			} else {
+				var self = this; 
+				window.setTimeout(function() {
+					self.audioElement.play();
+					self.audioPlayStarted = Date.now();
+				}, delay);
+			}
 		}
 	},
 
@@ -242,7 +249,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 			/* TODO use an actual montage component for audio */
 			this.audioElement.src = this.audioFile;
-			this.playAudio();
+			this.playAudio(2000);
 		}
 	}
 
