@@ -17,7 +17,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	constructor: {
 		value: function Stimulus() {
 			this.super();
-
+			this.responses = [{}];
 			window.audioEndListener = function() {
 				var audiourl = this.getAttribute("src");
 				console.log("audiourl is done " + audiourl);
@@ -230,13 +230,13 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			}
 			if (this.responses === null) {
-				this.responses = [];
+				this.responses = [{}];
 			}
 			if (this.nonResponses === null) {
 				this.nonResponses = [];
 			}
 			this.nonResponses = [];
-			this.rangeController = new RangeController().initWithContent(this.responses);
+			// this.rangeController = new RangeController().initWithContent({"hi":"there"});
 
 			var self = this;
 
