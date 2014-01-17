@@ -10,6 +10,12 @@
                 "element": {"#": "fourImageStimulus"}
             }
         },
+       "reinforcement": {
+            "prototype": "ui/reinforcement.reel",
+            "properties": {
+                "element": {"#": "reinforcement"}
+            }
+        },  
         "showVisualTargetCondition": {
             "prototype": "montage/ui/condition.reel",
             "properties": {
@@ -93,9 +99,7 @@
             </div>
         </div>
         <div class="Stimulus-content-right">
-            <div class="Stimulus-reinforcement-area">
-                <img src="http://fc02.deviantart.net/fs70/f/2013/011/e/5/rarity_by_krusiu42-d5r5qso.svg" hidden>
-            </div>
+            <div data-montage-id="reinforcement"></div> 
         </div>
         <!-- TODO 
          "auditoryPrime": {

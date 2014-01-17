@@ -103,6 +103,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			};
 			this.responses.push(response);
 			console.log("Recorded response", response);
+
+			this.templateObjects.reinforcement.next();
+
 		}
 	},
 
