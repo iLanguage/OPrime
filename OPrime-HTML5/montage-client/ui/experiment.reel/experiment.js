@@ -3,7 +3,6 @@
  * @requires core/contextualizable-component
  */
 var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
-	experimentalDesign = require("/assets/stimuli/tcpp_design.json"),
 	PressComposer = require("montage/composer/press-composer").PressComposer,
 	RangeController = require("montage/core/range-controller").RangeController,
 	PromiseController = require("montage/core/promise-controller").PromiseController;
@@ -33,14 +32,22 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	constructor: {
 		value: function Experiment() {
 			this.super();
+		}
+	},
 
-			this.experimentalDesignSrc = "/assets/stimuli/tcpp_design.json";
+	loadDesign: {
+		value: function() {
+			if (!this.experimentalDesignSrc) {
+				throw "Experimential design source file is undefined, not loading the experiment";
+			}
 			var self = this;
 			this.designHasBeenLoaded = require.read(this.experimentalDesignSrc).then(function(contents) {
 				console.log(" Loaded in the experimental Design." + this.experimentalDesignSrc);
 				self.experimentalDesign = JSON.parse(contents);
 
 				self.iconSrc = self.experimentalDesign.iconSrc;
+            	console.log("iconSrc"+self.iconSrc);
+
 				/* set the current test block if any*/
 				if (self.experimentalDesign.subexperiments && self.experimentalDesign.subexperiments.length > 0 && self.experimentalDesign.subexperiments[0]) {
 					self._currentTestBlockIndex = 0;
