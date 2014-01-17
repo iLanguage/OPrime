@@ -46,7 +46,7 @@
 	},
 	"scoreTotal": 0,
 	"subexperiments": [{
-		"label": "pratice",
+		"label": "practice",
 		"title": {
 			"default": "localized_practice",
 			"gamified_title": "localized_gamified_practice"
