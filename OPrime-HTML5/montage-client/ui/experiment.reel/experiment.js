@@ -3,9 +3,11 @@
  * @requires core/contextualizable-component
  */
 var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
+	Confirm = require("ui/confirm.reel").Confirm,
 	PressComposer = require("montage/composer/press-composer").PressComposer,
 	RangeController = require("montage/core/range-controller").RangeController,
-	PromiseController = require("montage/core/promise-controller").PromiseController;
+	PromiseController = require("montage/core/promise-controller").PromiseController,
+	Promise = require("montage/core/promise").Promise;
 
 /**
  * @class Experiment
@@ -124,11 +126,31 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			window.setTimeout(function() {
 				/* hack to make the tutorial mode seem like its working */
 				if (!self.currentlyPlaying) {
-					var showTutorialMode = confirm("Do you want to have a tutorial?");
-					if (showTutorialMode) {
+					var confirmChoicePrompt = "Do you want to have a tutorial?";
+					var showTutorial = Promise.defer();
+					if (confirmChoicePrompt) {
+						var options = {
+							iconSrc: self.iconSrc,
+							message: confirmChoicePrompt,
+							okLabel: "Yes",
+							cancelLabel: "No"
+						};
+						Confirm.show(options, function() {
+							showTutorial.resolve();
+						}, function() {
+							showTutorial.reject(new Error("The x prevented the cancel?"));
+						});
+					} else {
+						showTutorial.resolve();
+					}
+					showTutorial.promise.then(function() {
 						console.log("Showing tutorial mode");
 						self.toggleTutorialArea();
-					}
+					}, function(reason) {
+						console.log("Not showing tutorial");
+						
+					});
+
 				}
 			}, 30000);
 		}
