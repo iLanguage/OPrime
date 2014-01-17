@@ -17,7 +17,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	constructor: {
 		value: function Stimulus() {
 			this.super();
-
+			this.responses = [{}];
 			window.audioEndListener = function() {
 				var audiourl = this.getAttribute("src");
 				console.log("audiourl is done " + audiourl);
@@ -190,13 +190,20 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 * @type {Object}
 	 */
 	playAudio: {
-		value: function() {
+		value: function(delay) {
 
 			this.audioElement.removeEventListener('ended', window.audioEndListener);
 			this.audioElement.addEventListener('ended', window.audioEndListener);
-
-			this.audioElement.play();
-			this.audioPlayStarted = Date.now();
+			if (!delay) {
+				this.audioElement.play();
+				this.audioPlayStarted = Date.now();
+			} else {
+				var self = this; 
+				window.setTimeout(function() {
+					self.audioElement.play();
+					self.audioPlayStarted = Date.now();
+				}, delay);
+			}
 		}
 	},
 
@@ -230,19 +237,19 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			}
 			if (this.responses === null) {
-				this.responses = [];
+				this.responses = [{}];
 			}
 			if (this.nonResponses === null) {
 				this.nonResponses = [];
 			}
 			this.nonResponses = [];
-			this.rangeController = new RangeController().initWithContent(this.responses);
+			// this.rangeController = new RangeController().initWithContent({"hi":"there"});
 
 			var self = this;
 
 			/* TODO use an actual montage component for audio */
 			this.audioElement.src = this.audioFile;
-			this.playAudio();
+			this.playAudio(2000);
 		}
 	}
 
