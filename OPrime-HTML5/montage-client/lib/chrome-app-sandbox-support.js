@@ -227,5 +227,5 @@ if (debug) {
     //Send the request to the widow outside of the sandbox
     window.top.postMessage(filePlease, '*');
 
-    return deffered.promise;
+    // return deffered.promise;
 }
