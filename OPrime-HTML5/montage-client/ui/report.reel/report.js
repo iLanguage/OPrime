@@ -17,10 +17,10 @@ exports.Report = ContextualizableComponent.specialize( /** @lends Report# */ {
 			load experiment messages
 			*/
 			var doneYet = window.contextualizer.addFiles([{
-				"path": "ui/report.reel/locales/en/messages.json",
+				"path": "node_modules/oprime-montage/ui/report.reel/locales/en/messages.json",
 				"localeCode": "en"
 			}, {
-				"path": "ui/report.reel/locales/fr/messages.json",
+				"path": "node_modules/oprime-montage/ui/report.reel/locales/fr/messages.json",
 				"localeCode": "fr"
 			}]);
 
