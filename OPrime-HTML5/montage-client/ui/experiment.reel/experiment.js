@@ -38,43 +38,42 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	},
 
 	loadDesign: {
-		value: function() {
+		value: function(designToForceIncludeInMop) {
 			if (!this.experimentalDesignSrc) {
 				throw "Experimential design source file is undefined, not loading the experiment";
 			}
 			var self = this;
-			this.designHasBeenLoaded = require.read(this.experimentalDesignSrc).then(function(contents) {
-				console.log(" Loaded in the experimental Design." + this.experimentalDesignSrc);
-				self.experimentalDesign = JSON.parse(contents);
 
-				self.iconSrc = self.experimentalDesign.iconSrc;
-            	console.log("iconSrc"+self.iconSrc);
 
-				/* set the current test block if any*/
-				if (self.experimentalDesign.subexperiments && self.experimentalDesign.subexperiments.length > 0 && self.experimentalDesign.subexperiments[0]) {
-					self._currentTestBlockIndex = 0;
+			// console.log(" Loaded in the experimental Design." + designToForceIncludeInMop);
+			// self.experimentalDesign = JSON.parse(designToForceIncludeInMop);
+			self.experimentalDesign = designToForceIncludeInMop;
 
-					/* find the test block inside the subexperiment */
-					self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
-					// for(var blockName in blockDetails){
-					// 	if(blockDetails.hasOwnProperty(blockName)){
-					// 		if(blockDetails[blockName].trials){
-					// 			self._currentTestBlock = blockDetails[blockName];
-					// 			break;
-					// 		}
-					// 	}
-					// }
+			self.iconSrc = self.experimentalDesign.iconSrc;
+        	console.log("iconSrc"+self.iconSrc);
 
-				}
+			/* set the current test block if any*/
+			if (self.experimentalDesign.subexperiments && self.experimentalDesign.subexperiments.length > 0 && self.experimentalDesign.subexperiments[0]) {
+				self._currentTestBlockIndex = 0;
 
-				/* set the current stimulus index if any */
-				if (self._currentTestBlock && self._currentTestBlock.trials && self._currentTestBlock.trials.length > 0) {
-					self._currentStimulusIndex = -1;
-				}
+				/* find the test block inside the subexperiment */
+				self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
+				// for(var blockName in blockDetails){
+				// 	if(blockDetails.hasOwnProperty(blockName)){
+				// 		if(blockDetails[blockName].trials){
+				// 			self._currentTestBlock = blockDetails[blockName];
+				// 			break;
+				// 		}
+				// 	}
+				// }
 
-			}, function(reason) {
-				alert("Unable to load the experiment, please report this.");
-			});
+			}
+
+			/* set the current stimulus index if any */
+			if (self._currentTestBlock && self._currentTestBlock.trials && self._currentTestBlock.trials.length > 0) {
+				self._currentStimulusIndex = -1;
+			}
+
 			/*
 			load experiment messages
 			*/
