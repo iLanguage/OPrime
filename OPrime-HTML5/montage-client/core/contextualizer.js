@@ -1,7 +1,7 @@
 var Montage = require("montage/montage").Montage;
 var Q = require("q");
 
-exports.Contextualizer = Montage.specialize( /** @lends Experiment# */ {
+exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 
 	constructor: {
 		value: function Contextualizer(files) {
