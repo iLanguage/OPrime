@@ -15,14 +15,14 @@ exports.Report = ContextualizableComponent.specialize( /** @lends Report# */ {
 
 			/*
 			load experiment messages
-			*/
-			var doneYet = window.contextualizer.addFiles([{
-				"path": "node_modules/oprime-montage/ui/report.reel/locales/en/messages.json",
-				"localeCode": "en"
-			}, {
-				"path": "node_modules/oprime-montage/ui/report.reel/locales/fr/messages.json",
-				"localeCode": "fr"
-			}]);
+			// */
+			// var doneYet = window.contextualizer.addFiles([{
+			// 	"path": "node_modules/oprime-montage/ui/report.reel/locales/en/messages.json",
+			// 	"localeCode": "en"
+			// }, {
+			// 	"path": "node_modules/oprime-montage/ui/report.reel/locales/fr/messages.json",
+			// 	"localeCode": "fr"
+			// }]);
 
 		}
 	}

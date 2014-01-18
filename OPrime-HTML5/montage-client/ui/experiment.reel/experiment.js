@@ -78,16 +78,16 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			/*
 			load experiment messages
 			*/
-			var doneYet = window.contextualizer.addFiles([{
-				"path": "/assets/stimuli/locale/en/messages.json",
-				"localeCode": "en"
-			}, {
-				"path": "/assets/stimuli/locale/fr/messages.json",
-				"localeCode": "fr"
-			}, {
-				"path": "/assets/stimuli/locale/iu/messages.json",
-				"localeCode": "iu"
-			}]);
+			// var doneYet = window.contextualizer.addFiles([{
+			// 	"path": "/assets/stimuli/locale/en/messages.json",
+			// 	"localeCode": "en"
+			// }, {
+			// 	"path": "/assets/stimuli/locale/fr/messages.json",
+			// 	"localeCode": "fr"
+			// }, {
+			// 	"path": "/assets/stimuli/locale/iu/messages.json",
+			// 	"localeCode": "iu"
+			// }]);
 
 
 
