@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../node_modules/montage/montage.js" data-package="../../"></script>
+    <script type="text/montage-serialization">
+        {
+            "test": {
+                "prototype": "test/response/response-test",
+                "properties": {
+                    "response": {"@": "response1"}
+                }
+            },
+
+            "response1": {
+                "prototype": "digit/ui/text.reel",
+                "properties": {
+                    "element": {"#": "response"}
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+    <div data-montage-id="response" class="response">
+    </div>
+</body>
+</html>
