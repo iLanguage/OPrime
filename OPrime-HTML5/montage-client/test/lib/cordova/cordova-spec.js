@@ -1,3 +1,6 @@
+
+var cordovaApp = cordovaApp || require("../../../lib/cordova/index").cordovaApp;
+var helper = helper || require("test/lib/cordova/helper").helper;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -9,37 +12,37 @@
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing,
+ * Unless required by cordovaApplicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
  */
-describe('app', function() {
+describe('cordovaApp', function() {
     describe('initialize', function() {
         it('should bind deviceready', function() {
             runs(function() {
-                spyOn(app, 'onDeviceReady');
-                app.initialize();
+                spyOn(cordovaApp, 'onDeviceReady');
+                cordovaApp.initialize();
                 helper.trigger(window.document, 'deviceready');
             });
 
             waitsFor(function() {
-                return (app.onDeviceReady.calls.length > 0);
+                return (cordovaApp.onDeviceReady.calls.length > 0);
             }, 'onDeviceReady should be called once', 500);
 
             runs(function() {
-                expect(app.onDeviceReady).toHaveBeenCalled();
+                expect(cordovaApp.onDeviceReady).toHaveBeenCalled();
             });
         });
     });
 
     describe('onDeviceReady', function() {
         it('should report that it fired', function() {
-            spyOn(app, 'receivedEvent');
-            app.onDeviceReady();
-            expect(app.receivedEvent).toHaveBeenCalledWith('deviceready');
+            spyOn(cordovaApp, 'receivedEvent');
+            cordovaApp.onDeviceReady();
+            expect(cordovaApp.receivedEvent).toHaveBeenCalledWith('deviceready');
         });
     });
 
@@ -53,13 +56,13 @@ describe('app', function() {
         });
 
         it('should hide the listening element', function() {
-            app.receivedEvent('deviceready');
+            cordovaApp.receivedEvent('deviceready');
             var displayStyle = helper.getComputedStyle('#deviceready .listening', 'display');
             expect(displayStyle).toEqual('none');
         });
 
         it('should show the received element', function() {
-            app.receivedEvent('deviceready');
+            cordovaApp.receivedEvent('deviceready');
             var displayStyle = helper.getComputedStyle('#deviceready .received', 'display');
             expect(displayStyle).toEqual('block');
         });

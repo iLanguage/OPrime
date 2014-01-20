@@ -92,20 +92,22 @@ module.exports = function(grunt) {
                 dest: 'dist/<%= pkg.name %>.js'
             },
         },
-        uglify: {
-            options: {
-                banner: '<%= banner %>'
-            },
-            dist: {
-                src: '<%= concat.dist.dest %>',
-                dest: 'dist/<%= pkg.name %>.min.js'
-            },
-        },
         tests: {
             files: ['test/**/*Test.js'],
         },
-        nodeunit: {
-            files: ['test/**/*Test.js']
+        jasmine_node: { //jshint ignore:line
+            specNameMatcher: 'spec',
+            projectRoot: './',
+            requirejs: false,
+            forceExit: true,
+            isVerbose: true,
+            showColors: true,
+            jUnit: {
+                report: true,
+                savePath: './build/reports/jasmine/',
+                consolidate: true,
+                useDotNotation: false
+            }
         },
         jshint: {
             options: {
@@ -124,7 +126,16 @@ module.exports = function(grunt) {
                 src: ['test/**/*.js']
             },
             codebase: {
-                src: 'ui/**/*.js'
+                src: ['ui/**/*.js', 'core/**/*.js']
+            }
+        },
+        jsdoc: {
+            dist: {
+                jsdoc: 'node_modules/.bin/jsdoc',
+                src: ['core/**/*.js', 'ui/**/*.js', 'lib/**/*.js'],
+                options: {
+                    destination: 'doc/javascript'
+                }
             }
         },
         watch: {
@@ -134,18 +145,21 @@ module.exports = function(grunt) {
             },
             lib: {
                 files: '<%= jshint.lib.src %>',
-                tasks: ['jshint:lib', 'nodeunit']
+                tasks: ['jshint:lib', 'jasmine_node']
             },
             test: {
                 files: '<%= jshint.test.src %>',
-                tasks: ['jshint:test', 'nodeunit']
+                tasks: ['jshint:test', 'jasmine_node']
+            },
+            codebase: {
+                src: ['ui/**/*.js', 'core/**/*.js']
             }
         },
         copy: {
             codebase: {
                 files: [{
                     expand: true,
-                    src: ['builds/pre-sails/**'],
+                    src: ['builds/<%= pkg.name %>/**'],
                     dest: montageMobileWebViewsRoot + '/www/'
                 }]
             }
@@ -154,15 +168,16 @@ module.exports = function(grunt) {
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-exec');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
+    grunt.registerTask('docs', ['jsdoc']);
+
     grunt.registerTask('reduceImageSize', ['exec:reduceImageSize', 'exec:optimizeImages']);
-    grunt.registerTask('default', ['jshint', 'nodeunit', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'jasmine_node']); //jshint ignore:line
 
     // Default task.
     // grunt.registerTask('default', ['jshint', 'exec:echoHelp']);

@@ -16,9 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 afterEach(function() {
     document.getElementById('stage').innerHTML = '';
 });
+
+(function(exports) {
 
 var helper = {
     trigger: function(obj, name) {
@@ -31,3 +34,6 @@ var helper = {
         return window.getComputedStyle(element).getPropertyValue(property);
     }
 };
+
+exports.helper = helper;
+}(typeof exports === 'object' && exports || this));

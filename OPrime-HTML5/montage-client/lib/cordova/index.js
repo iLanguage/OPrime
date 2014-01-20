@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+(function(exports) {
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -47,3 +50,7 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+exports.cordovaApp = app;
+}(typeof exports === 'object' && exports || this));
+
