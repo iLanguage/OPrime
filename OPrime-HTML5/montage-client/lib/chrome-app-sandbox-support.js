@@ -45,8 +45,10 @@ PubSub.publisher = {
     visitSubscribers: function(action, type, arg, context) {
         var pubtype = type || 'any';
         var subscribers = this.subscribers[pubtype];
-        if (!subscribers || subscribers.length == 0) {
-            if (PubSub.debugMode) PubSub.debug(pubtype + ": There were no subscribers.");
+        if (!subscribers || subscribers.length === 0) {
+            if (PubSub.debugMode) {
+                PubSub.debug(pubtype + ": There were no subscribers.");
+            }
             return;
         }
         var i;
@@ -66,7 +68,9 @@ PubSub.publisher = {
                     subscribers[i].fn.call(subscribers[i].context, arg);
                 }
             }
-            if (PubSub.debugMode) PubSub.debug('Visited ' + subscribers.length + ' subscribers.');
+            if (PubSub.debugMode) {
+                PubSub.debug('Visited ' + subscribers.length + ' subscribers.');
+            }
 
         } else {
 
@@ -74,18 +78,22 @@ PubSub.publisher = {
             for (i = maxUnsubscribe; i >= 0; i--) {
                 try {
                     if (!subscribers[i].context) {
-                        PubSub
-                            .debug("This subscriber has no context. should we remove it? " + i);
+                        PubSub.debug("This subscriber has no context. should we remove it? " + i);
                     }
                     if (subscribers[i].context === context) {
                         var removed = subscribers.splice(i, 1);
-                        if (PubSub.debugMode) PubSub.debug("Removed subscriber " + i + " from " + type, removed);
+                        if (PubSub.debugMode) {
+                            PubSub.debug("Removed subscriber " + i + " from " + type, removed);
+                        }
                     } else {
-                        if (PubSub.debugMode) PubSub.debug(type + " keeping subscriber " + i,
-                            subscribers[i].context);
+                        if (PubSub.debugMode) {
+                            PubSub.debug(type + " keeping subscriber " + i, subscribers[i].context);
+                        }
                     }
                 } catch (e) {
-                    if (PubSub.debugMode) PubSub.debug("problem visiting Subscriber " + i, subscribers)
+                    if (PubSub.debugMode) {
+                        PubSub.debug("problem visiting Subscriber " + i, subscribers);
+                    }
                 }
             }
         }
@@ -193,11 +201,13 @@ if (debug) {
 
 
 /**
- * This sample show how the above client code can be achieved with promises... 
+ * This sample show how the above client code can be achieved with Q promises...
  */
 
 if (debug) {
-    var deffered = Promise.defer();
+    var Q = Q || {};
+    var deffered = Q.defer(),
+        url = "package.json";
 
     var filePlease = {
         key: 'xhr-file',

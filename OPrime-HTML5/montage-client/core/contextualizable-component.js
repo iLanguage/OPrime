@@ -12,7 +12,7 @@ exports.ContextualizableComponent = Component.specialize( /** @lends Contextuali
 	constructor: {
 		value: function ContextualizableComponent() {
 			this.super();
-			this.contextualizer = window.contextualizer
+			this.contextualizer = window.contextualizer;
 		}
 	},
 

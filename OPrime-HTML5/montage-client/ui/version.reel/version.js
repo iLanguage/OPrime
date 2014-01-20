@@ -2,13 +2,13 @@
  * @module ui/version.reel
  * @requires montage/ui/component
  */
-var Component = require("montage/ui/component").Component;
-
+var Component = require("montage/ui/component").Component,
+    packageDetails = require("package.json");
 /**
  * @class Version
  * @extends Component
  */
-exports.Version = Component.specialize(/** @lends Version# */ {
+exports.Version = Component.specialize( /** @lends Version# */ {
     constructor: {
         value: function Version() {
             this.super();
@@ -17,7 +17,11 @@ exports.Version = Component.specialize(/** @lends Version# */ {
 
     montageDescription: {
         get: function() {
-            return montageRequire.packageDescription;
+            if (packageDetails.version) {
+                return packageDetails.version;
+            } else {
+                return "Unknown";
+            }
         }
     }
 });

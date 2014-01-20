@@ -12,6 +12,9 @@
   "predef": [
     "exports",
     "module",
-    "console"
+    "console",
+    "window",
+    "document",
+    "XMLHttpRequest"
   ]
 }

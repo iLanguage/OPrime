@@ -50,7 +50,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			self.experimentalDesign = designToForceIncludeInMop;
 
 			self.iconSrc = self.experimentalDesign.iconSrc;
-        	console.log("iconSrc"+self.iconSrc);
+			console.log("iconSrc" + self.iconSrc);
 
 			/* set the current test block if any*/
 			if (self.experimentalDesign.subexperiments && self.experimentalDesign.subexperiments.length > 0 && self.experimentalDesign.subexperiments[0]) {
@@ -59,12 +59,12 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				/* find the test block inside the subexperiment */
 				self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
 				// for(var blockName in blockDetails){
-				// 	if(blockDetails.hasOwnProperty(blockName)){
-				// 		if(blockDetails[blockName].trials){
-				// 			self._currentTestBlock = blockDetails[blockName];
-				// 			break;
-				// 		}
-				// 	}
+				// if(blockDetails.hasOwnProperty(blockName)){
+				//		if(blockDetails[blockName].trials){
+				//			self._currentTestBlock = blockDetails[blockName];
+				//			break;
+				//		}
+				//	}
 				// }
 
 			}
@@ -78,14 +78,14 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			load experiment messages
 			*/
 			// var doneYet = window.contextualizer.addFiles([{
-			// 	"path": "/assets/stimuli/locale/en/messages.json",
-			// 	"localeCode": "en"
+			//	"path": "/assets/stimuli/locale/en/messages.json",
+			//	"localeCode": "en"
 			// }, {
-			// 	"path": "/assets/stimuli/locale/fr/messages.json",
-			// 	"localeCode": "fr"
+			//	"path": "/assets/stimuli/locale/fr/messages.json",
+			//	"localeCode": "fr"
 			// }, {
-			// 	"path": "/assets/stimuli/locale/iu/messages.json",
-			// 	"localeCode": "iu"
+			//	"path": "/assets/stimuli/locale/iu/messages.json",
+			//	"localeCode": "iu"
 			// }]);
 
 
@@ -125,36 +125,47 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			window.setTimeout(function() {
 				/* hack to make the tutorial mode seem like its working */
 				if (!self.currentlyPlaying) {
-					var confirmChoicePrompt = "Do you want to have a tutorial?";
-					var showTutorial = Promise.defer();
-					if (confirmChoicePrompt) {
-						var options = {
-							iconSrc: self.iconSrc,
-							message: confirmChoicePrompt,
-							okLabel: "Yes",
-							cancelLabel: "No"
-						};
-						Confirm.show(options, function() {
-							showTutorial.resolve();
-						}, function() {
-							showTutorial.reject(new Error("The x prevented the cancel?"));
-						});
-					} else {
-						showTutorial.resolve();
-					}
-					showTutorial.promise.then(function() {
+					self.confirm("Do you want to have a tutorial?").then(function() {
 						console.log("Showing tutorial mode");
 						self.toggleTutorialArea();
 					}, function(reason) {
 						console.log("Not showing tutorial");
-						
 					});
-
 				}
 			}, 30000);
 		}
 	},
-
+	/**
+	 *  Shows a dialog box with the message, returns a promise which will resolve
+	 *  if the user gives a positive repsonse, and reject if the user gives a negative response
+	 *
+	 *
+	 * @param {String} confirmChoicePrompt A message to be shown to the user
+	 * @type {Promise}
+	 */
+	confirm: {
+		value: function(confirmChoicePrompt) {
+			var promiseForConfirm = Promise.defer();
+			if (confirmChoicePrompt) {
+				var options = {
+					iconSrc: this.iconSrc,
+					message: confirmChoicePrompt,
+					okLabel: "Yes",
+					cancelLabel: "No"
+				};
+				Confirm.show(options, function() {
+					promiseForConfirm.resolve();
+				}, function() {
+					promiseForConfirm.reject(new Error("The x prevented the cancel?"));
+				});
+			} else {
+				Promise.nextTick(function() {
+					promiseForConfirm.resolve();
+				});
+			}
+			return promiseForConfirm.promise;
+		}
+	},
 
 	/*
 	 * Machinery for Recording stimuli responses.
@@ -248,7 +259,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	/**
 	 * 
 	 *
-	    var example = {
+	 * var example = {
 			"auditoryStimulus": "practice_1_auditory_stimuli",
 			"audioFile": "1.wav",
 			"primeImage": "animal1.png",
@@ -266,6 +277,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	 */
 	nextStimulus: {
 		value: function() {
+			var self = this;
 			this._currentStimulusIndex++;
 			console.log("Showing stimulus " + this._currentStimulusIndex + " of block " + this._currentTestBlockIndex);
 
@@ -274,7 +286,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				stimulus.id = this._currentTestBlock.label + this._currentStimulusIndex;
 				this._currentStimulus.load(stimulus);
 				if (this.autoPlaySlideshowOfStimuli) {
-					var self = this;
 					window.setTimeout(function() {
 						console.log("Slideshow play...");
 						self.nextStimulus();
@@ -282,32 +293,42 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				}
 
 			} else {
-				/* TODO, go to the next test block */
+				/* Go to the next test block */
+				self.confirm("Break time?").then(function() {
+					console.log("Going to the test block");
+					self._currentTestBlockIndex++;
+					self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
+					if (self._currentTestBlock && self._currentTestBlock.trials) {
+						self._currentStimulusIndex = 0;
+						stimulus = self._currentTestBlock.trials[self._currentStimulusIndex];
+						if (stimulus) {
+							stimulus.id = self._currentTestBlock.label + self._currentStimulusIndex;
+							self._currentStimulus.load(stimulus);
+							if (self.autoPlaySlideshowOfStimuli) {
+								window.setTimeout(function() {
+									console.log("Slideshow play...");
+									self.nextStimulus();
+								}, 5000);
+							}
 
-				alert("Break time?");
-
-				this._currentTestBlockIndex++; 
-				this._currentTestBlock = this.experimentalDesign.subexperiments[this._currentTestBlockIndex]; 
-				if (this._currentTestBlock && this._currentTestBlock.trials) {
-					this._currentStimulusIndex = 0; 
-					var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
-					if (stimulus) {
-						stimulus.id = this._currentTestBlock.label + this._currentStimulusIndex;
-						this._currentStimulus.load(stimulus);
-						if (this.autoPlaySlideshowOfStimuli) {
-							var self = this;
-							window.setTimeout(function() {
-								console.log("Slideshow play...");
-								self.nextStimulus();
-							}, 5000);
+						} else {
+							self.confirm("Good job!").then(function() {
+								console.log("there was an error, this testblock appears to be empty", self._currentTestBlock);
+							}, function(reason) {
+								console.log("TODO add a button for resume?");
+							});
 						}
-
 					} else {
-						alert("Good job!");
+						self.confirm("Good job!").then(function() {
+							console.log("Going to the test block");
+						}, function(reason) {
+							console.log("TODO add a button for resume?");
+						});
 					}
-				} else {
-					alert("Good job!");
-				}
+				}, function(reason) {
+					console.log("TODO add a button for resume?");
+				});
+
 			}
 
 		}
@@ -327,7 +348,11 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				this._currentStimulus.load(stimulus);
 			} else {
 				/* TODO, go to the previous test block */
-				alert("At the beginning!");
+				this.confirm("At the beginning!").then(function() {
+					console.log("Doing nothing");
+				}, function(reason) {
+					console.log("Doing nothing");
+				});
 			}
 
 		}
@@ -390,7 +415,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	 */
 	handleAudienceChange: {
 		value: function(now, previous) {
-			if (!now || now.length == 0 || !now[0]) {
+			if (!now || now.length === 0 || !now[0]) {
 				return;
 			}
 			var label = this.gamify ? "gameLabel" : "experimentLabel";
@@ -404,7 +429,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 	handleLocaleChange: {
 		value: function(now, previous) {
-			if (!now || now.length == 0 || !now[0]) {
+			if (!now || now.length === 0 || !now[0]) {
 				return;
 			}
 			console.log("Locale changed from: " + (previous[0] ? previous[0].label : "nothing") + " -> " + (now[0] ? now[0].label : "nothing"));
@@ -453,7 +478,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				return title;
 			}
 			if (this.gamify) {
-				title = this.experimentalDesign.title["gamified_title"] || "";
+				title = this.experimentalDesign.title["gamified_title"] || ""; //jshint ignore:line
 			}
 			if (!title) {
 				title = this.experimentalDesign.title["default"] || "";

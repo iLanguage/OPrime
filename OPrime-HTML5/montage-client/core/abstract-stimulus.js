@@ -31,7 +31,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 */
 	// willDraw: {
 	//        value: function() {
-	//        	console.log("Stimulus does not draw automatically, instead it is drawn in steps by its child classes.");
+	//			console.log("Stimulus does not draw automatically, instead it is drawn in steps by its child classes.");
 	//        }
 	//    },
 
@@ -90,7 +90,6 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			});
 
-			var reactionTimeEnd = Date.now();
 			var response = {
 				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
 				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
@@ -198,7 +197,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				this.audioElement.play();
 				this.audioPlayStarted = Date.now();
 			} else {
-				var self = this; 
+				var self = this;
 				window.setTimeout(function() {
 					self.audioElement.play();
 					self.audioPlayStarted = Date.now();

@@ -67,7 +67,7 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 			this.showVisualTargets = false;
 			/* Dont draw the images yet, wait until we say its time */
 			this.templateObjects.visualPrime.element.hidden = true;
-			this.templateObjects.visualPrime.element.style["width"] = "15%";
+			this.templateObjects.visualPrime.element.style.width = "15%";
 
 			// this.templateObjects.visualPrime.canDrawGate.setField("allowed", false);
 
@@ -77,12 +77,12 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 
 			var cueToShowPrime = stimulus.cueToShowPrime;
 			var self = this;
+
 			setTimeout(function() {
 				self.animateVisualPrime();
 			}, cueToShowPrime);
 
 			var cueToShowTargets = stimulus.cueToShowTargets;
-			var self = this;
 			setTimeout(function() {
 				self.animateVisualTargets();
 			}, cueToShowTargets);
@@ -95,7 +95,7 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 		value: function() {
 			console.log("animating visual prime");
 			// this.templateObjects.visualPrime.canDrawGate.setField("allowed", true);
-			this.templateObjects.visualPrime.element.style["width"] = "50%";
+			this.templateObjects.visualPrime.element.style.width = "50%";
 			this.templateObjects.visualPrime.element.style["-webkit-animation"] = "";
 			this.templateObjects.visualPrime.element.hidden = false;
 		}
@@ -106,7 +106,7 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 			console.log("animating visual targets");
 			this.showVisualTargets = true;
 			this.templateObjects.visualPrime.element.style["-webkit-animation"] = "Four-image-stimulus-move-prime ease-in-out 2s";
-			this.templateObjects.visualPrime.element.style["width"] = "15%";
+			this.templateObjects.visualPrime.element.style.width = "15%";
 
 			this.templateObjects.showVisualTargetCondition.element.hidden = false;
 			// this.templateObjects.showVisualTargetCondition.canDrawGate.setField("allowed", true);
@@ -120,10 +120,10 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 			this.audioElement.src = this.audioFileIntroduceTargets;
 			this.audioElement.play();
 
-			this.templateObjects.visualChoiceA.element.style["opacity"] = ".3";
-			this.templateObjects.visualChoiceB.element.style["opacity"] = ".3";
-			this.templateObjects.visualChoiceC.element.style["opacity"] = ".3";
-			this.templateObjects.visualChoiceD.element.style["opacity"] = ".3";
+			this.templateObjects.visualChoiceA.element.style.opacity = ".3";
+			this.templateObjects.visualChoiceB.element.style.opacity = ".3";
+			this.templateObjects.visualChoiceC.element.style.opacity = ".3";
+			this.templateObjects.visualChoiceD.element.style.opacity = ".3";
 
 			var self = this;
 			var introduceNext = function(visualTargetId) {
@@ -132,10 +132,10 @@ exports.FourImageStimulus = AbstractStimulus.specialize( /** @lends FourImageSti
 					if (visualTargetId === "done") {
 						self.startWaitingForUserToRespond = Date.now();
 
-						self.templateObjects.visualChoiceA.element.style["opacity"] = ".8";
-						self.templateObjects.visualChoiceB.element.style["opacity"] = ".8";
-						self.templateObjects.visualChoiceC.element.style["opacity"] = ".8";
-						self.templateObjects.visualChoiceD.element.style["opacity"] = ".8";
+						self.templateObjects.visualChoiceA.element.style.opacity = ".8";
+						self.templateObjects.visualChoiceB.element.style.opacity = ".8";
+						self.templateObjects.visualChoiceC.element.style.opacity = ".8";
+						self.templateObjects.visualChoiceD.element.style.opacity = ".8";
 
 						self.templateObjects.visualChoiceA.element.style["-webkit-animation"] = "";
 						self.templateObjects.visualChoiceB.element.style["-webkit-animation"] = "";

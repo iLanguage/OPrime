@@ -28,7 +28,7 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 								if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
 									result = self._contextualizationHolder.data[self.currentLocale][message].message;
 								} else if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined) {
-									self._contextualizationHolder.data[self.currentLocale][message].message;
+									console.log("TODO figure out what this line was for" + self._contextualizationHolder.data[self.currentLocale][message].message);
 								}
 								console.log("Resolving localization slowly", result);
 								def.resolve(result);
@@ -65,21 +65,21 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 
 	addFiles: {
 		value: function(files) {
-			var allDone = [];
-			var self = this;
-			var processJSON = function(contents) {
-				return self.addMessagesToContextualizedStrings(contents, localeCode);
+			var allDone = [],
+				self = this,
+				promise;
+
+			var processJSON = function(localeCode) {
+				promise.then(function(contents) {
+					return self.addMessagesToContextualizedStrings(contents, localeCode);
+				});
 			};
 			for (var f = 0; f < files.length; f++) {
 				this._contextualizationHolder.data[files[f].localeCode] = this._contextualizationHolder.data[files[f].localeCode] || {};
 
 				console.log("Loading " + files[f].path);
-				var promise = this._require.read(files[f].path);
-				(function(localeCode) {
-					promise.then(function(contents) {
-						return self.addMessagesToContextualizedStrings(contents, localeCode);
-					});
-				})(files[f].localeCode);
+				promise = this._require.read(files[f].path);
+				processJSON(files[f].localeCode); //TODO test this
 				allDone.push(promise);
 			}
 			return Q.all(allDone);
