@@ -80,23 +80,23 @@
 		"trials": [{
 			"auditoryStimulus": "practice_1_auditory_stimuli",
 			"audioFile": "1.wav",
-			"primeImage": "animal1.png",
-			"targetImage": "practice1.png",
-			"distractorImages": ["distractor1.png", "distractor2.png", "distractor3.png"],
+			"primeImage": "http://fc09.deviantart.net/fs71/f/2012/338/2/1/wat__dash_by_reallyunimportant-d5gl3y0.png",
+			"targetImage": "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png",
+			"distractorImages": ["http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png", "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg", "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png"],
 			"responses": []
 		}, {
 			"auditoryStimulus": "practice_1_auditory_stimuli",
 			"audioFile": "1.wav",
-			"primeImage": "animal1.png",
-			"targetImage": "practice2.png",
-			"distractorImages": ["distractor5.png", "distractor8.png", "distractor7.png"],
+			"primeImage": "http://fc09.deviantart.net/fs71/f/2012/338/2/1/wat__dash_by_reallyunimportant-d5gl3y0.png",
+			"targetImage": "http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png",
+			"distractorImages": ["http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png", "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg", "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png"],
 			"responses": []
 		}, {
 			"auditoryStimulus": "practice_1_auditory_stimuli",
 			"audioFile": "1.wav",
-			"primeImage": "animal1.png",
-			"targetImage": "practice3.png",
-			"distractorImages": ["distractor6.png", "distractor4.png", "distractor9.png"],
+			"primeImage": "http://fc09.deviantart.net/fs71/f/2012/338/2/1/wat__dash_by_reallyunimportant-d5gl3y0.png",
+			"targetImage": "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png",
+			"distractorImages": ["http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png", "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png", "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg"],
 			"responses": []
 		}],
 		"scoreSubTotal": 0
@@ -135,16 +135,16 @@
 		"trials": [{
 			"auditoryStimulus": "test_1_auditory_stimuli",
 			"audioFile": "2.wav",
-			"primeImage": "animal2.png",
-			"targetImage": "test1.png",
-			"distractorImages": ["distractor10.png", "distractor11.png", "distractor12.png"],
+			"primeImage": "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg",
+			"targetImage": "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png",
+			"distractorImages": ["http://th01.deviantart.net/fs70/PRE/f/2012/291/0/f/annoyed_smart_cookie_by_silentmatten-d5i7448.png", "http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png", "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg"],
 			"responses": []
 		}, {
 			"auditoryStimulus": "test_1_auditory_stimuli",
 			"audioFile": "2.wav",
-			"primeImage": "animal2.png",
-			"targetImage": "test2.png",
-			"distractorImages": ["distractor15.png", "distractor14.png", "distractor13.png"],
+			"primeImage": "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg",
+			"targetImage": "http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png",
+			"distractorImages": ["http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png", "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg", "http://th01.deviantart.net/fs70/PRE/f/2012/291/0/f/annoyed_smart_cookie_by_silentmatten-d5i7448.png"],
 			"responses": []
 		}],
 		"scoreSubTotal": 0
@@ -183,67 +183,19 @@
 		"trials": [{
 			"auditoryStimulus": "story_break",
 			"audioFile": "3.wav",
-			"primeImage": "animal2.png",
-			"targetImage": "test1.png",
-			"distractorImages": ["distractor16.png", "distractor18.png", "distractor17.png"],
+			"primeImage": "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg",
+			"targetImage": "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png",
+			"distractorImages": ["http://fc09.deviantart.net/fs71/f/2012/338/2/1/wat__dash_by_reallyunimportant-d5gl3y0.png", "http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png", "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png"],
 			"responses": []
 
 		}, {
 			"auditoryStimulus": "story_break_comprehension_question",
 			"audioFile": "4.wav",
-			"primeImage": "animal3.png",
-			"targetImage": "story1.png",
-			"distractorImages": ["distractor19.png", "distractor20.png", "distractor21.png"],
+			"primeImage": "http://fc06.deviantart.net/fs71/f/2013/076/4/a/_vector___svg__go_home_berry__you_are_sober__by_tritebristle-d5yc4zh.svg",
+			"targetImage": "http://th03.deviantart.net/fs70/PRE/f/2012/274/5/0/da_fuk__applejack_by_reallyunimportant-d5gh1zz.png",
+			"distractorImages": ["http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png", "http://fc09.deviantart.net/fs71/f/2012/338/2/1/wat__dash_by_reallyunimportant-d5gl3y0.png", "http://th06.deviantart.net/fs71/PRE/f/2013/025/6/7/moustache_pinkie_pie_by_silentmatten-d5qfrai.png"],
 			"responses": []
 
-		}],
-		"scoreSubTotal": 0
-	}, {
-		"label": "testBlock3",
-		"title": {
-			"default": "localized_title",
-			"gamified_title": "localized_gamified_title"
-		},
-		"participants": [{
-			"participant_code": "AA",
-			"age": 22.34,
-			"date_of_birth": 20101231,
-			"userid": 1234512345
-		}, {
-			"participant_code": "BB",
-			"age": 23.34,
-			"date_of_birth": 20101131,
-			"userid": 12347823930
-		}],
-		"experimenter": [{
-			"experimenter_code": "NN",
-			"role": "observer",
-			"userid": 1234512345
-		}, {
-			"experimenter_code": "RT",
-			"role": "test_administrator",
-			"userid": 12347823930
-		}],
-		"description": {
-			"default": ""
-		},
-		"instructions": {
-			"default": "localized_test_instructions_for_child"
-		},
-		"trials": [{
-			"auditoryStimulus": "test_2_auditory_stimuli",
-			"audioFile": "5.wav",
-			"primeImage": "animal4.png",
-			"targetImage": "test3.png",
-			"distractorImages": ["distractor22.png", "distractor23.png", "distractor24.png"],
-			"responses": []
-		}, {
-			"auditoryStimulus": "test_1_auditory_stimuli",
-			"audioFile": "6.wav",
-			"primeImage": "animal5.png",
-			"targetImage": "test4.png",
-			"distractorImages": ["distractor26.png", "distractor27.png", "distractor28.png"],
-			"responses": []
 		}],
 		"scoreSubTotal": 0
 	}]
