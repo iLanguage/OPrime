@@ -1,7 +1,7 @@
 require("montage-testing").run(require,[
     // Please keep in alphabetical order
     "test/lib/cordova/cordova-spec",
-    "test/response/response-spec"
+    "test/audio/audio-spec"
 
     // "test/experiment/complex-experiment/complex-experiment-spec",
     // "test/experiment/experiment-spec",

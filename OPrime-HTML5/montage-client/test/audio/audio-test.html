@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../node_modules/montage/montage.js" data-package="../../"></script>
+    <script type="text/montage-serialization">
+        {
+            "test": {
+                "prototype": "test/audio/audio-test",
+                "properties": {
+                    "audio1": {"@": "audio1"},
+                    "audio2": {"@": "audio2"}
+                }
+            },
+
+            "audio1": {
+                "prototype": "ui/audio.reel",
+                "properties": {
+                    "element": {"#": "audio1"}
+                }
+            },
+
+            "audio2": {
+                "prototype": "ui/audio.reel",
+                "properties": {
+                    "element": {"#": "audio2"}
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+    <div data-montage-id="audio1" class="audio">
+    </div>
+
+    <div data-montage-id="audio2" class="audio">
+    </div>
+</body>
+</html>
