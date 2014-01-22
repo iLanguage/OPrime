@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="reinforcement.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "reinforcement"},
+                "currentImage": ""
+            }
+        },
+        "reinforcementImage": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "reinforcementImage"},
+                "crossOrigin": null
+            },
+            "bindings": {
+                "src": {"<-": "@owner.currentImage"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="reinforcement" class="Reinforcement">
+        <div class="Reinforcement-image-area">
+            <img data-montage-id="reinforcementImage" class="Reinforcement-image" src="">
+        </div>
+    </div>
+</body>
+</html>
