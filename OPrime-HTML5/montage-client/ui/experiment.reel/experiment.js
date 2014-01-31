@@ -252,6 +252,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this._currentStimulus = this.templateObjects.currentStimulus;
 			this._currentStimulus.imageAssetsPath = this.experimentalDesign.imageAssetsPath;
 			this._currentStimulus.audioAssetsPath = this.experimentalDesign.audioAssetsPath;
+			this.templateObjects.currentStimulus.templateObjects.reinforcement.showFirst();
 			this.nextStimulus();
 		}
 	},
@@ -294,14 +295,15 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			} else {
 				/* Go to the next test block */
-				self.confirm("Break time?").then(function() {
-					console.log("Going to the test block");
-					self._currentTestBlockIndex++;
-					self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
-					if (self._currentTestBlock && self._currentTestBlock.trials) {
-						self._currentStimulusIndex = 0;
-						stimulus = self._currentTestBlock.trials[self._currentStimulusIndex];
-						if (stimulus) {
+				console.log("Going to the test block");
+				self._currentTestBlockIndex++;
+				self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
+				if (self._currentTestBlock && self._currentTestBlock.trials) {
+					self._currentStimulusIndex = 0;
+					stimulus = self._currentTestBlock.trials[self._currentStimulusIndex];
+					if (stimulus) {
+
+						self.confirm("Prêt à commencer?").then(function() {
 							stimulus.id = self._currentTestBlock.label + self._currentStimulusIndex;
 							self._currentStimulus.load(stimulus);
 							if (self.autoPlaySlideshowOfStimuli) {
@@ -310,24 +312,26 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 									self.nextStimulus();
 								}, 5000);
 							}
+						}, function(reason) {
+							console.log("TODO add a button for resume?");
+						});
 
-						} else {
-							self.confirm("Good job!").then(function() {
-								console.log("there was an error, this testblock appears to be empty", self._currentTestBlock);
-							}, function(reason) {
-								console.log("TODO add a button for resume?");
-							});
-						}
 					} else {
-						self.confirm("Good job!").then(function() {
-							console.log("Going to the test block");
+						self.confirm("Bravo!").then(function() {
+							console.log("there was an error, this testblock appears to be empty", self._currentTestBlock);
 						}, function(reason) {
 							console.log("TODO add a button for resume?");
 						});
 					}
-				}, function(reason) {
-					console.log("TODO add a button for resume?");
-				});
+				} else {
+					self.confirm("Bravo!").then(function() {
+						self.templateObjects.currentStimulus.templateObjects.reinforcement.showLast();
+
+						console.log("Going to the test block");
+					}, function(reason) {
+						console.log("TODO add a button for resume?");
+					});
+				}
 
 			}
 
