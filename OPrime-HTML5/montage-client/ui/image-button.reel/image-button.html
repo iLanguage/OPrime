@@ -17,7 +17,7 @@
                 "enabled": true
             },
             "bindings": {
-                "src": {"<-": "@owner.src"}
+                "src": {"<-": "'../../' + @owner.src"}
             }
         }
     }
@@ -26,7 +26,7 @@
 <body>
 
     <div data-montage-id="imageButton" class="ImageButton">
-        <img data-montage-id="image" class="ImageButton"/>
+        <img data-montage-id="image" class="" src=""/>
     </div>
 
 </body>

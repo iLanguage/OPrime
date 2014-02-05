@@ -84,11 +84,4 @@
     min-width: 2em;
 }
 
-.Experiment-start-pause-button:active {
- -webkit-transform:scale(0.9); 
- -moz-transform:scale(0.9); 
- -ms-transform:scale(0.9); 
- -o-transform:scale(0.9); 
- transform:scale(0.9);
-}
 

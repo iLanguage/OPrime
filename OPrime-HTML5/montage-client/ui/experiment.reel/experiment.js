@@ -4,7 +4,6 @@
  */
 var ContextualizableComponent = require("core/contextualizable-component").ContextualizableComponent,
 	Confirm = require("ui/confirm.reel").Confirm,
-	PressComposer = require("montage/composer/press-composer").PressComposer,
 	RangeController = require("montage/core/range-controller").RangeController,
 	PromiseController = require("montage/core/promise-controller").PromiseController,
 	Promise = require("montage/core/promise").Promise;
@@ -132,52 +131,12 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this.super(firstTime);
 
 			if (firstTime) {
-				this.setupFirstDisplay();
-				// this.addOwnPropertyChangeListener("src", this);
-
+				this.currentlyPlaying = false;
 				this.templateObjects.audiencesController.content = this.audiences;;
 				this.templateObjects.experimentStimuliDialectsController.content = this.locales;
 			}
 			this.experimentDisplayTimeStart = Date.now();
 
-		}
-	},
-
-	handlePress: {
-		value: function(e) {
-			console.log("The experiment has been pressed: ");
-			if (e.targetElement.dataset.montageId === "playGame") {
-				this.run();
-			}
-
-			/* if the user touches the screen, stop slideshow */
-			this.autoPlaySlideshowOfStimuli = false;
-		}
-	},
-
-	prepareForActivationEvents: {
-		value: function() {
-			this._pressComposer.addEventListener("pressStart", this, false);
-			this._pressComposer.addEventListener("press", this, false);
-			this._pressComposer.addEventListener("pressCancel", this, false);
-		}
-	},
-
-	setupFirstDisplay: {
-		value: function() {
-			this.element.removeEventListener("touchstart", this, false);
-			this.element.removeEventListener("mousedown", this, false);
-			// this._firstPlay = true;
-			// this.videoController.stop();
-
-			// this.classList.add("digit-Video--firstPlay");
-			// this.classList.remove("digit-Video--showControls");
-
-			this._pressComposer = PressComposer.create();
-			this._pressComposer.identifier = "experiment";
-			/* TODO try to make this listen to only what needs a press composer? */
-			this.addComposerForElement(this._pressComposer, this.element);
-			this.currentlyPlaying = false;
 		}
 	},
 
