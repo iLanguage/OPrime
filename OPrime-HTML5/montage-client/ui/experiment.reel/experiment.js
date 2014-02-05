@@ -52,47 +52,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			self.iconSrc = self.experimentalDesign.iconSrc;
 			console.log("iconSrc" + self.iconSrc);
 
-			/* set the current test block if any*/
-			if (self.experimentalDesign.subexperiments && self.experimentalDesign.subexperiments.length > 0 && self.experimentalDesign.subexperiments[0]) {
-				self._currentTestBlockIndex = 0;
-
-				/* find the test block inside the subexperiment */
-				self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
-				// for(var blockName in blockDetails){
-				// if(blockDetails.hasOwnProperty(blockName)){
-				//		if(blockDetails[blockName].trials){
-				//			self._currentTestBlock = blockDetails[blockName];
-				//			break;
-				//		}
-				//	}
-				// }
-
-			}
-
-			/* set the current stimulus index if any */
-			if (self._currentTestBlock && self._currentTestBlock.trials && self._currentTestBlock.trials.length > 0) {
-				self._currentStimulusIndex = -1;
-			}
-
-			/*
-			load experiment messages
-			*/
-			// var doneYet = window.contextualizer.addFiles([{
-			//	"path": "/assets/stimuli/locale/en/messages.json",
-			//	"localeCode": "en"
-			// }, {
-			//	"path": "/assets/stimuli/locale/fr/messages.json",
-			//	"localeCode": "fr"
-			// }, {
-			//	"path": "/assets/stimuli/locale/iu/messages.json",
-			//	"localeCode": "iu"
-			// }]);
-
-
-
 			this.gamify = true;
 			this.tutorialMode = false;
 			this.currentlyPlaying = false;
+			this.resultsReportMode = false;
 
 			/* This makes essentially a slideshow of images, useful for debugging and reviewing */
 			this.autoPlaySlideshowOfStimuli = false;
@@ -191,9 +154,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			if (e.targetElement.dataset.montageId === "playGame") {
 				this.run();
 			}
-			if (e.targetElement.dataset.montageId === "showTutorial") {
-				this.toggleTutorialArea();
-			}
 
 			/* if the user touches the screen, stop slideshow */
 			this.autoPlaySlideshowOfStimuli = false;
@@ -232,6 +192,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			/*TODO the conditions dont seem to have any connection to hiding and showing their elements 
 			this is a brute force hack to make them not show. */
 			this.templateObjects.showGameCondition.element.hidden = true;
+			this.templateObjects.showResultReportCondition.element.hidden = true;
 			this.templateObjects.showGameDetailsCondition.element.hidden = true;
 		}
 	},
@@ -249,12 +210,18 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this.currentlyPlaying = true;
 			this.templateObjects.showGameCondition.element.hidden = false;
 			this.templateObjects.playGame.element.hidden = true;
+			this.templateObjects.showResultReportCondition.element.hidden = true;
 			this._currentStimulus = this.templateObjects.currentStimulus;
 			this._currentStimulus.imageAssetsPath = this.experimentalDesign.imageAssetsPath;
 			this._currentStimulus.audioAssetsPath = this.experimentalDesign.audioAssetsPath;
-			this.templateObjects.currentStimulus.templateObjects.reinforcement.showFirst();
-			this.nextStimulus();
+			// this.templateObjects.currentStimulus.templateObjects.reinforcement = this.templateObjects.reinforcement;
+			this.loadTestBlock(0);
 		}
+	},
+
+
+	autoPlaySlideshowOfStimuli: {
+		value: null
 	},
 
 	/**
@@ -273,99 +240,160 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				"y": 23
 			}
 		}
-	 * 
-	 * @type {Object}
 	 */
 	nextStimulus: {
 		value: function() {
 			var self = this;
+
+			if (!this._currentTestBlock || !this._currentTestBlock.trials || !this._currentTestBlock.trials.length) {
+				console.warn("Something is wrong, there are no stimuli so I can't go to the next. ");
+				return;
+			}
+			if (this._currentStimulusIndex >= this._currentTestBlock.trials.length - 1) {
+				this.templateObjects.reinforcement.showLast();
+				this.loadTestBlock(this._currentTestBlockIndex + 1);
+				return;
+			}
+
 			this._currentStimulusIndex++;
 			console.log("Showing stimulus " + this._currentStimulusIndex + " of block " + this._currentTestBlockIndex);
 
-			var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
-			if (stimulus) {
-				stimulus.id = this._currentTestBlock.label + this._currentStimulusIndex;
-				this._currentStimulus.load(stimulus);
-				if (this.autoPlaySlideshowOfStimuli) {
-					window.setTimeout(function() {
-						console.log("Slideshow play...");
-						self.nextStimulus();
-					}, 5000);
-				}
-
-			} else {
-				/* Go to the next test block */
-				console.log("Going to the test block");
-				self._currentTestBlockIndex++;
-				self._currentTestBlock = self.experimentalDesign.subexperiments[self._currentTestBlockIndex];
-				if (self._currentTestBlock && self._currentTestBlock.trials) {
-					self._currentStimulusIndex = 0;
-					stimulus = self._currentTestBlock.trials[self._currentStimulusIndex];
-					if (stimulus) {
-
-						self.confirm("Prêt à commencer?").then(function() {
-							stimulus.id = self._currentTestBlock.label + self._currentStimulusIndex;
-							self._currentStimulus.load(stimulus);
-							if (self.autoPlaySlideshowOfStimuli) {
-								window.setTimeout(function() {
-									console.log("Slideshow play...");
-									self.nextStimulus();
-								}, 5000);
-							}
-						}, function(reason) {
-							console.log("TODO add a button for resume?");
-						});
-
-					} else {
-						self.confirm("Bravo!").then(function() {
-							console.log("there was an error, this testblock appears to be empty", self._currentTestBlock);
-						}, function(reason) {
-							console.log("TODO add a button for resume?");
-						});
-					}
-				} else {
-					self.confirm("Bravo!").then(function() {
-						self.templateObjects.currentStimulus.templateObjects.reinforcement.showLast();
-
-						console.log("Going to the test block");
-					}, function(reason) {
-						console.log("TODO add a button for resume?");
-					});
-				}
-
+			if (!this._currentTestBlock.trials[this._currentStimulusIndex]) {
+				console.warn("Something is wrong, there was no stimulus.");
+				return;
 			}
 
-		}
-	},
+			this.templateObjects.reinforcement.next();
+			this._currentTestBlock.trials[this._currentStimulusIndex].id = this._currentTestBlock.label + this._currentStimulusIndex;
+			this._currentStimulus.load(this._currentTestBlock.trials[this._currentStimulusIndex]);
 
-	autoPlaySlideshowOfStimuli: {
-		value: null
+			if (this.autoPlaySlideshowOfStimuli) {
+				window.setTimeout(function() {
+					console.log("Slideshow play...");
+					self.nextStimulus();
+				}, 5000);
+			}
+		}
 	},
 
 	previousStimulus: {
 		value: function() {
+
+			if (!this._currentTestBlock || !this._currentTestBlock.trials || !this._currentTestBlock.trials.length) {
+				console.warn("Something is wrong, there are no stimuli so I can't go to the next. ");
+				return;
+			}
+			if (this._currentStimulusIndex > 0) {
+				this.loadTestBlock(this._currentTestBlockIndex - 1);
+				return;
+			}
+
 			this._currentStimulusIndex--;
 			console.log("Showing stimulus " + this._currentStimulusIndex + " of block " + this._currentTestBlockIndex);
 
-			var stimulus = this._currentTestBlock.trials[this._currentStimulusIndex];
-			if (stimulus) {
-				this._currentStimulus.load(stimulus);
-			} else {
-				/* TODO, go to the previous test block */
+			this.templateObjects.reinforcement.previous();
+			this._currentStimulus.load(this._currentTestBlock.trials[this._currentStimulusIndex]);
+		}
+	},
+
+	loadTestBlock: {
+		value: function(blockIndexToLoad) {
+
+			if (!this.experimentalDesign || !this.experimentalDesign.subexperiments || blockIndexToLoad === undefined) {
+				console.warn("Something is wrong, there are no subexperiments so I can't go to the next. ");
+				return;
+			}
+			if (blockIndexToLoad < 0) {
 				this.confirm("At the beginning!").then(function() {
 					console.log("Doing nothing");
 				}, function(reason) {
 					console.log("Doing nothing");
 				});
+				return;
+			}
+			if (blockIndexToLoad >= this.experimentalDesign.subexperiments.length) {
+				this.experimentCompleted();
+				return;
+			}
+			if (!this.experimentalDesign.subexperiments[blockIndexToLoad]) {
+				console.warn("Something is wrong, there are no test bock so I can't go to the next. ");
+				return;
+			}
+
+			this._currentTestBlockIndex = blockIndexToLoad;
+			this._currentTestBlock = this.experimentalDesign.subexperiments[blockIndexToLoad];
+			console.log("Loaded block " + blockIndexToLoad);
+			this.experimentBlockLoaded();
+		}
+	},
+
+	/**
+	 * By default when an experiment block is loaded,
+	 * it prompts the user if they are ready,
+	 * and then shows the first stimulus.
+	 *
+	 * This can be customized by experiements by overriding the experimentBlockLoaded function.
+	 */
+	experimentBlockLoaded: {
+		value: function() {
+			var self = this;
+
+			this._currentStimulusIndex = -1;
+			this.templateObjects.reinforcement.showFirst();
+			if (this._currentTestBlock.promptUserBeforeContinuing) {
+				this.confirm(this._currentTestBlock.promptUserBeforeContinuing.text).then(function() {
+					self.nextStimulus();
+				}, function(reason) {
+					console.log("TODO add a button for resume?");
+				});
+			} else {
+				this.nextStimulus();
+			}
+		}
+	},
+
+	experimentCompleted: {
+		value: function() {
+			var self = this;
+
+			this.confirm(this.experimentalDesign.end_instructions.for_child).then(function() {
+				console.log("Experiment is complete.");
+				self.showResultReport();
+			}, function(reason) {
+				console.log("TODO add a button for resume?");
+			});
+		}
+	},
+
+	showResultReport: {
+		value: function() {
+			this.resultsReportMode = !this.resultsReportMode;
+			if (this.resultsReportMode) {
+				var duration = 2000;
+				// this.templateObjects.showGameCondition.element.style["-webkit-animation"] = "Introduce-target-image "+duration+"s";
+				// this.templateObjects.showGameCondition.element.hidden = true; // TODO add a class list to reduce its size, but still keep it :)
+				// this.templateObjects.playGame.element.hidden = true;
+				this.templateObjects.showResultReportCondition.element.hidden = false;
+			} else {
+				// this.templateObjects.showGameCondition.element.style["-webkit-animation"] = "";
+				// this.templateObjects.showGameCondition.element.hidden = false; // TODO add a class list to reduce its size, but still keep it :)
+				// this.templateObjects.playGame.element.hidden = true;
+				this.templateObjects.showResultReportCondition.element.hidden = true;
 			}
 
 		}
 	},
 
+	calculateScore: {
+		value: function() {
+			return "10/10";
+		}
+	},
+
+
 	pause: {
 		value: function() {}
 	},
-
 
 	/* Using an object and a select: http://montagejs.github.io/mfiddle/#!/7884716 */
 	_targetAudience: {

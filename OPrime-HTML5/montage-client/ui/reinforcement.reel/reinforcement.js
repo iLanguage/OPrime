@@ -25,26 +25,48 @@ exports.Reinforcement = Component.specialize( /** @lends Reinforcement# */ {
 
     next: {
         value: function() {
+            if (!this.images) {
+                return;
+            }
             if (this.currentImage === null) {
                 this.currentImage = 0;
-            } else {
-                this.currentImage++;
             }
             console.log("next reinforcement" + this.currentImage);
             if (this.images.length > this.currentImage) {
                 this.currentImageSrc = this.images[this.currentImage];
             }
+            this.currentImage++;
+        }
+    },
+
+    previous: {
+        value: function() {
+            if (!this.images) {
+                return;
+            }
+            if (this.currentImage === null) {
+                this.currentImage = 0;
+            }
+            console.log("previous reinforcement" + this.currentImage);
+            if (this.currentImage >= 0) {
+                this.currentImageSrc = this.images[this.currentImage];
+            }
+            this.currentImage--;
         }
     },
 
     showFirst: {
         value: function() {
+            this.currentImage = 0;
             this.currentImageSrc = this.firstImageSrc;
         }
     },
 
     showLast: {
         value: function() {
+            if (this.images && this.images.length) {
+                this.currentImage = this.images.length - 1;
+            }
             this.currentImageSrc = this.lastImageSrc;
         }
     }

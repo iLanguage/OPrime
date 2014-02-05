@@ -53,6 +53,9 @@
             "prototype": "ui/stimulus.reel/four-image-stimulus.reel",
             "properties": {
                 "element": {"#": "stimulus"}
+            },
+            "bindings": {
+                "currentReinforcementImageSrc": {"<-": "@reinforcement.currentImageSrc"}
             }
         },
         "currentTestBlockLabel": {
@@ -150,6 +153,20 @@
             }
             ]
         },
+
+        "reinforcement": {
+            "prototype": "ui/reinforcement.reel",
+            "properties": {
+                "element": {"#": "reinforcement"}
+            },
+            "bindings": {
+                "images": {"<-": "@owner._currentTestBlock.reinforcementImages.counter"},
+                "firstImageSrc": {"<-": "@owner._currentTestBlock.reinforcementImages.firstImageSrc"},
+                "lastImageSrc": {"<-": "@owner._currentTestBlock.reinforcementImages.lastImageSrc"},
+                "imageElement": {"<-": "@currentStimulus.reinforcementImage"}
+            }
+        }, 
+
         "response": {
             "prototype": "ui/response.reel",
             "properties": {
@@ -244,6 +261,7 @@
         <div data-montage-id="showGameCondition">
             <div class="Experiment-content-container Main-content-container">
                 <div data-montage-id="stimulus"></div>
+                <div hidden data-montage-id="reinforcement"></div> 
             </div>
         </div>
         <div data-montage-id="showGameDetailsCondition" class="Experiment-details">
