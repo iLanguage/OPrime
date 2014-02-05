@@ -10,21 +10,24 @@
                 "element": {"#": "imageButton"}
             }
         },
-        "playGame": {
+        "image": {
             "prototype": "digit/ui/image.reel",
             "properties": {
-                "element": {"#": "playGame"},
+                "element": {"#": "image"},
                 "enabled": true
             },
             "bindings": {
-                "src": {"<-": "@owner.iconSrc"}
+                "src": {"<-": "@owner.src"}
             }
         }
     }
     </script>
 </head>
 <body>
-    <img data-montage-id="imageButton" class="ImageButton">
-    </img>
+
+    <div data-montage-id="imageButton" class="ImageButton">
+        <img data-montage-id="image" class="ImageButton"/>
+    </div>
+
 </body>
 </html>
