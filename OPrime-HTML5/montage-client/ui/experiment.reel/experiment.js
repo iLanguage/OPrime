@@ -60,24 +60,15 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			/* This makes essentially a slideshow of images, useful for debugging and reviewing */
 			this.autoPlaySlideshowOfStimuli = false;
 
-			this.audiencesController = RangeController.create().initWithContent(this.audiences);
-			this.audiencesController.selection = [];
-			this.audiencesController.addRangeAtPathChangeListener(
-				"selection", this, "handleAudienceChange");
+			// this.audiencesController = RangeController.create().initWithContent(this.audiences);
+			// this.audiencesController.selection = [];
+			// this.audiencesController.addRangeAtPathChangeListener(
+			// 	"selection", this, "handleAudienceChange");
 
-			this.localesController = RangeController.create().initWithContent([{
-				"iso": "en",
-				"label": "English",
-			}, {
-				"iso": "fr",
-				"label": "français",
-			}, {
-				"iso": "iu",
-				"label": "ᐃᓄᒃᑎᑐᑦ",
-			}]);
-			this.localesController.selection = [];
-			this.localesController.addRangeAtPathChangeListener(
-				"selection", this, "handleLocaleChange");
+			// this.localesController = RangeController.create().initWithContent();
+			// this.localesController.selection = [];
+			// this.localesController.addRangeAtPathChangeListener(
+			// 	"selection", this, "handleLocaleChange");
 		}
 	},
 
@@ -138,13 +129,17 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	 */
 	enterDocument: {
 		value: function(firstTime) {
-			this.super();
+			this.super(firstTime);
 
 			if (firstTime) {
 				this.setupFirstDisplay();
 				// this.addOwnPropertyChangeListener("src", this);
+
+				this.templateObjects.audiencesController.content = this.audiences;;
+				this.templateObjects.experimentStimuliDialectsController.content = this.locales;
 			}
 			this.experimentDisplayTimeStart = Date.now();
+
 		}
 	},
 
@@ -388,30 +383,50 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	audiences: {
 		value: [{
 			"gameLabel": "Child",
+			"text": "Child",
 			"experimentLabel": "Participant",
 			"key": "participant"
 		}, {
 			"gameLabel": "Teacher",
+			"text": "Teacher",
 			"experimentLabel": "Administrator",
 			"key": "experimentAdministrator"
 		}, {
 			"gameLabel": "Parent",
+			"text": "Parent",
 			"experimentLabel": "Parent",
 			"key": "parent"
 		}, {
 			"gameLabel": "SLP",
+			"text": "SLP",
 			"experimentLabel": "Administrator",
 			"key": "experimentAdministratorSpecialist"
 		}, {
 			"gameLabel": "School Records",
+			"text": "School Records",
 			"experimentLabel": "Report",
 			"key": "report"
 		}, {
 			"gameLabel": "Default",
+			"text": "Default",
 			"experimentLabel": "Default",
 			"key": "default"
 		}]
 	},
+
+	locales: {
+		value: [{
+			"iso": "en",
+			"label": "English",
+		}, {
+			"iso": "fr",
+			"label": "Français",
+		}, {
+			"iso": "iu",
+			"label": "ᐃᓄᒃᑎᑐᑦ",
+		}]
+	},
+
 	/**
 	 *
 	 * References:
