@@ -182,35 +182,22 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this._pressComposer.identifier = "experiment";
 			/* TODO try to make this listen to only what needs a press composer? */
 			this.addComposerForElement(this._pressComposer, this.element);
-			this.showPlayButton();
-		}
-	},
-
-	showPlayButton: {
-		value: function() {
-			this.templateObjects.playGame.element.hidden = false;
-			/*TODO the conditions dont seem to have any connection to hiding and showing their elements 
-			this is a brute force hack to make them not show. */
-			this.templateObjects.showGameCondition.element.hidden = true;
-			this.templateObjects.showResultReportCondition.element.hidden = true;
-			this.templateObjects.showGameDetailsCondition.element.hidden = true;
+			this.currentlyPlaying = false;
 		}
 	},
 
 	toggleTutorialArea: {
 		value: function() {
-			this.showTutorial = !this.showTutorial;
-			this.templateObjects.showGameDetailsCondition.element.hidden = !this.showTutorial;
-			console.log("Show tutorial:" + this.showTutorial);
+			this.tutorialMode = !this.tutorialMode;
+			console.log("Show tutorial: " + this.tutorialMode);
 		}
 	},
 
 	run: {
 		value: function() {
 			this.currentlyPlaying = true;
-			this.templateObjects.showGameCondition.element.hidden = false;
-			this.templateObjects.playGame.element.hidden = true;
-			this.templateObjects.showResultReportCondition.element.hidden = true;
+			console.log("currentlyPlaying: " + this.currentlyPlaying);
+
 			this._currentStimulus = this.templateObjects.currentStimulus;
 			this._currentStimulus.imageAssetsPath = this.experimentalDesign.imageAssetsPath;
 			this._currentStimulus.audioAssetsPath = this.experimentalDesign.audioAssetsPath;
@@ -368,19 +355,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	showResultReport: {
 		value: function() {
 			this.resultsReportMode = !this.resultsReportMode;
-			if (this.resultsReportMode) {
-				var duration = 2000;
-				// this.templateObjects.showGameCondition.element.style["-webkit-animation"] = "Introduce-target-image "+duration+"s";
-				// this.templateObjects.showGameCondition.element.hidden = true; // TODO add a class list to reduce its size, but still keep it :)
-				// this.templateObjects.playGame.element.hidden = true;
-				this.templateObjects.showResultReportCondition.element.hidden = false;
-			} else {
-				// this.templateObjects.showGameCondition.element.style["-webkit-animation"] = "";
-				// this.templateObjects.showGameCondition.element.hidden = false; // TODO add a class list to reduce its size, but still keep it :)
-				// this.templateObjects.playGame.element.hidden = true;
-				this.templateObjects.showResultReportCondition.element.hidden = true;
-			}
-
+			console.log("resultsReportMode " + this.resultsReportMode);
 		}
 	},
 
@@ -389,7 +364,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			return "10/10";
 		}
 	},
-
 
 	pause: {
 		value: function() {}

@@ -19,11 +19,10 @@
         "showVisualTargetCondition": {
             "prototype": "montage/ui/condition.reel",
             "properties": {
-                "element": {"#": "showVisualTargetCondition"},
-                "removalStrategy": "hide"
+                "element": {"#": "showVisualTargetCondition"}
             },
             "bindings": {
-                "hidden": {"<-": "!@owner.showVisualTargets"}
+                "condition": {"<-": "@owner.showVisualTargets"}
             }
         },
         "visualChoiceA": {
