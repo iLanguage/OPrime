@@ -31,9 +31,11 @@ TestPageLoader.queueTest("../audio/audio-test", function(testPage) {
         });
         expect(object.average).toEqual("this one is for context 1");
         object.localizer.currentLocale = "context2";
-        bind(object, "average", {
-            "<-": "localizer.localize('contextualized_string')"
-        });
+
+        //TODO without binding the second time (re-binding) the test fails
+        // bind(object, "average", {
+        //     "<-": "localizer.localize('contextualized_string')"
+        // });
         expect(object.average).toEqual("this one is for context 2");
     });
 
