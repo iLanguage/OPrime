@@ -9,42 +9,6 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 
 			this.defaultLocale = "en";
 			this.currentLocale = this.defaultLocale;
-			/* TODO get this out of the window */
-			var self = this;
-			this._contextualizationHolder = this._contextualizationHolder || {
-				"data": {},
-				"gimme": function(message) {
-					var def = Q.defer();
-					var result = message;
-
-					window.setTimeout(function() {
-						if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
-							result = self._contextualizationHolder.data[self.currentLocale][message].message;
-							console.log("Resolving localization quickly", result);
-							def.resolve(result);
-						} else {
-
-							window.setTimeout(function() {
-								if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined && self._contextualizationHolder.data[self.currentLocale][message].message) {
-									result = self._contextualizationHolder.data[self.currentLocale][message].message;
-								} else if (self._contextualizationHolder.data[self.currentLocale] && self._contextualizationHolder.data[self.currentLocale][message] && self._contextualizationHolder.data[self.currentLocale][message].message !== undefined) {
-									console.log("TODO figure out what this line was for" + self._contextualizationHolder.data[self.currentLocale][message].message);
-								}
-								console.log("Resolving localization slowly", result);
-								def.resolve(result);
-								return;
-							}, 1000);
-							return;
-
-						}
-					}, 100);
-
-					return def.promise;
-				}
-			};
-			// window.ContextualizedStrings = this._contextualizationHolder;
-			window.contextualizer = this;
-
 			return this;
 		}
 	},
@@ -53,16 +17,36 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 		value: (typeof global !== "undefined") ? global.require : (typeof window !== "undefined") ? window.require : null
 	},
 
-	_contextualizationHolder: {
-		value: null
+	data: {
+		value: {}
 	},
 
 	localize: {
-		value: function(key) {
-			return this._contextualizationHolder.gimme(key);
+		value: function(message) {
+			console.log("Resolving localization ");
+			var result = message;
+			if (!this.data) {
+				return result;
+			}
+
+			if (this.data[this.currentLocale] && this.data[this.currentLocale][message] && this.data[this.currentLocale][message].message !== undefined && this.data[this.currentLocale][message].message) {
+				result = this.data[this.currentLocale][message].message;
+				console.log("Resolving localization quickly", result);
+			} else {
+				if (this.data[this.currentLocale] && this.data[this.currentLocale][message] && this.data[this.currentLocale][message].message !== undefined && this.data[this.currentLocale][message].message) {
+					result = this.data[this.currentLocale][message].message;
+				} else if (this.data[this.currentLocale] && this.data[this.currentLocale][message] && this.data[this.currentLocale][message].message !== undefined) {
+					console.log("TODO figure out what this line was for" + this.data[this.currentLocale][message].message);
+				}
+				console.log("Resolving localization slowly", result);
+			}
+			return result;
 		}
 	},
 
+	/*
+	TODO this doesnt work in a chrome app sandbox, so use the addMessagesToContextualizedStrings instead
+	 */
 	addFiles: {
 		value: function(files) {
 			var allDone = [],
@@ -71,11 +55,12 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 
 			var processJSON = function(localeCode) {
 				promise.then(function(contents) {
+					contents = JSON.parse(contents);
 					return self.addMessagesToContextualizedStrings(contents, localeCode);
 				});
 			};
 			for (var f = 0; f < files.length; f++) {
-				this._contextualizationHolder.data[files[f].localeCode] = this._contextualizationHolder.data[files[f].localeCode] || {};
+				this.data[files[f].localeCode] = this.data[files[f].localeCode] || {};
 
 				console.log("Loading " + files[f].path);
 				promise = this._require.read(files[f].path);
@@ -88,26 +73,16 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 
 	addMessagesToContextualizedStrings: {
 		value: function(localeData, localeCode) {
-			var deferred = Q.defer();
+			if (!localeData) {
+				return;
+			}
 
-			var self = this;
-			window.setTimeout(function() {
-				if (!localeData) {
-					deferred.reject("No data");
-					return;
+			for (var message in localeData) {
+				if (localeData.hasOwnProperty(message)) {
+					this.data[localeCode] = this.data[localeCode] || {};
+					this.data[localeCode][message] = localeData[message];
 				}
-				localeData = JSON.parse(localeData);
-
-				for (var message in localeData) {
-					if (localeData.hasOwnProperty(message)) {
-						self._contextualizationHolder.data[localeCode][message] = localeData[message];
-					}
-				}
-				deferred.resolve("Okay");
-
-			}, 100);
-
-			return deferred.promise;
+			}
 		}
 	}
 
