@@ -1,5 +1,6 @@
 require("montage-testing").run(require,[
     // Please keep in alphabetical order
+    "test/core/contextualizer",
     "test/lib/cordova/cordova-spec",
     "test/audio/audio-spec"
 

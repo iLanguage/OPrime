@@ -15,7 +15,9 @@
     "montage": "~0.13.11",
     "digit": "~0.4.0",
     "q": "~1.0.0",
-    "matte": "~0.1.4"
+    "matte": "~0.1.4",
+    "frb": "~0.2.17",
+    "collection": "~0.1.4"
   },
   "devDependencies": {
     "grunt-exec": "*",
