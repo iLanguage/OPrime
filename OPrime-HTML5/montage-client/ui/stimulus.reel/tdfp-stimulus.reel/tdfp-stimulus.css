@@ -8,12 +8,16 @@
 	/* IE6,IE7 */
 	ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
 	/* IE8 */
-	-moz-transform: rotate(-180deg); /* FF3.5+ */
-	-o-transform: rotate(-180deg); /* Opera 10.5 */
-	-webkit-transform: rotate(-180deg); /* Safari 3.1+, Chrome */
-	position: absolute;
+	-moz-transform: rotate(-90deg); /* FF3.5+ */
+	-o-transform: rotate(-90deg); /* Opera 10.5 */
+	-webkit-transform: rotate(-90deg); /* Safari 3.1+, Chrome */
+	height: 100%;
 	width: 100%;
-	margin: 1em;
+	position:fixed;
+	right: 0;
+     top: 0;
+     bottom: 0;
+	
 }	
 
 .Tdfp-score-buttons {

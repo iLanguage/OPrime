@@ -76,8 +76,10 @@
                 "type": "action",
                 "useCapture": false,
                 "listener": {"@": "spontaneousQuestion1Listener"}
+            }],
+            "bindings": {
+                "enabled": {"<-": "@owner.canPlayButton1"}
             }
-            ]
         },
 
         "spontaneousQuestion2Button": {
@@ -110,7 +112,10 @@
                 "useCapture": false,
                 "listener": {"@": "deleayedImitationListener"}
             }
-            ]
+            ],
+            "bindings": {
+                "enabled": {"<-": "@owner.canPlayButton3"}
+            }
 
         },
 
@@ -127,7 +132,10 @@
                 "useCapture": false,
                 "listener": {"@": "immediateImitationListener"}
             }
-            ]
+            ],
+            "bindings": {
+                "enabled": {"<-": "@owner.canPlayButton4"}
+            }
         },
 
 
@@ -148,10 +156,6 @@
 </head>
 <body>
     <div data-montage-id="tdfpStimulus" class="TdfpStimulus">
-       
-        <div class="Stimulus-header">
-             <div data-montage-id="scoreboard"></div> 
-        </div>
 
         <div class="ExperimenterButtons">       
         <button data-montage-id="spontaneousQuestion1Button"></button>
@@ -159,6 +163,7 @@
         <button data-montage-id="delayedImitationButton"></button>
         <button data-montage-id="immediateImitationButton"></button>
         </div>
+       
         <div class="Stimulus-content-left">
                 <img data-montage-id="visualPrime" class="Stimulus-prime-image" src="">
         </div>

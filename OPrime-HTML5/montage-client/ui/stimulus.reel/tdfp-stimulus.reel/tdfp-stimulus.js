@@ -17,6 +17,7 @@ exports.TdfpStimulus = AbstractStimulus.specialize(/** @lends TdfpStimulus# */ {
 			this.confirmResponseChoiceMessage = "Es tu sûr?";
 			this.primeImage = "";
 			this.audioFile = "";
+			this.canPlayButton1 = true ;
 
         }
     },
@@ -34,9 +35,6 @@ exports.TdfpStimulus = AbstractStimulus.specialize(/** @lends TdfpStimulus# */ {
 			this.super(stimulus);
 
 		}
-			
-
-
 			
 	},
 
@@ -66,6 +64,8 @@ exports.TdfpStimulus = AbstractStimulus.specialize(/** @lends TdfpStimulus# */ {
 			this.audioElement.src = this.audioFile;
 
 			this.playAudio();
+			this.canPlayButton1 = false ;
+			this.canPlayButton3 = true ;
 
 		}
 	},
@@ -80,6 +80,8 @@ exports.TdfpStimulus = AbstractStimulus.specialize(/** @lends TdfpStimulus# */ {
 			this.audioElement.src = this.audioFile;
 
 			this.playAudio();
+			this.canPlayButton2 = false ;
+			this.canPlayButton4 = true ;
 
 		}
 	},
@@ -94,6 +96,7 @@ exports.TdfpStimulus = AbstractStimulus.specialize(/** @lends TdfpStimulus# */ {
 			this.audioElement.src = this.audioFile;
 
 			this.playAudio();
+			this.canPlayButton3 = false ;
 
 		}
 	},
