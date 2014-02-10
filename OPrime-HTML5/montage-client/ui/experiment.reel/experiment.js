@@ -472,12 +472,5 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			}
 			this._title = value;
 		}
-	},
-
-	handleAction: {
-		value: function(e) {
-			console.log("handleAction has been triggered: ", e);
-
-		}
 	}
 });
