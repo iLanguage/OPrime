@@ -61,11 +61,10 @@
             "prototype": "digit/ui/image.reel",
             "properties": {
                 "element": {"#": "icon"},
-                "enabled": true,
-                "src" :""
+                "enabled": true
             },
             "bindings": {
-                "src": {"<-": "'../../'+ @owner.iconSrc??'../../assets/img/blank.png'"}
+                "src": {"<-": "'../../'+ @owner.iconSrc ?? '../../assets/img/blank.png'"}
             }
         },
         "owner": {

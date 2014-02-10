@@ -36,6 +36,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		}
 	},
 
+	iconSrc:{
+		value: "../../assets/img/blank.png"
+	},
+
 	loadDesign: {
 		value: function(designToForceIncludeInMop) {
 			if (!this.experimentalDesignSrc) {
