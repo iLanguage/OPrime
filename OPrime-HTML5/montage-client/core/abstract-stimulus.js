@@ -18,10 +18,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		value: function Stimulus() {
 			this.super();
 			this.responses = [{}];
-			window.audioEndListener = function() {
-				var audiourl = this.getAttribute("src");
-				console.log("audiourl is done " + audiourl);
-			};
+
 		}
 	},
 
@@ -203,19 +200,43 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 */
 	playAudio: {
 		value: function(delay) {
+			var self = this,
+				startTime = Date.now(), 
+				audioElementToPlay = this.audioElement;
 
-			this.audioElement.removeEventListener('ended', window.audioEndListener);
-			this.audioElement.addEventListener('ended', window.audioEndListener);
-			if (!delay) {
-				this.audioElement.play();
-				this.audioPlayStarted = Date.now();
-			} else {
-				var self = this;
-				window.setTimeout(function() {
+			audioElementToPlay.removeEventListener('ended', window.audioEndListener);
+			audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+
+			var audiourl = audioElementToPlay.src;
+			window.audioEndListener = function() {
+				audioElementToPlay.removeEventListener('ended', window.audioEndListener);
+				console.log("audiourl is done " + audiourl);
+			};
+
+			window.actuallyPlayAudio = function() {
+				audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+
+				if (!delay) {
 					self.audioElement.play();
 					self.audioPlayStarted = Date.now();
-				}, delay);
+				} else {
+					var timeToPrepareAudio = Date.now() - startTime;
+					var newDelay = delay - timeToPrepareAudio;
+					if (newDelay > 0) {
+						window.setTimeout(function() {
+							self.audioElement.play();
+							self.audioPlayStarted = Date.now();
+						}, newDelay);
+					} else {
+						console.warn("Audio was " + newDelay + " late.");
+						self.audioElement.play();
+						self.audioPlayStarted = Date.now();
+					}
+				}
 			}
+
+			audioElementToPlay.addEventListener('ended', window.audioEndListener);
+			audioElementToPlay.addEventListener('canplaythrough', window.actuallyPlayAudio);
 		}
 	},
 
@@ -238,7 +259,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			try {
 				this.audioElement.pause();
 				this.audioElement.currentTime = 0;
-			} catch(e) {
+			} catch (e) {
 				console.log(e);
 			}
 		}
