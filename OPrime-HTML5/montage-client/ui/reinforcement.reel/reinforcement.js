@@ -16,7 +16,7 @@ exports.Reinforcement = Component.specialize( /** @lends Reinforcement# */ {
     },
 
     images: {
-        value: ["/assets/stimuli/image/r00_caterpillars.png"]
+        value: null
     },
 
     currentImage: {
