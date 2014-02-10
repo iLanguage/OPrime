@@ -164,25 +164,25 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 	prepareForActivationEvents: {
 		value: function() {
-			this._pressComposer.addEventListener("pressStart", this, false);
-			this._pressComposer.addEventListener("press", this, false);
-			this._pressComposer.addEventListener("pressCancel", this, false);
+			// this._pressComposer.addEventListener("pressStart", this, false);
+			// this._pressComposer.addEventListener("press", this, false);
+			// this._pressComposer.addEventListener("pressCancel", this, false);
 		}
 	},
 
 	setupFirstPlay: {
 		value: function() {
-			this.element.removeEventListener("touchstart", this, false);
-			this.element.removeEventListener("mousedown", this, false);
-			// this._firstPlay = true;
-			// this.videoController.stop();
+			// this.element.removeEventListener("touchstart", this, false);
+			// this.element.removeEventListener("mousedown", this, false);
+			// // this._firstPlay = true;
+			// // this.videoController.stop();
 
-			// this.classList.add("digit-Video--firstPlay");
-			// this.classList.remove("digit-Video--showControls");
+			// // this.classList.add("digit-Video--firstPlay");
+			// // this.classList.remove("digit-Video--showControls");
 
-			this._pressComposer = PressComposer.create();
-			this._pressComposer.identifier = "stimulus";
-			this.addComposerForElement(this._pressComposer, this.element);
+			// this._pressComposer = PressComposer.create();
+			// this._pressComposer.identifier = "stimulus";
+			// this.addComposerForElement(this._pressComposer, this.element);
 			// this.showPoster();
 
 
