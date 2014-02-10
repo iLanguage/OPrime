@@ -65,7 +65,7 @@
                 "src" :""
             },
             "bindings": {
-                "src": {"<-": "'../../'+ @owner.iconSrc ?? '' "}
+                "src": {"<-": "'../../'+ @owner.iconSrc??'../../assets/img/blank.png'"}
             }
         },
         "owner": {
@@ -84,7 +84,7 @@
             <h3 data-montage-id="title" class="title">Confirmation</h3>
         </div>
         <div class="Confirm-content">
-            <img data-montage-id="icon"></img>
+            <img data-montage-id="icon" src="../../assets/img/blank.png"/>
             <div data-montage-id="msg" class="msg"></div>
             <div data-montage-id="msg-detail" class="msg-detail"></div>
         </div>

@@ -25,6 +25,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		}
 	},
 
+	currentReinforcementImageSrc: {
+		value: "../../assets/img/blank.png"
+	},
+	
 	/**
 	 *  dont draw automatically refs: http://montagejs.github.io/mfiddle/#!/7932746
 	 * @type {Object}

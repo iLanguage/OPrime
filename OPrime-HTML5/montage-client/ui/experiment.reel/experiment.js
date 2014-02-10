@@ -109,7 +109,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				Confirm.show(options, function() {
 					promiseForConfirm.resolve();
 				}, function() {
-					promiseForConfirm.reject(new Error("The x prevented the cancel?"));
+					console.log("The x prevented the cancel?");
+					// promiseForConfirm.reject(new Error("The x prevented the cancel?"));
 				});
 			} else {
 				Promise.nextTick(function() {
