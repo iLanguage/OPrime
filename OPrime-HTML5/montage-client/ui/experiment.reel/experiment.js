@@ -113,8 +113,12 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				Confirm.show(options, function() {
 					promiseForConfirm.resolve();
 				}, function() {
-					console.log("The x prevented the cancel?");
-					// promiseForConfirm.reject(new Error("The x prevented the cancel?"));
+
+					// promiseForConfirm.reject("The user clicked cancel.");
+					// [Q] Unhandled rejection reasons (should be empty): ["(no stack) The user clicked cancel."] 
+					// https://github.com/kriskowal/q/issues/292
+					// https://github.com/kriskowal/q/issues/238 TODO seems to be nothing i can do about it...
+					console.log("The user clicked cancel.");
 				});
 			} else {
 				Promise.nextTick(function() {
@@ -289,7 +293,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			if (this._currentTestBlock.promptUserBeforeContinuing) {
 				this.confirm(this._currentTestBlock.promptUserBeforeContinuing.text).then(function() {
 					self.nextStimulus();
-				}, function(reason) {
+				}).fail(function(reason) {
 					console.log("TODO add a button for resume?");
 				});
 			} else {
