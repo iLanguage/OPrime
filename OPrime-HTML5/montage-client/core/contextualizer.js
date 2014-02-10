@@ -26,19 +26,18 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 			console.log("Resolving localization ");
 			var result = message;
 			if (!this.data) {
+				console.warn("No localizations available, resolving the key itself: ", result);
 				return result;
 			}
 
 			if (this.data[this.currentLocale] && this.data[this.currentLocale][message] && this.data[this.currentLocale][message].message !== undefined && this.data[this.currentLocale][message].message) {
 				result = this.data[this.currentLocale][message].message;
-				console.log("Resolving localization quickly", result);
+				console.log("Resolving localization using requested language: ", result);
 			} else {
-				if (this.data[this.currentLocale] && this.data[this.currentLocale][message] && this.data[this.currentLocale][message].message !== undefined && this.data[this.currentLocale][message].message) {
-					result = this.data[this.currentLocale][message].message;
-				} else if (this.data[this.currentLocale] && this.data[this.currentLocale][message] && this.data[this.currentLocale][message].message !== undefined) {
-					console.log("TODO figure out what this line was for" + this.data[this.currentLocale][message].message);
-				}
-				console.log("Resolving localization slowly", result);
+				if (this.data[this.defaultLocale] && this.data[this.defaultLocale][message] && this.data[this.defaultLocale][message].message !== undefined && this.data[this.defaultLocale][message].message) {
+					result = this.data[this.defaultLocale][message].message;
+					console.warn("Resolving localization using default: ", result);
+				} 
 			}
 			return result;
 		}
