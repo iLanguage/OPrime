@@ -52,19 +52,7 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
     _popup: {
         value: null
     },
-    /**
-        Description TODO
-        @type {Function}
-        @default null
-    */
-    popup: {
-        set: function(value) {
-            this._popup = value;
-        },
-        get: function() {
-            return this._popup;
-        }
-    },
+
 
     okCallback: {
         value: null
@@ -134,7 +122,7 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
 
             this.popup.hide();
         }
-    },
+    }
 
     // Static method to show a Confirmation dialog
     /**
@@ -146,6 +134,21 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
      @example
      ...
      */
+}, {
+    /**
+        Description TODO
+        @type {Function}
+        @default null
+    */
+    popup: {
+        set: function(value) {
+            this._popup = value;
+        },
+        get: function() {
+            return this._popup;
+        }
+    },
+
     show: {
         value: function(options, okCallback, cancelCallback) {
             var popup = this.application._confirmPopup,
