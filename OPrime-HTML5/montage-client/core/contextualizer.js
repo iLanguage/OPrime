@@ -37,7 +37,7 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 				if (this.data[this.defaultLocale] && this.data[this.defaultLocale][message] && this.data[this.defaultLocale][message].message !== undefined && this.data[this.defaultLocale][message].message) {
 					result = this.data[this.defaultLocale][message].message;
 					console.warn("Resolving localization using default: ", result);
-				} 
+				}
 			}
 			return result;
 		}
