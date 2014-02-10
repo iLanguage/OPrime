@@ -1,8 +1,8 @@
 require("montage-testing").run(require,[
     // Please keep in alphabetical order
-    "test/core/contextualizer",
-    "test/lib/cordova/cordova-spec",
-    "test/audio/audio-spec"
+    "test/core/contextualizer"
+    // "test/lib/cordova/cordova-spec",
+    // "test/audio/audio-spec"
 
     // "test/experiment/complex-experiment/complex-experiment-spec",
     // "test/experiment/experiment-spec",

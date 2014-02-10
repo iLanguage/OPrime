@@ -27,7 +27,7 @@ TestPageLoader.queueTest("../audio/audio-test", function(testPage) {
             }
         };
         bind(object, "average", {
-            "<-": "localizer.localize('contextualized_string')"
+            "<-": "localizer.localize('contextualized_string', localizer.currentLocale)"
         });
         expect(object.average).toEqual("this one is for context 1");
         object.localizer.currentLocale = "context2";
