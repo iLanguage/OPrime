@@ -106,6 +106,13 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
             this.popup.hide();
         }
     },
+
+    handleOkLongAction:{
+        value: function(evt) {
+            this.handleOkAction(evt);
+        }
+    },
+
     /**
     Description TODO
     @function
@@ -121,6 +128,12 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
             this.dispatchEvent(anEvent);
 
             this.popup.hide();
+        }
+    },
+
+    handleCancelLongAction:{
+        value: function(evt) {
+            this.handleCancelAction(evt);
         }
     }
 

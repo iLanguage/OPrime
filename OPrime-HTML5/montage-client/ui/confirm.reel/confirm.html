@@ -27,14 +27,17 @@
             "bindings": {
                 "label": {"<-": "@owner.okLabel"}
             },
-            "listeners": [
-            {
+            "listeners": [{
                 "type": "action",
                 "listener": {
                     "@": "owner"
                 }
-            }
-            ]
+            },{
+                "type": "longAction",
+                "listener": {
+                    "@": "owner"
+                }
+            }]
         },
         "button2": {
             "prototype": "digit/ui/button.reel",
@@ -47,14 +50,17 @@
             "bindings": {
                 "label": {"<-": "@owner.cancelLabel"}
             },
-            "listeners": [
-            {
+            "listeners": [{
                 "type": "action",
                 "listener": {
                     "@": "owner"
                 }
-            }
-            ]
+            },{
+                "type": "longAction",
+                "listener": {
+                    "@": "owner"
+                }
+            }]
 
         },
         "icon": {
