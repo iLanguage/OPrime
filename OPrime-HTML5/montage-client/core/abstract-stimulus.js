@@ -166,11 +166,25 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		}
 	},
 
+	handlePressStart: {
+		value: function(e) {
+			console.log("The stimulus has been pressStarted: ");
+		}
+	},
+
+	handleLongAction: {
+		value: function(e) {
+			console.log("The stimulus has been longActioned: ");
+		}
+	},
+
 	prepareForActivationEvents: {
 		value: function() {
-			this._pressComposer.addEventListener("pressStart", this, false);
+			// this._pressComposer.addEventListener("pressStart", this, false);
 			this._pressComposer.addEventListener("press", this, false);
-			this._pressComposer.addEventListener("pressCancel", this, false);
+			this._pressComposer.addEventListener("action", this, false);
+			// this._pressComposer.addEventListener("longAction", this, false);
+			// this._pressComposer.addEventListener("pressCancel", this, false);
 		}
 	},
 
@@ -201,42 +215,58 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	playAudio: {
 		value: function(delay) {
 			var self = this,
-				startTime = Date.now(), 
+				startTime = Date.now(),
 				audioElementToPlay = this.audioElement;
 
-			audioElementToPlay.removeEventListener('ended', window.audioEndListener);
-			audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+			try {
+				var media = new Media(this.audioElement.src, function() {
+					console.log("media successs");
+					media.play();
+				}, function() {
+					console.log("media error");
+				}, function(status) {
+					console.log("media status " + status);
+				});
+				console.log("Requested play of audio file using cordova media " + audioElementToPlay.src);
 
-			var audiourl = audioElementToPlay.src;
-			window.audioEndListener = function() {
+			} catch (e) {
+				console.log("Cordova media faield " + e);
+
 				audioElementToPlay.removeEventListener('ended', window.audioEndListener);
-				console.log("audiourl is done " + audiourl);
-			};
-
-			window.actuallyPlayAudio = function() {
 				audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
 
-				if (!delay) {
-					self.audioElement.play();
-					self.audioPlayStarted = Date.now();
-				} else {
-					var timeToPrepareAudio = Date.now() - startTime;
-					var newDelay = delay - timeToPrepareAudio;
-					if (newDelay > 0) {
-						window.setTimeout(function() {
-							self.audioElement.play();
-							self.audioPlayStarted = Date.now();
-						}, newDelay);
-					} else {
-						console.warn("Audio was " + newDelay + " late.");
+				var audiourl = audioElementToPlay.src;
+				window.audioEndListener = function() {
+					audioElementToPlay.removeEventListener('ended', window.audioEndListener);
+					console.log("audiourl is done " + audiourl);
+				};
+
+				window.actuallyPlayAudio = function() {
+					audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+
+					if (!delay) {
 						self.audioElement.play();
 						self.audioPlayStarted = Date.now();
+					} else {
+						var timeToPrepareAudio = Date.now() - startTime;
+						var newDelay = delay - timeToPrepareAudio;
+						if (newDelay > 0) {
+							window.setTimeout(function() {
+								self.audioElement.play();
+								self.audioPlayStarted = Date.now();
+							}, newDelay);
+						} else {
+							console.warn("Audio was " + newDelay + " late.");
+							self.audioElement.play();
+							self.audioPlayStarted = Date.now();
+						}
 					}
 				}
-			}
+				console.log("Requested play of audio file " + audioElementToPlay.src);
+				audioElementToPlay.addEventListener('ended', window.audioEndListener);
+				audioElementToPlay.addEventListener('canplaythrough', window.actuallyPlayAudio);
 
-			audioElementToPlay.addEventListener('ended', window.audioEndListener);
-			audioElementToPlay.addEventListener('canplaythrough', window.actuallyPlayAudio);
+			}
 		}
 	},
 
@@ -285,7 +315,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			var self = this;
 
 			/* TODO use an actual montage component for audio */
-			this.audioElement.src = this.audioFile;
+			this.audioElement.src = "../../assets/pageflip2.mp3" //this.audioFile;
 			this.playAudio(2000);
 		}
 	}
