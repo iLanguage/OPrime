@@ -162,11 +162,18 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		}
 	},
 
+	handleAction: {
+		value: function(e) {
+			console.log("The stimulus has been actioned: ");
+			this.handlePress(e);
+		}
+	},
+
 	prepareForActivationEvents: {
 		value: function() {
-			// this._pressComposer.addEventListener("pressStart", this, false);
-			// this._pressComposer.addEventListener("press", this, false);
-			// this._pressComposer.addEventListener("pressCancel", this, false);
+			this._pressComposer.addEventListener("pressStart", this, false);
+			this._pressComposer.addEventListener("press", this, false);
+			this._pressComposer.addEventListener("pressCancel", this, false);
 		}
 	},
 
@@ -180,9 +187,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			// // this.classList.add("digit-Video--firstPlay");
 			// // this.classList.remove("digit-Video--showControls");
 
-			// this._pressComposer = PressComposer.create();
-			// this._pressComposer.identifier = "stimulus";
-			// this.addComposerForElement(this._pressComposer, this.element);
+			this._pressComposer = PressComposer.create();
+			this._pressComposer.identifier = "stimulus";
+			this.addComposerForElement(this._pressComposer, this.element);
 			// this.showPoster();
 
 
