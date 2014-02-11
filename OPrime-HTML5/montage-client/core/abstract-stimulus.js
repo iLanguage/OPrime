@@ -53,7 +53,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 
 			var reactionTimeEnd = Date.now();
-			var audioDuration = this.audioElement.duration || 0;
+			var audioDuration =  0;
 			if (audioDuration) {
 				audioDuration = audioDuration * 1000;
 			} else {
@@ -144,7 +144,6 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				this.addOwnPropertyChangeListener("src", this);
 			}
 			this.reactionTimeStart = Date.now();
-			this.audioElement = document.getElementById('audio');
 		}
 	},
 
@@ -214,84 +213,20 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 */
 	playAudio: {
 		value: function(delay) {
-			var self = this,
-				startTime = Date.now(),
-				audioElementToPlay = this.audioElement;
-
-			try {
-				var media = new Media(this.audioElement.src, function() {
-					console.log("media successs");
-					media.play();
-				}, function() {
-					console.log("media error");
-				}, function(status) {
-					console.log("media status " + status);
-				});
-				console.log("Requested play of audio file using cordova media " + audioElementToPlay.src);
-
-			} catch (e) {
-				console.log("Cordova media faield " + e);
-
-				audioElementToPlay.removeEventListener('ended', window.audioEndListener);
-				audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
-
-				var audiourl = audioElementToPlay.src;
-				window.audioEndListener = function() {
-					audioElementToPlay.removeEventListener('ended', window.audioEndListener);
-					console.log("audiourl is done " + audiourl);
-				};
-
-				window.actuallyPlayAudio = function() {
-					audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
-
-					if (!delay) {
-						self.audioElement.play();
-						self.audioPlayStarted = Date.now();
-					} else {
-						var timeToPrepareAudio = Date.now() - startTime;
-						var newDelay = delay - timeToPrepareAudio;
-						if (newDelay > 0) {
-							window.setTimeout(function() {
-								self.audioElement.play();
-								self.audioPlayStarted = Date.now();
-							}, newDelay);
-						} else {
-							console.warn("Audio was " + newDelay + " late.");
-							self.audioElement.play();
-							self.audioPlayStarted = Date.now();
-						}
-					}
-				}
-				console.log("Requested play of audio file " + audioElementToPlay.src);
-				audioElementToPlay.addEventListener('ended', window.audioEndListener);
-				audioElementToPlay.addEventListener('canplaythrough', window.actuallyPlayAudio);
-
-			}
+			
 		}
 	},
 
-	/* TODO use an actual montage component */
-	audioElement: {
-		value: null
-	},
 
 	pauseAudio: {
 		value: function() {
-			this.audioElement.pause();
-			if (this.audioElement.currentTime > 0.05) {
-				this.audioElement.currentTime = this.audioElement.currentTime - 0.05;
-			}
+			
 		}
 	},
 
 	stopAudio: {
 		value: function() {
-			try {
-				this.audioElement.pause();
-				this.audioElement.currentTime = 0;
-			} catch (e) {
-				console.log(e);
-			}
+			
 		}
 	},
 
@@ -314,9 +249,6 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 			var self = this;
 
-			/* TODO use an actual montage component for audio */
-			this.audioElement.src = "../../assets/pageflip2.mp3" //this.audioFile;
-			this.playAudio(2000);
 		}
 	}
 
