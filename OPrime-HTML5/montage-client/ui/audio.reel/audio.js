@@ -60,15 +60,59 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 	},
 
 	play: {
-		value: function(evt) {
+		value: function(optionalSource, delay) {
+			if (optionalSource) {
+				this.src = optionalSource;
+			}
 			if (this._audioElement) {
-				this._audioElement.play();
+				if (!this._audioElement.src || this._audioElement.src !== this.src) {
+					this._audioElement.src = this.src;
+				}
+
+				var self = this,
+					startTime = Date.now(),
+					audioElementToPlay = this._audioElement;
+
+				audioElementToPlay.removeEventListener('ended', window.audioEndListener);
+				audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+
+				var audiourl = audioElementToPlay.src;
+				window.audioEndListener = function() {
+					audioElementToPlay.removeEventListener('ended', window.audioEndListener);
+					console.log("audiourl is done " + audiourl);
+				};
+
+				window.actuallyPlayAudio = function() {
+					audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+
+					if (!delay) {
+						self._audioElement.play();
+						self.audioPlayStarted = Date.now();
+					} else {
+						var timeToPrepareAudio = Date.now() - startTime;
+						var newDelay = delay - timeToPrepareAudio;
+						if (newDelay > 0) {
+							window.setTimeout(function() {
+								self._audioElement.play();
+								self.audioPlayStarted = Date.now();
+							}, newDelay);
+						} else {
+							console.warn("Audio was " + newDelay + " late.");
+							self._audioElement.play();
+							self.audioPlayStarted = Date.now();
+						}
+					}
+				};
+				console.log("Requested play of audio file " + audioElementToPlay.src);
+				audioElementToPlay.addEventListener('ended', window.audioEndListener);
+				audioElementToPlay.addEventListener('canplaythrough', window.actuallyPlayAudio);
+
 			}
 		}
 	},
 
 	pause: {
-		value: function(evt) {
+		value: function() {
 			if (this._audioElement) {
 				this._audioElement.pause();
 			}
@@ -76,7 +120,7 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 	},
 
 	stop: {
-		value: function(evt) {
+		value: function() {
 			if (this._audioElement) {
 				this._audioElement.pause();
 				// this._audioElement.currentTime = 0;

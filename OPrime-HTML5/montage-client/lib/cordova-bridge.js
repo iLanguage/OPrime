@@ -15,26 +15,27 @@ CordovaAudio.library = "Cordova";
 //
 CordovaAudio.play = function(src) {
     // Create Media object from src
-    this.my_media = new Media(src, this.onSuccess, onError);
+    this.my_media = new Media(src, this.onSuccess, this.onError);
 
     // Play audio
     this.my_media.play();
 
+    var self = this;
     // Update this.my_media position every second
     if (this.mediaTimer == null) {
         this.mediaTimer = setInterval(function() {
             // get this.my_media position
-            this.my_media.getCurrentPosition(
+            self.my_media.getCurrentPosition(
                 // success callback
                 function(position) {
                     if (position > -1) {
-                        this.setAudioPosition((position) + " sec");
+                        self.setAudioPosition((position) + " sec");
                     }
                 },
                 // error callback
                 function(e) {
                     console.log("Error getting pos=" + e);
-                    this.setAudioPosition("Error: " + e);
+                    self.setAudioPosition("Error: " + e);
                 }
             );
         }, 1000);
@@ -77,9 +78,12 @@ CordovaAudio.onError = function(error) {
 CordovaAudio.setAudioPosition = function(position) {
     if (document.getElementById('audio_position')) {
         document.getElementById('audio_position').innerHTML = position;
+    } else {
+        console.log("current audio position " + position);
     }
 }
 
+exports.CordovaAudio = CordovaAudio;
 // Wait for device API libraries to load
 //
-document.addEventListener("deviceready", CordovaAudio.onDeviceReady, false);
+// document.addEventListener("deviceready", CordovaAudio.onDeviceReady, false);

@@ -6,7 +6,8 @@ var ContextualizableComponent = require("core/contextualizable-component").Conte
 	Confirm = require("ui/confirm.reel").Confirm,
 	RangeController = require("montage/core/range-controller").RangeController,
 	PromiseController = require("montage/core/promise-controller").PromiseController,
-	Promise = require("montage/core/promise").Promise;
+	Promise = require("montage/core/promise").Promise,
+	AudioPlayer = require("core/audio-player").AudioPlayer;
 
 /**
  * @class Experiment
@@ -33,6 +34,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	constructor: {
 		value: function Experiment() {
 			this.super();
+			this.application.audioPlayer = new AudioPlayer();
 		}
 	},
 
@@ -62,6 +64,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			/* This makes essentially a slideshow of images, useful for debugging and reviewing */
 			this.autoPlaySlideshowOfStimuli = false;
+            this.application.audioPlayer.play("assets/pageflip2.mp3");
 
 			// this.audiencesController = RangeController.create().initWithContent(this.audiences);
 			// this.audiencesController.selection = [];
