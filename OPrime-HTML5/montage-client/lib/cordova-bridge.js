@@ -18,7 +18,7 @@ CordovaAudio.play = function(src) {
     this.my_media = new Media(src, this.onSuccess, this.onError);
     this.duration = 0;
     this.src = src;
-    
+
     // Play audio
     this.my_media.play();
 
@@ -82,8 +82,13 @@ CordovaAudio.setAudioPosition = function(position) {
         document.getElementById('audio_position').innerHTML = position;
     } else {
         console.log("current audio position " + position);
-        this.duration = position;
-        console.log("setting audio duration to " + position);
+        if (position > 0) {
+            this.duration = position;
+            console.log("setting audio duration to " + position);
+        } else {
+            clearInterval(this.mediaTimer);
+            this.mediaTimer = null;
+        }
     }
 }
 
