@@ -34,6 +34,17 @@ exports.AudioPlayer = Component.specialize( /** @lends AudioPlayer# */ {
 		}
 	},
 
+	getDuration: {
+		value: function(src) {
+			if (src && this.src.indexOf(src) > -1 && this.mediaController.src.indexOf(src) > -1) {
+				return this.mediaController.duration || 0;
+			} else {
+				console.log("Duration wasn't clear, so returning 0");
+				return 0;
+			}
+		}
+	},
+
 	_src: {
 		value: null
 	},
@@ -50,18 +61,20 @@ exports.AudioPlayer = Component.specialize( /** @lends AudioPlayer# */ {
 			if (this.isCordova && this.mediaController.library !== "Cordova") {
 				this._src = value;
 				this.mediaController = CordovaAudio;
-			} else if (!this.mediaController._audioElement) {
-				//Try to use the full path to the audio file if its a relative path 
+			} else {
 				if (!value.match(/^[^:]+:\/\//)) {
 					this._src = document.location.href.replace(document.location.pathname, "/" + value);
 				}
-				if (document.getElementById("audio")) {
-					this.mediaController._audioElement = document.getElementById("audio");
-				} else {
-					var audio = document.createElement("audio");
-					audio.setAttribute("id", "audio");
-					document.body.appendChild(audio);
-					this.mediaController._audioElement = audio;
+				if (!this.mediaController._audioElement) {
+					//Try to use the full path to the audio file if its a relative path 
+					if (document.getElementById("audio")) {
+						this.mediaController._audioElement = document.getElementById("audio");
+					} else {
+						var audio = document.createElement("audio");
+						audio.setAttribute("id", "audio");
+						document.body.appendChild(audio);
+						this.mediaController._audioElement = audio;
+					}
 				}
 			}
 

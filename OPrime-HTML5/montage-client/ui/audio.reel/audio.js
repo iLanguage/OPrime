@@ -55,6 +55,16 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 		}
 	},
 
+	duration: {
+		get: function() {
+			if (this._audioElement && this._audioElement.duration) {
+				return this._audioElement.duration;
+			} else {
+				return 0;
+			}
+		}
+	},
+
 	_audioElement: {
 		value: null
 	},
@@ -123,7 +133,7 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 		value: function() {
 			if (this._audioElement) {
 				this._audioElement.pause();
-				// this._audioElement.currentTime = 0;
+				this._audioElement.currentTime = 0;
 			}
 		}
 	},

@@ -16,7 +16,9 @@ CordovaAudio.library = "Cordova";
 CordovaAudio.play = function(src) {
     // Create Media object from src
     this.my_media = new Media(src, this.onSuccess, this.onError);
-
+    this.duration = 0;
+    this.src = src;
+    
     // Play audio
     this.my_media.play();
 
@@ -80,8 +82,12 @@ CordovaAudio.setAudioPosition = function(position) {
         document.getElementById('audio_position').innerHTML = position;
     } else {
         console.log("current audio position " + position);
+        this.duration = position;
+        console.log("setting audio duration to " + position);
     }
 }
+
+CordovaAudio.duration = 0;
 
 exports.CordovaAudio = CordovaAudio;
 // Wait for device API libraries to load

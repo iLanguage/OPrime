@@ -53,7 +53,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 
 			var reactionTimeEnd = Date.now();
-			var audioDuration =  0;
+			var audioDuration = this.application.audioPlayer.getDuration(this.audioFile) || 0;
 			if (audioDuration) {
 				audioDuration = audioDuration * 1000;
 			} else {
@@ -191,19 +191,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		value: function() {
 			// this.element.removeEventListener("touchstart", this, false);
 			// this.element.removeEventListener("mousedown", this, false);
-			// // this._firstPlay = true;
-			// // this.videoController.stop();
-
-			// // this.classList.add("digit-Video--firstPlay");
-			// // this.classList.remove("digit-Video--showControls");
 
 			this._pressComposer = PressComposer.create();
 			this._pressComposer.identifier = "stimulus";
 			this.addComposerForElement(this._pressComposer, this.element);
-			// this.showPoster();
-
-
-
 		}
 	},
 
@@ -213,23 +204,21 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 */
 	playAudio: {
 		value: function(delay) {
-			
+			this.application.audioPlayer.play(this.audioFile, delay);
 		}
 	},
 
-
 	pauseAudio: {
 		value: function() {
-			
+			this.application.audioPlayer.pause(this.audioFile);
 		}
 	},
 
 	stopAudio: {
 		value: function() {
-			
+			this.application.audioPlayer.stop(this.audioFile);
 		}
 	},
-
 
 	load: {
 		value: function(details) {
@@ -246,11 +235,8 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 			this.nonResponses = [];
 			// this.rangeController = new RangeController().initWithContent({"hi":"there"});
-
-			var self = this;
-
+			
+			this.playAudio(2000);
 		}
 	}
-
-
 });
