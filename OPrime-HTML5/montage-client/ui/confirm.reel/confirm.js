@@ -1,4 +1,3 @@
-
 /**
     @module "matte/ui/popup/confirm.reel"
 */
@@ -11,8 +10,10 @@ var Component = require("montage/ui/component").Component,
  @extends module:montage/ui/component.Component
  */
 
-var Confirm = exports.Confirm = Component.specialize(/** @lends module:"matte/ui/popup/confirm.reel".Confirm# */ {
-    hasTemplate: {value: true},
+var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/ui/popup/confirm.reel".Confirm# */ {
+    hasTemplate: {
+        value: true
+    },
 
     title: {
         value: 'Confirm'
@@ -44,14 +45,110 @@ var Confirm = exports.Confirm = Component.specialize(/** @lends module:"matte/ui
         value: 'Cancel'
     },
 
-/**
+    /**
   Description TODO
   @private
 */
     _popup: {
         value: null
     },
-/**
+
+
+    okCallback: {
+        value: null
+    },
+    cancelCallback: {
+        value: null
+    },
+
+    enterDocument: {
+        value: function(firstTime) {
+            if (firstTime) {
+                this.element.addEventListener("keyup", this, false);
+            }
+        }
+    },
+    /**
+    Description TODO
+    @function
+    */
+    draw: {
+        value: function() {}
+    },
+    /**
+    Description TODO
+    @function
+    @param {Event} evt The event keyCode.
+    */
+    handleKeyup: {
+        value: function(evt) {
+            if (evt.keyCode === 13 /*Enter*/ ) {
+                this.handleOkAction(evt);
+            } else if (evt.keyCode === 27 /*Escape*/ ) {
+                this.handleCancelAction(evt);
+            }
+        }
+    },
+    /**
+    Description TODO
+    @function
+    @param {Event} evt The event keyCode.
+    */
+    handleOkAction: {
+        value: function(evt) {
+            if (this.okCallback) {
+                this.okCallback.call(this, evt);
+            }
+            var anEvent = document.createEvent("CustomEvent");
+            anEvent.initCustomEvent("montage_confirm_ok", true, true, null);
+            this.dispatchEvent(anEvent);
+
+            this.popup.hide();
+        }
+    },
+
+    handleOkLongAction:{
+        value: function(evt) {
+            this.handleOkAction(evt);
+        }
+    },
+
+    /**
+    Description TODO
+    @function
+    @param {Event} evt The event keyCode.
+    */
+    handleCancelAction: {
+        value: function(evt) {
+            if (this.cancelCallback) {
+                this.cancelCallback.call(this, evt);
+            }
+            var anEvent = document.createEvent("CustomEvent");
+            anEvent.initCustomEvent("montage_confirm_cancel", true, true, null);
+            this.dispatchEvent(anEvent);
+
+            this.popup.hide();
+        }
+    },
+
+    handleCancelLongAction:{
+        value: function(evt) {
+            this.handleCancelAction(evt);
+        }
+    }
+
+    // Static method to show a Confirmation dialog
+    /**
+     Displays a confirm dialog with OK and Cancel buttons.
+     @function
+     @param {String} msg A message to display in the dialog.
+     @param {Function} okCallback Function that's invoked when the user clicks OK
+     @param {Function} cancelCallback Function that's invoked if the user clicks Cancel.
+     @example
+     ...
+     */
+}, {
+    /**
         Description TODO
         @type {Function}
         @default null
@@ -65,87 +162,11 @@ var Confirm = exports.Confirm = Component.specialize(/** @lends module:"matte/ui
         }
     },
 
-    okCallback: {value: null},
-    cancelCallback: {value: null},
-
-    enterDocument: {
-        value: function(firstTime) {
-            if (firstTime) {
-                this.element.addEventListener("keyup", this, false);
-            }
-        }
-    },
-/**
-    Description TODO
-    @function
-    */
-    draw: {
-        value: function() {
-        }
-    },
-/**
-    Description TODO
-    @function
-    @param {Event} evt The event keyCode.
-    */
-    handleKeyup: {
-        value: function(evt) {
-            if (evt.keyCode == 13 /*Enter*/) {
-                this.handleOkAction(evt);
-            } else if (evt.keyCode == 27 /*Escape*/) {
-                this.handleCancelAction(evt);
-            }
-        }
-    },
-/**
-    Description TODO
-    @function
-    @param {Event} evt The event keyCode.
-    */
-    handleOkAction: {
-        value: function(evt) {
-            if(this.okCallback) {
-                this.okCallback.call(this, evt);
-            }
-            var anEvent = document.createEvent("CustomEvent");
-            anEvent.initCustomEvent("montage_confirm_ok", true, true, null);
-            this.dispatchEvent(anEvent);
-
-            this.popup.hide();
-        }
-    },
- /**
-    Description TODO
-    @function
-    @param {Event} evt The event keyCode.
-    */
-    handleCancelAction: {
-        value: function(evt) {
-            if(this.cancelCallback) {
-                this.cancelCallback.call(this, evt);
-            }
-            var anEvent = document.createEvent("CustomEvent");
-            anEvent.initCustomEvent("montage_confirm_cancel", true, true, null);
-            this.dispatchEvent(anEvent);
-
-            this.popup.hide();
-        }
-    },
-
-    // Static method to show a Confirmation dialog
-    /**
-     Displays a confirm dialog with OK and Cancel buttons.
-     @function
-     @param {String} msg A message to display in the dialog.
-     @param {Function} okCallback Function that's invoked when the user clicks OK
-     @param {Function} cancelCallback Function that's invoked if the user clicks Cancel.
-     @example
-     ...
-     */
     show: {
         value: function(options, okCallback, cancelCallback) {
-            var popup = this.application._confirmPopup, confirm;
-            if(!popup) {
+            var popup = this.application._confirmPopup,
+                confirm;
+            if (!popup) {
                 popup = new Popup();
                 this.popup = popup;
 

@@ -17,12 +17,13 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	constructor: {
 		value: function Stimulus() {
 			this.super();
+			this.responses = [{}];
 
-			window.audioEndListener = function() {
-				var audiourl = this.getAttribute("src");
-				console.log("audiourl is done " + audiourl);
-			};
 		}
+	},
+
+	currentReinforcementImageSrc: {
+		value: "../../assets/img/blank.png"
 	},
 
 	/**
@@ -31,7 +32,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 */
 	// willDraw: {
 	//        value: function() {
-	//        	console.log("Stimulus does not draw automatically, instead it is drawn in steps by its child classes.");
+	//			console.log("Stimulus does not draw automatically, instead it is drawn in steps by its child classes.");
 	//        }
 	//    },
 
@@ -52,7 +53,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 
 			var reactionTimeEnd = Date.now();
-			var audioDuration = this.audioElement.duration || 0;
+			var audioDuration = this.application.audioPlayer.getDuration(this.audioFile) || 0;
 			if (audioDuration) {
 				audioDuration = audioDuration * 1000;
 			} else {
@@ -90,7 +91,6 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			});
 
-			var reactionTimeEnd = Date.now();
 			var response = {
 				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
 				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
@@ -102,9 +102,8 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"responseScore": 1
 			};
 			this.responses.push(response);
-			console.log("Recorded response", response);
+			console.log("Recorded response", JSON.stringify(response));
 
-			this.templateObjects.reinforcement.next();
 
 		}
 	},
@@ -126,7 +125,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"responseScore": -1
 			};
 			this.nonResponses.push(response);
-			console.log("Recorded non-response, the user is confused or not playing the game.", response);
+			console.log("Recorded non-response, the user is confused or not playing the game.", JSON.stringify(response));
 		}
 	},
 
@@ -145,46 +144,75 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				this.addOwnPropertyChangeListener("src", this);
 			}
 			this.reactionTimeStart = Date.now();
-			this.audioElement = document.getElementById('audio');
 		}
 	},
 
 	handlePress: {
-		value: function(e) {
+		value: function(touchEvent) {
+			console.log("event " + JSON.stringify(touchEvent.event));
+			console.log("targetElement " + JSON.stringify(touchEvent.targetElement));
 			console.log("The stimulus has been pressed: ");
-			if (e && e.targetElement && e.targetElement.dataset && e.targetElement.dataset.montageId && e.targetElement.classList.contains("Stimulus-record-touch-response")) {
-				this.addResponse(e.event, e.targetElement.dataset.montageId);
+			if (touchEvent && touchEvent.targetElement && touchEvent.targetElement.dataset && touchEvent.targetElement.dataset.montageId && touchEvent.targetElement.classList.contains("Stimulus-record-touch-response")) {
+				this.addResponse(touchEvent.event, touchEvent.targetElement.dataset.montageId);
 			} else {
-				this.addNonResponse(e.event);
+				this.addNonResponse(touchEvent.event);
 			}
+		}
+	},
+
+	handleAction: {
+		value: function(touchEvent) {
+			console.log("The stimulus has been actioned: ");
+			this.handlePress(touchEvent);
+		}
+	},
+
+	handleTouchup: {
+		value: function(touchEvent) {
+			console.log("The stimulus has been touchuped: ");
+			this.handlePress(touchEvent);
+		}
+	},
+
+	handlePressStart: {
+		value: function(touchEvent) {
+			console.log("The stimulus has been pressStarted: ");
+		}
+	},
+
+	handleLongAction: {
+		value: function(touchEvent) {
+			console.log("The stimulus has been longActioned: ");
+		}
+	},
+
+	handleLongPress: {
+		value: function(touchEvent) {
+			console.log("The stimulus has been handleLongPress: ");
+			this.handlePress(touchEvent);
 		}
 	},
 
 	prepareForActivationEvents: {
 		value: function() {
-			this._pressComposer.addEventListener("pressStart", this, false);
+			// this._pressComposer.addEventListener("pressStart", this, false);
 			this._pressComposer.addEventListener("press", this, false);
-			this._pressComposer.addEventListener("pressCancel", this, false);
+			this._pressComposer.addEventListener("touchup", this, false);
+			this._pressComposer.addEventListener("action", this, false);
+			this._pressComposer.addEventListener("longAction", this, false);
+			this._pressComposer.addEventListener("longPress", this, false);
+			// this._pressComposer.addEventListener("pressCancel", this, false);
 		}
 	},
 
 	setupFirstPlay: {
 		value: function() {
-			this.element.removeEventListener("touchstart", this, false);
-			this.element.removeEventListener("mousedown", this, false);
-			// this._firstPlay = true;
-			// this.videoController.stop();
-
-			// this.classList.add("digit-Video--firstPlay");
-			// this.classList.remove("digit-Video--showControls");
+			// this.element.removeEventListener("touchstart", this, false);
+			// this.element.removeEventListener("mousedown", this, false);
 
 			this._pressComposer = PressComposer.create();
 			this._pressComposer.identifier = "stimulus";
 			this.addComposerForElement(this._pressComposer, this.element);
-			// this.showPoster();
-
-
-
 		}
 	},
 
@@ -193,37 +221,22 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	 * @type {Object}
 	 */
 	playAudio: {
-		value: function() {
-
-			this.audioElement.removeEventListener('ended', window.audioEndListener);
-			this.audioElement.addEventListener('ended', window.audioEndListener);
-
-			this.audioElement.play();
-			this.audioPlayStarted = Date.now();
+		value: function(delay) {
+			this.application.audioPlayer.play(this.audioFile, delay);
 		}
-	},
-
-	/* TODO use an actual montage component */
-	audioElement: {
-		value: null
 	},
 
 	pauseAudio: {
 		value: function() {
-			this.audioElement.pause();
-			if (this.audioElement.currentTime > 0.05) {
-				this.audioElement.currentTime = this.audioElement.currentTime - 0.05;
-			}
+			this.application.audioPlayer.pause(this.audioFile);
 		}
 	},
 
 	stopAudio: {
 		value: function() {
-			this.audioElement.pause();
-			this.audioElement.currentTime = 0;
+			this.application.audioPlayer.stop(this.audioFile);
 		}
 	},
-
 
 	load: {
 		value: function(details) {
@@ -233,21 +246,15 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			}
 			if (this.responses === null) {
-				this.responses = [];
+				this.responses = [{}];
 			}
 			if (this.nonResponses === null) {
 				this.nonResponses = [];
 			}
 			this.nonResponses = [];
-			this.rangeController = new RangeController().initWithContent(this.responses);
+			// this.rangeController = new RangeController().initWithContent({"hi":"there"});
 
-			var self = this;
-
-			/* TODO use an actual montage component for audio */
-			this.audioElement.src = this.audioFile;
-			this.playAudio();
+			this.playAudio(2000);
 		}
 	}
-
-
 });

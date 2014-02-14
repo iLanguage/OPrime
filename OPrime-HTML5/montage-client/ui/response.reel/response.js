@@ -28,11 +28,11 @@ exports.Response = ContextualizableComponent.specialize( /** @lends Response# */
 	displayAsTouchPoint: {
 		value: function() {
 			if (this.displayInline || !this.json) {
-				return
+				return;
 			}
 			this._element.style.position = "fixed";
-			this._element.style["left"] = this.json.pageX + "px";
-			this._element.style["top"] = this.json.pageY +"px";
+			this._element.style.left = this.json.pageX + "px";
+			this._element.style.top = this.json.pageY +"px";
 			this._element.style["z-index"] = "200";
 			this._element.style["background-color"] = this.colorAsAFunctionOfReactionTime(this.json.reactionTimeAudioOffset);
 		}

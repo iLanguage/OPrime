@@ -6,16 +6,16 @@
     <script type="text/montage-serialization">
         {
             "test": {
-                "prototype": "test/experiment/experiment-test",
+                "prototype": "test/response/response-test",
                 "properties": {
-                    "experiment": {"@": "experiment1"}
+                    "response": {"@": "response1"}
                 }
             },
 
-            "experiment1": {
+            "response1": {
                 "prototype": "digit/ui/text.reel",
                 "properties": {
-                    "element": {"#": "experiment"}
+                    "element": {"#": "response"}
                 }
             }
         }
@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<div data-montage-id="experiment" class="experiment"></div>
-
+    <div data-montage-id="response" class="response">
+    </div>
 </body>
 </html>
