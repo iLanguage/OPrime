@@ -11,12 +11,17 @@ module.exports = function(grunt) {
         exec: {
             reduceImageSize: {
                 cmd: function() {
-                    return "cd assets/stimuli/image/ && mogrify -filter lanczos2 -resize '400x400>' *.png";
+                    return "cd assets/stimuli/image/ && mogrify -filter lanczos2 -resize '400x300>' *.png";
                 }
             },
             optimizeImages: {
                 cmd: function() {
-                    return 'optipng assets/stimuli/image/*.png';
+                    return 'for f in *.jpg; do convert $f ${f%.*}.png; done; && optipng assets/stimuli/image/*.png';
+                }
+            },
+            renameFilesToBeWebFriendly: {
+                cmd: function() {
+                    return 'for f in *; do short=`echo $f | sed "s/[ )(]//g" | sed "s/\.aiff//g" |sed "s/É/E/g" |sed "s/é/e/g"`; mv  "$f" "$short" ; done;';
                 }
             },
             echoHelp: {
