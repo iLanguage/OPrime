@@ -102,7 +102,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"responseScore": 1
 			};
 			this.responses.push(response);
-			console.log("Recorded response", response);
+			console.log("Recorded response", JSON.stringify(response));
 
 
 		}
@@ -125,7 +125,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"responseScore": -1
 			};
 			this.nonResponses.push(response);
-			console.log("Recorded non-response, the user is confused or not playing the game.", response);
+			console.log("Recorded non-response, the user is confused or not playing the game.", JSON.stringify(response));
 		}
 	},
 
@@ -148,32 +148,48 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	},
 
 	handlePress: {
-		value: function(e) {
+		value: function(touchEvent) {
+			console.log("event " + JSON.stringify(touchEvent.event));
+			console.log("targetElement " + JSON.stringify(touchEvent.targetElement));
 			console.log("The stimulus has been pressed: ");
-			if (e && e.targetElement && e.targetElement.dataset && e.targetElement.dataset.montageId && e.targetElement.classList.contains("Stimulus-record-touch-response")) {
-				this.addResponse(e.event, e.targetElement.dataset.montageId);
+			if (touchEvent && touchEvent.targetElement && touchEvent.targetElement.dataset && touchEvent.targetElement.dataset.montageId && touchEvent.targetElement.classList.contains("Stimulus-record-touch-response")) {
+				this.addResponse(touchEvent.event, touchEvent.targetElement.dataset.montageId);
 			} else {
-				this.addNonResponse(e.event);
+				this.addNonResponse(touchEvent.event);
 			}
 		}
 	},
 
 	handleAction: {
-		value: function(e) {
+		value: function(touchEvent) {
 			console.log("The stimulus has been actioned: ");
-			this.handlePress(e);
+			this.handlePress(touchEvent);
+		}
+	},
+
+	handleTouchup: {
+		value: function(touchEvent) {
+			console.log("The stimulus has been touchuped: ");
+			this.handlePress(touchEvent);
 		}
 	},
 
 	handlePressStart: {
-		value: function(e) {
+		value: function(touchEvent) {
 			console.log("The stimulus has been pressStarted: ");
 		}
 	},
 
 	handleLongAction: {
-		value: function(e) {
+		value: function(touchEvent) {
 			console.log("The stimulus has been longActioned: ");
+		}
+	},
+
+	handleLongPress: {
+		value: function(touchEvent) {
+			console.log("The stimulus has been handleLongPress: ");
+			this.handlePress(touchEvent);
 		}
 	},
 
@@ -181,8 +197,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		value: function() {
 			// this._pressComposer.addEventListener("pressStart", this, false);
 			this._pressComposer.addEventListener("press", this, false);
+			this._pressComposer.addEventListener("touchup", this, false);
 			this._pressComposer.addEventListener("action", this, false);
-			// this._pressComposer.addEventListener("longAction", this, false);
+			this._pressComposer.addEventListener("longAction", this, false);
+			this._pressComposer.addEventListener("longPress", this, false);
 			// this._pressComposer.addEventListener("pressCancel", this, false);
 		}
 	},
@@ -235,7 +253,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 			this.nonResponses = [];
 			// this.rangeController = new RangeController().initWithContent({"hi":"there"});
-			
+
 			this.playAudio(2000);
 		}
 	}
