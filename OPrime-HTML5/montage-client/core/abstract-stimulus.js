@@ -149,8 +149,8 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 	handlePress: {
 		value: function(touchEvent) {
-			console.log("event " + JSON.stringify(touchEvent.event));
-			console.log("targetElement " + JSON.stringify(touchEvent.targetElement));
+			// console.log("event " + JSON.stringify(touchEvent.event));
+			// console.log("targetElement " + JSON.stringify(touchEvent.targetElement));
 			console.log("The stimulus has been pressed: ");
 			if (touchEvent && touchEvent.targetElement && touchEvent.targetElement.dataset && touchEvent.targetElement.dataset.montageId && touchEvent.targetElement.classList.contains("Stimulus-record-touch-response")) {
 				this.addResponse(touchEvent.event, touchEvent.targetElement.dataset.montageId);
