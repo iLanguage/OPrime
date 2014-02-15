@@ -21,7 +21,7 @@ module.exports = function(grunt) {
             },
             renameFilesToBeWebFriendly: {
                 cmd: function() {
-                    return 'for f in *; do short=`echo $f | sed "s/[ )(]//g" | sed "s/\.aiff//g" |sed "s/É/E/g" |sed "s/é/e/g"`; mv  "$f" "$short" ; done;';
+                    return 'for f in *; do short=`echo $f | sed "s/[ )(]//g" | sed "s/\.aiff//g" | sed "s/É/E/g" | sed "s/é/e/g" | sed "s/é/e/g"`; mv  "$f" "$short" ; done;';
                 }
             },
             echoHelp: {
