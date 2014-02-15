@@ -9,12 +9,23 @@
             "properties": {
                 "element": {"#": "experimentReport"}
             }
+        },
+        "simpleScoreAsText": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "simpleScoreAsText"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.scoreAsText"}
+            }
         }
     }
     </script>
 </head>
 <body>
     <div data-montage-id="experimentReport" class="ExperimentReport">
+        Your score!
+        <div data-montage-id="simpleScoreAsText"></div>
     </div>
 </body>
 </html>

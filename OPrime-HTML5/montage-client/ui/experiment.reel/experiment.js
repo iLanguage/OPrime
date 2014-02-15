@@ -322,34 +322,12 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function() {
 			this.resultsReportMode = !this.resultsReportMode;
 			console.log("resultsReportMode " + this.resultsReportMode);
+			if (this.templateObjects.resultReport) {
+				this.templateObjects.resultReport.calculateScore();
+			}
 		}
 	},
 
-	/**
-	 * An extremely simplistic score until we have normalization data, when this will change complete..
-	 * @type {Object}
-	 */
-	calculateScore: {
-		value: function() {
-			var totalScore = 0;
-			var totalStimuli = 0;
-			for (var subexperimentIndex = 0; subexperimentIndex < this.experimentalDesign.subexperiments.length; subexperimentIndex++) {
-				var subexperiment = this.experimentalDesign.subexperiments[subexperimentIndex];
-				subexperiment.scoreSubTotal = 0;
-				for (var stimulusIndex = 0; stimulusIndex < subexperiment.trials.length; stimulusIndex++) {
-					var stimulusToScore = subexperiment.trials[stimulusIndex];
-					if (stimulusToScore.responses && stimulusToScore.responses[stimulusToScore.responses.length - 1] && stimulusToScore.responses[stimulusToScore.responses.length - 1].responseScore) {
-						subexperiment.scoreSubTotal += stimulusToScore.responses[stimulusToScore.responses.length - 1].responseScore;
-					}
-				}
-				if (subexperiment.label.indexOf("practice") === -1) {
-					totalScore += subexperiment.scoreSubTotal;
-					totalStimuli += subexperiment.trials.length;
-				}
-			}
-			return totalScore + "/" + totalStimuli;
-		}
-	},
 
 	pause: {
 		value: function() {}
