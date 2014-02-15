@@ -64,7 +64,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			/* This makes essentially a slideshow of images, useful for debugging and reviewing */
 			this.autoPlaySlideshowOfStimuli = false;
-            this.application.audioPlayer.play("assets/gammatone.wav");
+            // this.application.audioPlayer.play("assets/gammatone.wav");
 
 			// this.audiencesController = RangeController.create().initWithContent(this.audiences);
 			// this.audiencesController.selection = [];

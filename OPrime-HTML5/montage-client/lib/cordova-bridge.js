@@ -3,6 +3,7 @@ var CordovaAudio = {};
 //
 CordovaAudio.onDeviceReady = function() {
     this.play("assets/gammatone.wav");
+    console.log("Device is ready.");
 }
 
 // Audio player
