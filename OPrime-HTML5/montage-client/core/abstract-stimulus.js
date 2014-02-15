@@ -17,7 +17,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	constructor: {
 		value: function Stimulus() {
 			this.super();
-			this.responses = [{}];
+			this.responses = [];
 
 		}
 	},
@@ -36,7 +36,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	//        }
 	//    },
 
-	rangeController: {
+	responsesController: {
 		value: null
 	},
 
@@ -246,15 +246,16 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			}
 			if (this.responses === null) {
-				this.responses = [{}];
+				this.responses = [];
 			}
 			if (this.nonResponses === null) {
 				this.nonResponses = [];
 			}
 			this.nonResponses = [];
-			// this.rangeController = new RangeController().initWithContent({"hi":"there"});
+			this.responsesController = new RangeController().initWithContent(this.responses);
 
-			this.playAudio(2000);
+			// Not playing audio by default, child must call it.
+			// this.playAudio(2000);
 		}
 	}
 });
