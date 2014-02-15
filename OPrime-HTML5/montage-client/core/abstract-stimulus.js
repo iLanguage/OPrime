@@ -90,6 +90,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					self.playAudio();
 				}
 			});
+			var chosenImage = "";
+			if (stimulusId) {
+				chosenImage = this[stimulusId].substring(this[stimulusId].lastIndexOf("/") + 1)
+			}
 
 			var response = {
 				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
@@ -98,13 +102,21 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"y": responseEvent.y,
 				"pageX": responseEvent.pageX,
 				"pageY": responseEvent.pageY,
-				"chosenVisualStimulus": stimulusId,
-				"responseScore": 1
+				"chosenVisualStimulus": chosenImage,
+				"responseScore": this.scoreResponse(this.targetImage, chosenImage)
 			};
 			this.responses.push(response);
 			console.log("Recorded response", JSON.stringify(response));
+		}
+	},
 
-
+	scoreResponse: {
+		value: function(expectedResponse, actualResponse) {
+			if (actualResponse === expectedResponse) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 	},
 

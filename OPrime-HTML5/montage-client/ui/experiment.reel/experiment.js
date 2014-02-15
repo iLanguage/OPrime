@@ -38,7 +38,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		}
 	},
 
-	iconSrc:{
+	iconSrc: {
 		value: "../../assets/img/blank.png"
 	},
 
@@ -64,7 +64,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			/* This makes essentially a slideshow of images, useful for debugging and reviewing */
 			this.autoPlaySlideshowOfStimuli = false;
-            // this.application.audioPlayer.play("assets/gammatone.wav");
+			// this.application.audioPlayer.play("assets/gammatone.wav");
 
 			// this.audiencesController = RangeController.create().initWithContent(this.audiences);
 			// this.audiencesController.selection = [];
@@ -144,7 +144,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			if (firstTime) {
 				this.currentlyPlaying = false;
-				this.templateObjects.audiencesController.content = this.audiences;;
+				this.templateObjects.audiencesController.content = this.audiences;
 				this.templateObjects.experimentStimuliDialectsController.content = this.locales;
 			}
 			this.experimentDisplayTimeStart = Date.now();
@@ -325,9 +325,29 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		}
 	},
 
+	/**
+	 * An extremely simplistic score until we have normalization data, when this will change complete..
+	 * @type {Object}
+	 */
 	calculateScore: {
 		value: function() {
-			return "10/10";
+			var totalScore = 0;
+			var totalStimuli = 0;
+			for (var subexperimentIndex = 0; subexperimentIndex < this.experimentalDesign.subexperiments.length; subexperimentIndex++) {
+				var subexperiment = this.experimentalDesign.subexperiments[subexperimentIndex];
+				subexperiment.scoreSubTotal = 0;
+				for (var stimulusIndex = 0; stimulusIndex < subexperiment.trials.length; stimulusIndex++) {
+					var stimulusToScore = subexperiment.trials[stimulusIndex];
+					if (stimulusToScore.responses && stimulusToScore.responses[stimulusToScore.responses.length - 1] && stimulusToScore.responses[stimulusToScore.responses.length - 1].responseScore) {
+						subexperiment.scoreSubTotal += stimulusToScore.responses[stimulusToScore.responses.length - 1].responseScore;
+					}
+				}
+				if (subexperiment.label.indexOf("practice") === -1) {
+					totalScore += subexperiment.scoreSubTotal;
+					totalStimuli += subexperiment.trials.length;
+				}
+			}
+			return totalScore + "/" + totalStimuli;
 		}
 	},
 
