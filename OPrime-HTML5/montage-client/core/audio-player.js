@@ -107,5 +107,13 @@ exports.AudioPlayer = Component.specialize( /** @lends AudioPlayer# */ {
 				this.mediaController.stop();
 			}
 		}
+	},
+
+	addEvent: {
+		value: function(message, startTime, endTime) {
+			if (this.mediaController) {
+				this.mediaController.addAudioEventAtTimePeriod(message, startTime, endTime);
+			}
+		}
 	}
 });

@@ -33,6 +33,14 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 			}
 			this._src = value;
 			console.log("Changed audio source" + value);
+			// this.endAudioEvents = [];
+			// this.audioEvents = [];
+		}
+	},
+
+	matchesSource: {
+		value: function(value) {
+			return this._src.indexOf(value) > -1;
 		}
 	},
 
@@ -90,6 +98,14 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 				window.audioEndListener = function() {
 					audioElementToPlay.removeEventListener('ended', window.audioEndListener);
 					console.log("audiourl is done " + audiourl);
+					for (var i = 0; i < self.endAudioEvents.length; i++) {
+						// self.endAudioEvents[i].whatShouldHappen.call();
+						var eventName = self.endAudioEvents[i].whatShouldHappen;
+						if (self.matchesSource(self.endAudioEvents[i].audioFile)) {
+							console.log("Dispatching " + eventName);
+							self.application.dispatchEventNamed(eventName, true, false);
+						}
+					}
 				};
 
 				window.actuallyPlayAudio = function() {
@@ -141,6 +157,9 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 	audioEvents: {
 		value: []
 	},
+	endAudioEvents: {
+		value: []
+	},
 
 	audioTimeUpdateFunction: {
 		value: function() {
@@ -165,11 +184,21 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 			if (!endTime) {
 				endTime = startTime + 1000;
 			}
-			this.audioEvents.push({
-				startTime: startTime,
-				endTime: endTime,
-				whatShouldHappen: whatShouldHappen
-			});
+			var audioFile = whatShouldHappen.substring(whatShouldHappen.indexOf(":::")).replace(":::", "");
+			whatShouldHappen = whatShouldHappen.replace(":::" + audioFile, "");
+			if (startTime === "end") {
+				this.endAudioEvents.push({
+					whatShouldHappen: whatShouldHappen,
+					audioFile: audioFile
+				});
+			} else {
+				this.audioEvents.push({
+					startTime: startTime,
+					endTime: endTime,
+					whatShouldHappen: whatShouldHappen,
+					audioFile: audioFile
+				});
+			}
 
 			if (this._audioElement) {
 				this._audioElement.addEventListener("timeupdate", this.audioTimeUpdateFunction);
