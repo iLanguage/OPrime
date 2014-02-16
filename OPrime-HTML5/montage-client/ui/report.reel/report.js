@@ -25,5 +25,10 @@ exports.Report = ContextualizableComponent.specialize( /** @lends Report# */ {
 			// }]);
 
 		}
+	},
+	calculateScore: {
+		value: function(){
+			this.templateObjects.experimentReport.calculateScore();
+		}
 	}
 });
