@@ -19,6 +19,15 @@
                 "value": {"<-": "@owner.scoreAsText * 100"}
             }
         },
+        "scoreComparedToNorms": {
+            "prototype": "ui/report.reel/norm-visualization.reel",
+            "properties": {
+                "element": {"#": "scoreComparedToNorms"}
+            },
+            "bindings": {
+                "score": {"<-": "@owner.scoreAsText * 100"}
+            }
+        },
         "resultjson": {
             "prototype": "digit/ui/text-area.reel",
             "properties": {
@@ -51,9 +60,10 @@
 </head>
 <body>
     <div data-montage-id="experimentReport" class="ExperimentReport">
-        Percentage: 
-        <span data-montage-id="simpleScoreAsText"></span>
-        <div data-montage-id="resultjson" class="ExperimentReport-json"></div>
+        Result: 
+        <span data-montage-id="simpleScoreAsText"></span>%
+        <span data-montage-id="scoreComparedToNorms"></span>
+        <div hidden data-montage-id="resultjson" class="ExperimentReport-json"></div>
         <ul data-montage-id="results" class="">
             <li data-montage-id="result" class=""></li>
         </ul>

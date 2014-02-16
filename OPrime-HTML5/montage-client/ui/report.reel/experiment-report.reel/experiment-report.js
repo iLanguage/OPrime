@@ -36,7 +36,7 @@ exports.ExperimentReport = Component.specialize( /** @lends ExperimentReport# */
 			this.results = [];
 			var self = this;
 			ResultOnlyView.emit = function(key, value){
-				self.scoreAsText = key;
+				self.scoreAsText = Math.round(key * 10000) / 10000;
 				self.results = value;
 			}
 			ResultOnlyView.map(this.experimentalDesign);
@@ -74,7 +74,7 @@ exports.ExperimentReport = Component.specialize( /** @lends ExperimentReport# */
 			// this.experimentalDesign.scoreTotal = totalScore;
 			// this.scoreAsText = totalScore + "/" + totalStimuli;
 			this.stimuliResponsesController = new RangeController().initWithContent(this.results);
-			this.resultjson = JSON.stringify(this.results, null, 4);
+			this.resultjson = JSON.stringify(this.results, null, 2);
 			return this.scoreAsText;
 		}
 	}

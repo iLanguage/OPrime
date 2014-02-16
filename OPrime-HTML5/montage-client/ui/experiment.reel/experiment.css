@@ -76,6 +76,19 @@
     z-index: 300;
 }
 
+.Experiment-results {
+    opacity: .9;
+    position: absolute;
+    background-color: #fff;
+    color: #333;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 2em;
+    z-index: 250;
+}
+
 .Experiment-start-pause-button {
     position: absolute;
     top: 35%;
