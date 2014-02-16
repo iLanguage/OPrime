@@ -2,7 +2,8 @@
  * @module ui/experiment-report.reel
  * @requires montage/ui/component
  */
-var Component = require("montage/ui/component").Component;
+var Component = require("montage/ui/component").Component,
+	RangeController = require("montage/core/range-controller").RangeController;
 
 /**
  * @class ExperimentReport
@@ -15,6 +16,14 @@ exports.ExperimentReport = Component.specialize( /** @lends ExperimentReport# */
 		}
 	},
 
+	stimuliResponsesController: {
+		value: null
+	},
+
+	resultjson: {
+		value: null
+	},
+
 	/**
 	 * An extremely simplistic score until we have normalization data, when this will change complete..
 	 * @type {Object}
@@ -23,13 +32,30 @@ exports.ExperimentReport = Component.specialize( /** @lends ExperimentReport# */
 		value: function() {
 			var totalScore = 0;
 			var totalStimuli = 0;
+			this.results = [];
 			for (var subexperimentIndex = 0; subexperimentIndex < this.experimentalDesign.subexperiments.length; subexperimentIndex++) {
 				var subexperiment = this.experimentalDesign.subexperiments[subexperimentIndex];
 				subexperiment.scoreSubTotal = 0;
 				for (var stimulusIndex = 0; stimulusIndex < subexperiment.trials.length; stimulusIndex++) {
 					var stimulusToScore = subexperiment.trials[stimulusIndex];
-					if (stimulusToScore.responses && stimulusToScore.responses[stimulusToScore.responses.length - 1] && stimulusToScore.responses[stimulusToScore.responses.length - 1].responseScore) {
-						subexperiment.scoreSubTotal += stimulusToScore.responses[stimulusToScore.responses.length - 1].responseScore;
+					if (stimulusToScore.responses && stimulusToScore.responses[stimulusToScore.responses.length - 1] && stimulusToScore.responses[stimulusToScore.responses.length - 1].score !== undefined) {
+						stimulusToScore.response = stimulusToScore.responses[stimulusToScore.responses.length - 1];
+						stimulusToScore.score = stimulusToScore.responses[stimulusToScore.responses.length - 1].score;
+						this.results.push(stimulusToScore);
+						subexperiment.scoreSubTotal += stimulusToScore.score;
+						// this.experimentalDesign.result.push({
+						// 	stimulus: stimulusToScore.targetImage,
+						// 	response: stimulusToScor e.responses[stimulusToScore.responses.length - 1],
+						// 	score: stimulusToScore.responses[stimulusToScore.responses.length - 1].score
+						// });
+					} else {
+						stimulusToScore.response = {
+							choice: {
+								orthographic: "NA"
+							}
+						};
+						stimulusToScore.score = null;
+						this.results.push(stimulusToScore);
 					}
 				}
 				if (true || subexperiment.label.indexOf("practice") === -1) {
@@ -39,6 +65,8 @@ exports.ExperimentReport = Component.specialize( /** @lends ExperimentReport# */
 			}
 			this.experimentalDesign.scoreTotal = totalScore;
 			this.scoreAsText = totalScore + "/" + totalStimuli;
+			this.stimuliResponsesController = new RangeController().initWithContent(this.results);
+			this.resultjson = JSON.stringify(this.results, null, 2);
 			return this.scoreAsText;
 		}
 	}

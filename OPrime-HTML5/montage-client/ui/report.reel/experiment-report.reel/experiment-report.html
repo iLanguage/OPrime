@@ -18,6 +18,33 @@
             "bindings": {
                 "value": {"<-": "@owner.scoreAsText"}
             }
+        },
+        "resultjson": {
+            "prototype": "digit/ui/text-area.reel",
+            "properties": {
+                "element": {"#": "resultjson"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.resultjson"}
+            }
+        },
+        "result": {
+            "prototype": "ui/report.reel/stimulus-report.reel",
+            "properties": {
+                "element": {"#": "result"}
+            },
+            "bindings": {
+                "json": {"<-": "@results:iteration.object"}
+            }
+        },
+        "results": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "results"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.stimuliResponsesController"}
+            }
         }
     }
     </script>
@@ -26,6 +53,10 @@
     <div data-montage-id="experimentReport" class="ExperimentReport">
         Your score!
         <div data-montage-id="simpleScoreAsText"></div>
+        <div data-montage-id="resultjson" class="ExperimentReport-json"></div>
+        <div data-montage-id="results" class="">
+            <span data-montage-id="result" class=""></span>
+        </div>
     </div>
 </body>
 </html>

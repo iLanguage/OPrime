@@ -90,11 +90,19 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					self.playAudio();
 				}
 			});
-			var chosenImage = "";
+			var choice = "";
 			if (stimulusId) {
-				chosenImage = this[stimulusId].substring(this[stimulusId].lastIndexOf("/") + 1)
+				choice = this[stimulusId].substring(this[stimulusId].lastIndexOf("/") + 1).replace(/\..+$/, "").replace(/\d+_/, "");
+				if (choice === this.target.orthographic) {
+					choice = this.target;
+				} else {
+					this.distractors.map(function(distractor) {
+						if (choice === distractor.orthographic) {
+							choice = distractor;
+						}
+					});
+				}
 			}
-
 			var response = {
 				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
 				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
@@ -102,8 +110,14 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"y": responseEvent.y,
 				"pageX": responseEvent.pageX,
 				"pageY": responseEvent.pageY,
-				"chosenVisualStimulus": chosenImage,
-				"responseScore": this.scoreResponse(this.targetImage, chosenImage)
+				// "prime": {
+				// 	phonemic: this.prime.phonemic,
+				// 	orthographic: this.prime.orthographic,
+				// 	imageFile: this.prime.imageFile
+				// },
+				"choice": choice,
+				// "target": this.target,
+				"score": this.scoreResponse(this.target, choice)
 			};
 			this.responses.push(response);
 			console.log("Recorded response", JSON.stringify(response));
@@ -112,7 +126,10 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 	scoreResponse: {
 		value: function(expectedResponse, actualResponse) {
-			if (actualResponse === expectedResponse) {
+			if (!actualResponse.orthographic) {
+				return "error";
+			}
+			if (actualResponse.orthographic === expectedResponse.orthographic) {
 				return 1;
 			} else {
 				return 0;
