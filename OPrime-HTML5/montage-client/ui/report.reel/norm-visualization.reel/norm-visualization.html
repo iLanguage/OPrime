@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="norm-visualization.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "normVisualization"}
+            }
+        },
+        "viz": {
+            "prototype": "digit/ui/slider.reel",
+            "properties": {
+                "element": {"#": "viz"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.score"},
+                "disabled": {"<-": "@owner.score > 0"},
+                "classList.has('disabled')": {"<-": "@owner.score > 0"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="normVisualization" class="NormVisualization">
+        <div class="NormVisualization-colorgradient">
+            <input data-montage-id="viz" disabled class="NormVisualization-viz NormVisualization-handle" type="range" min="0" max="100">
+        </div>
+    </div>
+</body>
+</html>
