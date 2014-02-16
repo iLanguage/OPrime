@@ -218,7 +218,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			}
 
 			this.templateObjects.reinforcement.next();
-			this._currentTestBlock.trials[this._currentStimulusIndex].id = this._currentTestBlock.label + this._currentStimulusIndex;
+			this._currentTestBlock.trials[this._currentStimulusIndex].id = this._currentTestBlock.label + "_" + this._currentStimulusIndex;
 			this._currentStimulus.load(this._currentTestBlock.trials[this._currentStimulusIndex]);
 
 			if (this.autoPlaySlideshowOfStimuli) {
