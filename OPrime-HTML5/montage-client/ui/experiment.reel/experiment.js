@@ -7,7 +7,8 @@ var ContextualizableComponent = require("core/contextualizable-component").Conte
 	RangeController = require("montage/core/range-controller").RangeController,
 	PromiseController = require("montage/core/promise-controller").PromiseController,
 	Promise = require("montage/core/promise").Promise,
-	AudioPlayer = require("core/audio-player").AudioPlayer;
+	AudioPlayer = require("core/audio-player").AudioPlayer,
+	CORS = require("core/cors").CORS;
 
 /**
  * @class Experiment
@@ -308,6 +309,15 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	experimentCompleted: {
 		value: function() {
 			var self = this;
+
+			this.experimentalDesign.jsonType = "experiment";
+			this.experimentalDesign.experimentType = this.experimentType;
+			CORS.makeCORSRequest({
+				method: "POST",
+				data: this.experimentalDesign,
+				url: this.experimentalDesign.database
+			});
+			this.currentlyPlaying = false;
 
 			this.confirm(this.experimentalDesign.end_instructions.for_child).then(function() {
 				console.log("Experiment is complete.");
