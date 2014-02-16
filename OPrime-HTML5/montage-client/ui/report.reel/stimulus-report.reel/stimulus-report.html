@@ -16,16 +16,34 @@
                 "element": {"#": "prime"}
             },
             "bindings": {
-                "value": {"<-": "@owner.prime"}
+                "value": {"<-": "@owner.json.prime"},
+                "classList.has('StimulusReport-incorrect')": {
+                    "<-": "@owner.json.score==0"
+                }
             }
         },
-        "score": {
+        "target": {
             "prototype": "montage/ui/text.reel",
             "properties": {
-                "element": {"#": "score"}
+                "element": {"#": "target"}
             },
             "bindings": {
-                "value": {"<-": "@owner.score"}
+                "value": {"<-": "@owner.json.target"}
+            }
+        },
+        "response": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "response"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.response"},
+                "classList.has('StimulusReport-correct')": {
+                    "<-": "@owner.json.score"
+                },
+                "classList.has('StimulusReport-incorrect')": {
+                    "<-": "@owner.json.score==0"
+                }
             }
         }
     }
@@ -33,8 +51,10 @@
 </head>
 <body>
     <div data-montage-id="stimulusReport" class="StimulusReport">
-        Prime: <span data-montage-id="prime"></span>
-        = <span data-montage-id="score"></span>
+        /<span data-montage-id="prime"></span>/
+        : <span data-montage-id="target"></span>
+        : /<span data-montage-id="response"></span>/
+        
     </div>
 </body>
 </html>
