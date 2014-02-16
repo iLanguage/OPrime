@@ -16,7 +16,7 @@
                 "element": {"#": "simpleScoreAsText"}
             },
             "bindings": {
-                "value": {"<-": "@owner.scoreAsText"}
+                "value": {"<-": "@owner.scoreAsText * 100"}
             }
         },
         "resultjson": {
@@ -51,12 +51,12 @@
 </head>
 <body>
     <div data-montage-id="experimentReport" class="ExperimentReport">
-        Your score!
-        <div data-montage-id="simpleScoreAsText"></div>
+        Percentage: 
+        <span data-montage-id="simpleScoreAsText"></span>
         <div data-montage-id="resultjson" class="ExperimentReport-json"></div>
-        <div data-montage-id="results" class="">
-            <span data-montage-id="result" class=""></span>
-        </div>
+        <ul data-montage-id="results" class="">
+            <li data-montage-id="result" class=""></li>
+        </ul>
     </div>
 </body>
 </html>

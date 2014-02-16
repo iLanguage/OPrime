@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="stimulus-report.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "stimulusReport"}
+            }
+        },
+        "prime": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "prime"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.prime"}
+            }
+        },
+        "score": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "score"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.score"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="stimulusReport" class="StimulusReport">
+        Prime: <span data-montage-id="prime"></span>
+        = <span data-montage-id="score"></span>
+    </div>
+</body>
+</html>
