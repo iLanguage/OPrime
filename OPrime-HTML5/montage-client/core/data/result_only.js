@@ -2,7 +2,7 @@ exports.emit = function(key, value) {
     console.log(key, value);
 }
 exports.map = function(doc) {
-    emit = this.emit;
+    emit = emit || this.emit;
     
     try {
         if (doc.jsonType === "experiment") {

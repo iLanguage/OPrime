@@ -8,7 +8,7 @@ var ContextualizableComponent = require("core/contextualizable-component").Conte
 	PromiseController = require("montage/core/promise-controller").PromiseController,
 	Promise = require("montage/core/promise").Promise,
 	AudioPlayer = require("core/audio-player").AudioPlayer,
-	CORS = require("core/cors").CORS;
+	Database = require("core/data/database");
 
 /**
  * @class Experiment
@@ -312,11 +312,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			this.experimentalDesign.jsonType = "experiment";
 			this.experimentalDesign.experimentType = this.experimentType;
-			CORS.makeCORSRequest({
-				method: "POST",
-				data: this.experimentalDesign,
-				url: this.experimentalDesign.database
-			});
+			this.experimentalDesign.timestamp = Date.now();
+			Database.databaseUrl = this.experimentalDesign.database;
+			Database.set(this.experimentalDesign.timestamp, this.experimentalDesign);
+			
 			this.currentlyPlaying = false;
 
 			this.confirm(this.experimentalDesign.end_instructions.for_child).then(function() {

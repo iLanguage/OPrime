@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="participants.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "participants"}
+            }
+        },
+        "participantsWithResultsJSON": {
+            "prototype": "digit/ui/text-area.reel",
+            "properties": {
+                "element": {"#": "participantsWithResultsJSON"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.participantsWithResultsJSON"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="participants" class="Participants">
+        List of participants 
+        <textarea data-montage-id="participantsWithResultsJSON"></textarea>
+    </div>
+</body>
+</html>
