@@ -77,10 +77,9 @@
 }
 
 .Experiment-results {
-    opacity: .9;
+    opacity: 1;
     position: absolute;
-    background-color: #fff;
-    color: #333;
+    
     top: 0;
     left: 0;
     height: 100%;

@@ -9,12 +9,23 @@
             "properties": {
                 "element": {"#": "participant"}
             }
+        },
+        "name": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "name"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.name ?? @owner.json.userid"},
+                "title": {"<-": "@owner.json.userid"}
+            }
         }
     }
     </script>
 </head>
 <body>
     <div data-montage-id="participant" class="Participant">
+        <span data-montage-id="name"></span>
     </div>
 </body>
 </html>

@@ -10,6 +10,28 @@
                 "element": {"#": "participants"}
             }
         },
+
+        "participant": {
+            "prototype": "ui/participant.reel",
+            "properties": {
+                "element": {"#": "participant"}
+            },
+            "bindings": {
+                "json": {"<-": "@participantsList:iteration.object"}
+            }
+        },
+
+        "participantsList": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "participantsList"},
+                "isSelectionEnabled": true
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.participantsController"}
+            }
+        },
+
         "participantsWithResultsJSON": {
             "prototype": "digit/ui/text-area.reel",
             "properties": {
@@ -24,8 +46,11 @@
 </head>
 <body>
     <div data-montage-id="participants" class="Participants">
-        List of participants 
-        <textarea data-montage-id="participantsWithResultsJSON"></textarea>
+        List of participants:
+        <ul data-montage-id="participantsList">
+            <li data-montage-id="participant"></li>
+        </ul>
+        <textarea hidden data-montage-id="participantsWithResultsJSON"></textarea>
     </div>
 </body>
 </html>

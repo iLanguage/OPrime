@@ -164,6 +164,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function() {
 			this.currentlyPlaying = true;
 			console.log("currentlyPlaying: " + this.currentlyPlaying);
+			
+			this.experimentalDesign.jsonType = "experiment";
+			this.experimentalDesign.experimentType = this.experimentType;
+			this.experimentalDesign.timestamp = Date.now();
 
 			this._currentStimulus = this.templateObjects.currentStimulus;
 			this._currentStimulus.imageAssetsPath = this.experimentalDesign.imageAssetsPath;
@@ -310,11 +314,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function() {
 			var self = this;
 
-			this.experimentalDesign.jsonType = "experiment";
-			this.experimentalDesign.experimentType = this.experimentType;
+			
 			this.experimentalDesign.timestamp = Date.now();
 			Database.databaseUrl = this.experimentalDesign.database;
-			Database.set(this.experimentalDesign.timestamp, this.experimentalDesign);
+			Database.set(this.experimentalDesign.experimentType + this.experimentalDesign.timestamp, this.experimentalDesign);
 			
 			this.currentlyPlaying = false;
 

@@ -134,12 +134,32 @@ h4 {
 
 .bluebody {
 	background-color: #0176A0;
+	color: #fff;
 	background-image: -moz-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
 	background-image: -webkit-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
 	background-image: -o-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
 	background-image: -ms-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
 	background-image: radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#029CC9', endColorstr='#005077', GradientType=0 ); 
+}
+
+.span6 {
+	width: 49%;
+	float: left;
+}
+
+.span9 {
+	width: 69%;
+	float: left;
+}
+
+.span3 {
+	width: 29%;
+	float: left;
+}
+
+.row, .row-fluid {
+	clear: both;
 }
 
 @media print {

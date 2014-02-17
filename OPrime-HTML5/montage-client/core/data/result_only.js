@@ -2,8 +2,12 @@ exports.emit = function(key, value) {
     console.log(key, value);
 }
 exports.map = function(doc) {
-    emit = emit || this.emit;
-    
+    try {
+        emit = emit || this.emit;
+    } catch (e) {
+        emit = this.emit;
+    }
+
     try {
         if (doc.jsonType === "experiment") {
 
@@ -42,7 +46,7 @@ exports.map = function(doc) {
                     totalStimuli += subexperiment.trials.length;
                 }
             }
-            emit(totalScore / totalStimuli, results);
+            emit(totalScore / totalAnswered, results);
         }
     } catch (e) {
         emit(e, 1);

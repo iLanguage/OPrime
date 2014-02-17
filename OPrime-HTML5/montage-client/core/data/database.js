@@ -14,7 +14,7 @@ exports.set = function(key, value) {
 	// if (!this.databaseUrl) {
 	// 	throw "Database url is not defined.";
 	// }
-	value._id = id;
+	value._id = key;
 	return CORS.makeCORSRequest({
 		method: "POST",
 		data: value,
@@ -27,4 +27,3 @@ exports.view = function(view, reduced) {
 		url: this.databaseUrl + "/_design/psycholinguistics/_view/" + view
 	});
 };
-

@@ -1,25 +1,17 @@
 /**
  * @module ui/participant.reel
- * @requires ui/user.reel
+ * @requires montage/ui/component
  */
-var User = require("ui/user.reel").User;
+var Component = require("montage/ui/component").Component;
 
 /**
  * @class Participant
- * @extends User
+ * @extends Component
  */
-exports.Participant = User.specialize(/** @lends Participant# */ {
+exports.Participant = Component.specialize(/** @lends Participant# */ {
     constructor: {
         value: function Participant() {
             this.super();
         }
-    },
-
-    jsonType: {
-        value: "participant"
-    },
-
-    templateModuleId: {
-        value: "ui/user.reel/user.html"
     }
 });
