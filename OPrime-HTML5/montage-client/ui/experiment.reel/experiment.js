@@ -36,6 +36,18 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function Experiment() {
 			this.super();
 			this.application.audioPlayer = new AudioPlayer();
+			this.application.audienceSelection = [{
+				"gameLabel": "Debug",
+				"text": "Debug",
+				"experimentLabel": "Debug",
+				"key": "debug"
+			}];
+			this.application.stimuliDialectsSelection = [{
+				"gameLabel": "Debug",
+				"text": "Debug",
+				"experimentLabel": "Debug",
+				"key": "debug"
+			}];
 		}
 	},
 
@@ -49,7 +61,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				throw "Experimential design source file is undefined, not loading the experiment";
 			}
 			var self = this;
-
 
 			// console.log(" Loaded in the experimental Design." + designToForceIncludeInMop);
 			// self.experimentalDesign = JSON.parse(designToForceIncludeInMop);
@@ -67,15 +78,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this.autoPlaySlideshowOfStimuli = false;
 			// this.application.audioPlayer.play("assets/gammatone.wav");
 
-			// this.audiencesController = RangeController.create().initWithContent(this.audiences);
-			// this.audiencesController.selection = [];
-			// this.audiencesController.addRangeAtPathChangeListener(
-			// 	"selection", this, "handleAudienceChange");
-
-			// this.localesController = RangeController.create().initWithContent();
-			// this.localesController.selection = [];
-			// this.localesController.addRangeAtPathChangeListener(
-			// 	"selection", this, "handleLocaleChange");
 		}
 	},
 
@@ -145,10 +147,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			if (firstTime) {
 				this.currentlyPlaying = false;
-				this.templateObjects.audiencesController.content = this.audiences;
-				this.templateObjects.experimentStimuliDialectsController.content = this.locales;
+				this.experimentDisplayTimeStart = Date.now();
 			}
-			this.experimentDisplayTimeStart = Date.now();
 
 		}
 	},
@@ -164,7 +164,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function() {
 			this.currentlyPlaying = true;
 			console.log("currentlyPlaying: " + this.currentlyPlaying);
-			
+
 			this.experimentalDesign.jsonType = "experiment";
 			this.experimentalDesign.experimentType = this.experimentType;
 			this.experimentalDesign.timestamp = Date.now();
@@ -314,11 +314,11 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function() {
 			var self = this;
 
-			
+
 			this.experimentalDesign.timestamp = Date.now();
 			Database.databaseUrl = this.experimentalDesign.database;
 			Database.set(this.experimentalDesign.experimentType + this.experimentalDesign.timestamp, this.experimentalDesign);
-			
+
 			this.currentlyPlaying = false;
 
 			this.confirm(this.experimentalDesign.end_instructions.for_child).then(function() {
@@ -388,6 +388,11 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			"experimentLabel": "Report",
 			"key": "report"
 		}, {
+			"gameLabel": "Debug",
+			"text": "Debug",
+			"experimentLabel": "Debug",
+			"key": "debug"
+		}, {
 			"gameLabel": "Default",
 			"text": "Default",
 			"experimentLabel": "Default",
@@ -398,13 +403,13 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	locales: {
 		value: [{
 			"iso": "en",
-			"label": "English",
+			"label": "English"
 		}, {
 			"iso": "fr",
-			"label": "Français",
+			"label": "Français"
 		}, {
 			"iso": "iu",
-			"label": "ᐃᓄᒃᑎᑐᑦ",
+			"label": "ᐃᓄᒃᑎᑐᑦ"
 		}]
 	},
 
@@ -437,6 +442,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			console.log("Locale changed from: " + (previous[0] ? previous[0].label : "nothing") + " -> " + (now[0] ? now[0].label : "nothing"));
 		}
 	},
+
 	/*
 	TODO change the labelPropertyName to use an FRB contingent on gamify
 	*/
