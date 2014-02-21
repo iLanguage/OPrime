@@ -12,17 +12,40 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 	constructor: {
 		value: function Audiences() {
 			this.content = [{
-				"quote": "If music be the food of love, play on.",
-				"important": false
+				"gameLabel": "Child",
+				"text": "Child",
+				"experimentLabel": "Participant",
+				"key": "participant"
 			}, {
-				"quote": "O Romeo, Romeo! wherefore art thou Romeo?",
-				"important": true
+				"gameLabel": "Teacher",
+				"text": "Teacher",
+				"experimentLabel": "Administrator",
+				"key": "experimentAdministrator"
 			}, {
-				"quote": "All that glitters is not gold.",
-				"important": false
+				"gameLabel": "Parent",
+				"text": "Parent",
+				"experimentLabel": "Parent",
+				"key": "parent"
 			}, {
-				"quote": "I am amazed and know not what to say.",
-				"important": false
+				"gameLabel": "SLP",
+				"text": "SLP",
+				"experimentLabel": "Administrator",
+				"key": "experimentAdministratorSpecialist"
+			}, {
+				"gameLabel": "School Records",
+				"text": "School Records",
+				"experimentLabel": "Report",
+				"key": "report"
+			}, {
+				"gameLabel": "Debug",
+				"text": "Debug",
+				"experimentLabel": "Debug",
+				"key": "debug"
+			}, {
+				"gameLabel": "Default",
+				"text": "Default",
+				"experimentLabel": "Default",
+				"key": "default"
 			}];
 		}
 	},
@@ -31,7 +54,7 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 		value: function() {
 			var rangeController = this.templateObjects.rangeController;
 			rangeController.content = this.content;
-			rangeController.select(this.content[1]);
+			rangeController.select(this.content[5]);
 
 			//Observe the selection for changes
 			rangeController.addRangeAtPathChangeListener(
@@ -41,8 +64,13 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 
 	handleSelectionChange: {
 		value: function(plus, minus) {
-			this.message = "Selection changed from: " + (minus[0] ? minus[0].quote : "nothing") + " -> " + (plus[0] ? plus[0].quote : "nothing");
+			this.message = "Selection changed from: " + (minus[0] ? minus[0].gameLabel : "nothing") + " -> " + (plus[0] ? plus[0].gameLabel : "nothing");
+			this._currentAudience = plus[0];
 		}
+	},
+
+	_currentAudience: {
+		value: null
 	}
 
 });

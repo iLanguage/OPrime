@@ -22,13 +22,13 @@
             "prototype": "montage/core/range-controller"
         },
 
-        "quote": {
+        "gameLabel": {
             "prototype": "montage/ui/text.reel",
             "properties": {
-                "element": {"#": "quote"}
+                "element": {"#": "gameLabel"}
             },
             "bindings": {
-                "value": {"<-": "@repetition.objectAtCurrentIteration.quote"}
+                "value": {"<-": "@repetition.objectAtCurrentIteration.gameLabel"}
             }
         },
         
@@ -37,7 +37,7 @@
             "properties": {
                 "element": {"#": "select"},
                 "contentController": {"@": "rangeController"},
-                "labelPropertyName": "quote"
+                "labelPropertyName": "gameLabel"
             }
         },
         
@@ -58,7 +58,7 @@
         <select data-montage-id="select">
         </select>
         <div data-montage-id="repetition">
-            <span data-montage-id="quote">
+            <span data-montage-id="gameLabel">
             </span>
         </div>
         <span data-montage-id="log">
