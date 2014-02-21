@@ -52,7 +52,7 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 				this.addOwnPropertyChangeListener("src", this);
 				this._audioElement = this.templateObjects.owner.element;
 				this._audioElement.src = this.src;
-				this.addAudioEventAtTimePeriod();
+				// this.addAudioEventAtTimePeriod();
 			}
 		}
 	},

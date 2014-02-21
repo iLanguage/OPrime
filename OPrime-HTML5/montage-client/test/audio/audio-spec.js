@@ -59,9 +59,7 @@ TestPageLoader.queueTest("audio-test", function(testPage) {
         it('should be able to animate events at points in the audio playback', function(done) {
             runs(function() {
                 audio.src = "http://cordova.apache.org/downloads/BlueZedEx.mp3"; // http://81310752d5730fb4ef3c-221b4998ec12974102282b6d4a8fafbe.r2.cf1.rackcdn.com/3rds.mp3
-                audio.addAudioEventAtTimePeriod(function(){
-                    alert("Hi!");
-                }, 0, 200000);
+                audio.addAudioEventAtTimePeriod("aneventlistener", 0, 200000);
 
 
                 spyOn(audio.element, 'ended');
