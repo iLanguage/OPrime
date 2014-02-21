@@ -400,7 +400,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		}]
 	},
 
-	locales: {
+	stimuliDialects: {
 		value: [{
 			"iso": "en",
 			"label": "English"
