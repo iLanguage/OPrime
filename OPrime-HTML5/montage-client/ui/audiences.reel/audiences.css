@@ -1,3 +1,8 @@
-.Audiences {
+.Audiences span {
+    cursor: pointer;
+    padding-left: 20px;
+}
 
+.Audiences .selected {
+    color:red;
 }
