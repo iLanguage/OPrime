@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="audiences.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "audiences"}
+            }
+        },
+        "repetition": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "repetition"},
+                "isSelectionEnabled": true,
+                "contentController": {"@": "rangeController"}
+            }
+        },
+        "rangeController": {
+            "prototype": "montage/core/range-controller"
+        },
+
+        "quote": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "quote"}
+            },
+            "bindings": {
+                "value": {"<-": "@repetition:iteration.object.quote"}
+            }
+        },
+        
+        "select": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "select"},
+                "contentController": {"@": "rangeController"},
+                "labelPropertyName": "quote"
+            }
+        },
+        
+        "log": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "log"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.message"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="audiences" class="Audiences">
+        <select data-montage-id="select">
+        </select>
+        <div data-montage-id="repetition">
+            <p data-montage-id="quote">
+            </p>
+        </div>
+        <p data-montage-id="log">
+        </p>
+    </div>
+</body>
+</html>

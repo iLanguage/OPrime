@@ -36,12 +36,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function Experiment() {
 			this.super();
 			this.application.audioPlayer = new AudioPlayer();
-			this.application.audienceSelection = [{
-				"gameLabel": "Debug",
-				"text": "Debug",
-				"experimentLabel": "Debug",
-				"key": "debug"
-			}];
+			
 			this.application.stimuliDialectsSelection = [{
 				"gameLabel": "Debug",
 				"text": "Debug",
@@ -345,61 +340,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function() {}
 	},
 
-	/* Using an object and a select: http://montagejs.github.io/mfiddle/#!/7884716 */
-	_targetAudience: {
-		value: null
-	},
-	targetAudience: {
-		get: function() {
-			return this._targetAudience;
-		},
-		set: function(value) {
-			if (this._targetAudience === value) {
-				return;
-			}
-			this._targetAudience = value;
-			this.needsDraw = true;
-		}
-	},
-	audiences: {
-		value: [{
-			"gameLabel": "Child",
-			"text": "Child",
-			"experimentLabel": "Participant",
-			"key": "participant"
-		}, {
-			"gameLabel": "Teacher",
-			"text": "Teacher",
-			"experimentLabel": "Administrator",
-			"key": "experimentAdministrator"
-		}, {
-			"gameLabel": "Parent",
-			"text": "Parent",
-			"experimentLabel": "Parent",
-			"key": "parent"
-		}, {
-			"gameLabel": "SLP",
-			"text": "SLP",
-			"experimentLabel": "Administrator",
-			"key": "experimentAdministratorSpecialist"
-		}, {
-			"gameLabel": "School Records",
-			"text": "School Records",
-			"experimentLabel": "Report",
-			"key": "report"
-		}, {
-			"gameLabel": "Debug",
-			"text": "Debug",
-			"experimentLabel": "Debug",
-			"key": "debug"
-		}, {
-			"gameLabel": "Default",
-			"text": "Default",
-			"experimentLabel": "Default",
-			"key": "default"
-		}]
-	},
-
 	stimuliDialects: {
 		value: [{
 			"iso": "en",
@@ -411,27 +351,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			"iso": "iu",
 			"label": "ᐃᓄᒃᑎᑐᑦ"
 		}]
-	},
-
-	/**
-	 *
-	 * References:
-	 * https://github.com/montagejs/montage/pull/1103
-	 *
-	 * @type {Object}
-	 */
-	handleAudienceChange: {
-		value: function(now, previous) {
-			if (!now || now.length === 0 || !now[0]) {
-				return;
-			}
-			var label = this.gamify ? "gameLabel" : "experimentLabel";
-			console.log("Audience changed from: " + (previous[0] ? previous[0][label] : "nothing") + " -> " + (now[0] ? now[0][label] : "nothing"));
-			this.targetAudience = now[0].key;
-			/*cause the title and description to change based on the audience. */
-			console.log(this.description);
-			console.log(this.title);
-		}
 	},
 
 	handleLocaleChange: {
