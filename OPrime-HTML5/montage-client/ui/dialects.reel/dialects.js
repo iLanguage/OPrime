@@ -51,6 +51,9 @@ exports.Dialects = Component.specialize( /** @lends Dialects# */ {
 				this.value = this.templateObjects.select.value;
 				if (this.globalKey) {
 					this.application[this.globalKey] = this.value;
+					var changeDialectEvent = document.createEvent("CustomEvent");
+					changeDialectEvent.initCustomEvent("change" + this.globalKey, true, true, null);
+					this.dispatchEvent(changeDialectEvent);
 				}
 			}
 			console.log("StimuliDialects handleChange", this.value);

@@ -23,7 +23,7 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 
 	localize: {
 		value: function(message) {
-			console.log("Resolving localization ");
+			console.log("Resolving localization in "+ this.currentLocale);
 			var result = message;
 			if (!this.data) {
 				console.warn("No localizations available, resolving the key itself: ", result);

@@ -36,13 +36,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function Experiment() {
 			this.super();
 			this.application.audioPlayer = new AudioPlayer();
-			
-			this.application.stimuliDialectsSelection = [{
-				"gameLabel": "Debug",
-				"text": "Debug",
-				"experimentLabel": "Debug",
-				"key": "debug"
-			}];
+
 		}
 	},
 
@@ -138,13 +132,21 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	 */
 	enterDocument: {
 		value: function(firstTime) {
-			this.super(firstTime);
-
 			if (firstTime) {
 				this.currentlyPlaying = false;
 				this.experimentDisplayTimeStart = Date.now();
+
+				this.application.addEventListener("changeinterfaceLocale", this);
 			}
 
+			this.super(firstTime);
+
+		}
+	},
+
+	draw: {
+		value: function() {
+			this.super();
 		}
 	},
 
@@ -340,25 +342,32 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function() {}
 	},
 
-	stimuliDialects: {
-		value: [{
-			"iso": "en",
-			"label": "English"
-		}, {
-			"iso": "fr",
-			"label": "Français"
-		}, {
-			"iso": "iu",
-			"label": "ᐃᓄᒃᑎᑐᑦ"
-		}]
-	},
-
 	handleLocaleChange: {
 		value: function(now, previous) {
+			console.log("handleLocaleChange");
 			if (!now || now.length === 0 || !now[0]) {
 				return;
 			}
 			console.log("Locale changed from: " + (previous[0] ? previous[0].label : "nothing") + " -> " + (now[0] ? now[0].label : "nothing"));
+		}
+	},
+
+	handleChangeinterfaceLocale: {
+		value: function() {
+			if (this.application && this.application.interfaceLocale) {
+				console.log("handleChangeinterfaceLocale", this.application.interfaceLocale);
+				this.contextualizer.currentLocale = this.application.interfaceLocale.iso;
+				this.needsDraw = true;
+			} else {
+				console.log("Not setting the experiments contextualizer locale");
+			}
+		}
+	},
+
+	getTextFor: {
+		value: function(key, audience, dialect) {
+			console.log("getTextFor", key, audience, dialect);
+			return this[key];
 		}
 	},
 
@@ -378,12 +387,21 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			if (!this.experimentalDesign || !this.experimentalDesign.description) {
 				return description;
 			}
-			if (this.targetAudience) {
-				description = this.experimentalDesign.description["for_" + this.targetAudience];
+			if (this.application && this.application.currentAudience) {
+				description = this.experimentalDesign.description["for_" + this.application.currentAudience.key];
+				console.log("Contextualizing description for " + description);
 			}
 			if (!description) {
 				description = this.experimentalDesign.description["default"] || "";
 			}
+
+			if (this.application && this.application.interfaceLocale) {
+				console.log("updating contextualizer locale", this.application.interfaceLocale);
+				this.contextualizer.currentLocale = this.application.interfaceLocale.iso;
+			} else {
+				console.log("Not setting the experiments contextualizer locale");
+			}
+
 			var localized = this.contextualizer.localize(description);
 			return localized;
 		},
