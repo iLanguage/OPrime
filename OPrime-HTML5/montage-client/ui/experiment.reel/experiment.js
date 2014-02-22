@@ -137,10 +137,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				this.experimentDisplayTimeStart = Date.now();
 
 				this.application.addEventListener("changeinterfaceLocale", this);
+				this.application.addEventListener("changeCurrentAudience", this);
 			}
 
 			this.super(firstTime);
-
 		}
 	},
 
@@ -358,9 +358,18 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				console.log("handleChangeinterfaceLocale", this.application.interfaceLocale);
 				this.contextualizer.currentLocale = this.application.interfaceLocale.iso;
 				this.needsDraw = true;
+				this.setContextualizedText("description");
+				this.setContextualizedText("instructions");
+				this.setTitle();
 			} else {
 				console.log("Not setting the experiments contextualizer locale");
 			}
+		}
+	},
+
+	handleChangeCurrentAudience: {
+		value: function() {
+			this.handleChangeinterfaceLocale();
 		}
 	},
 
@@ -378,47 +387,39 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: null
 	},
 
-	_description: {
+	description: {
 		value: null
 	},
-	description: {
-		get: function() {
-			var description = this._description || "";
-			if (!this.experimentalDesign || !this.experimentalDesign.description) {
-				return description;
+	setContextualizedText: {
+		value: function(key) {
+			var contextualizedKey = "";
+			if (!this.experimentalDesign || !this.experimentalDesign[key]) {
+				return key;
 			}
 			if (this.application && this.application.currentAudience) {
-				description = this.experimentalDesign.description["for_" + this.application.currentAudience.key];
-				console.log("Contextualizing description for " + description);
+				var context = this.application.currentAudience.key;
+				if (this.gamify && this.application.currentAudience.gamifiedKey) {
+					context = this.application.currentAudience.gamifiedKey;
+				}
+				contextualizedKey = this.experimentalDesign[key]["for_" + context];
+				console.log("Contextualizing key for " + key);
 			}
-			if (!description) {
-				description = this.experimentalDesign.description["default"] || "";
-			}
-
-			if (this.application && this.application.interfaceLocale) {
-				console.log("updating contextualizer locale", this.application.interfaceLocale);
-				this.contextualizer.currentLocale = this.application.interfaceLocale.iso;
-			} else {
-				console.log("Not setting the experiments contextualizer locale");
+			if (!contextualizedKey) {
+				contextualizedKey = this.experimentalDesign[key]["default"] || "";
 			}
 
-			var localized = this.contextualizer.localize(description);
+			var localized = this.contextualizer.localize(contextualizedKey);
+			this[key] = localized;
 			return localized;
-		},
-		set: function(value) {
-			if (this._description === value) {
-				return;
-			}
-			this._description = value;
 		}
 	},
 
-	_title: {
+	title: {
 		value: null
 	},
-	title: {
-		get: function() {
-			var title = this._title || "";
+	setTitle: {
+		value: function() {
+			var title = "";
 			if (!this.experimentalDesign || !this.experimentalDesign.title) {
 				return title;
 			}
@@ -429,13 +430,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				title = this.experimentalDesign.title["default"] || "";
 			}
 			var localized = this.contextualizer.localize(title);
+			this.title = localized;
 			return localized;
-		},
-		set: function(value) {
-			if (this._title === value) {
-				return;
-			}
-			this._title = value;
 		}
 	}
 });

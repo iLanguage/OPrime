@@ -96,4 +96,19 @@
     min-width: 2em;
 }
 
+.Experiment-Tutorial-Description {
+    font-size: 1.5em;
+    padding-bottom: 2em;
+}
+
+.Experiment-Tutorial-Instructions {
+    top: 50%;
+    position: absolute;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.Experiment-Tutorial-Instructions p {
+    font-size: 1.2em;
+}
 

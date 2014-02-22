@@ -15,7 +15,8 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 				"gameLabel": "Child",
 				"text": "Child",
 				"experimentLabel": "Participant",
-				"key": "participant"
+				"key": "participant",
+				"gamifiedKey": "child"
 			}, {
 				"gameLabel": "Teacher",
 				"text": "Teacher",
@@ -35,7 +36,8 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 				"gameLabel": "School Records",
 				"text": "School Records",
 				"experimentLabel": "Report",
-				"key": "report"
+				"key": "resultReport",
+				"gamifiedKey": "school_records"
 			}, {
 				"gameLabel": "Debug",
 				"text": "Debug",
@@ -80,6 +82,9 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 			if (this._currentAudience !== this.templateObjects.select.value) {
 				this._currentAudience = this.templateObjects.select.value;
 				this.application.currentAudience = this._currentAudience;
+				var changeAudienceEvent = document.createEvent("CustomEvent");
+				changeAudienceEvent.initCustomEvent("changeCurrentAudience", true, true, null);
+				this.dispatchEvent(changeAudienceEvent);
 			}
 			console.log("Audiences handleChange", this._currentAudience);
 		}
