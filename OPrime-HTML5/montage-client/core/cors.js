@@ -9,7 +9,7 @@ var CORS = {
     },
     bug: function(message) {
         console.warn(message);
-        alert(message);
+        throw message;
     }
 };
 
@@ -21,7 +21,7 @@ CORS.supportCORSandIE = function(method, url) {
     if ("withCredentials" in xhrCors) {
         // XHR for Chrome/Firefox/Opera/Safari.
         xhrCors.open(method, url, true);
-    } else if (typeof XDomainRequest != "undefined") {
+    } else if (typeof XDomainRequest !== "undefined") {
         // XDomainRequest for IE.
         xhrCors = new XDomainRequest();
         xhrCors.open(method, url);
@@ -50,7 +50,7 @@ CORS.makeCORSRequest = function(options) {
     if (!options.data) {
         options.data = "";
     }
-    if (options.method == "GET" && options.data) {
+    if (options.method === "GET" && options.data) {
         options.dataToSend = JSON.stringify(options.data).replace(/,/g, "&").replace(/:/g, "=").replace(/"/g, "").replace(/[}{]/g, "");
         options.url = options.url + "?" + options.dataToSend;
     }
@@ -62,7 +62,7 @@ CORS.makeCORSRequest = function(options) {
         return;
     }
 
-    //  if(options.method == "POST"){
+    //  if(options.method === "POST"){
     //xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.withCredentials = true;
@@ -90,7 +90,7 @@ CORS.makeCORSRequest = function(options) {
         self.bug("There was an error making the CORS request to " + options.url + " from " + window.location.href + " the app will not function normally. Please report this.");
         promiseForData.reject(e);
     };
-    if (options.method == "POST") {
+    if (options.method === "POST") {
         xhr.send(JSON.stringify(options.data));
     } else {
         xhr.send();
