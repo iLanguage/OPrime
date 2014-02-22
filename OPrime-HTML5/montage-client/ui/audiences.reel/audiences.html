@@ -19,7 +19,13 @@
             }
         },
         "rangeController": {
-            "prototype": "montage/core/range-controller"
+            "prototype": "montage/core/range-controller",
+            "properties": {
+                "selection": []
+            },
+            "bindings": {
+                "content": {"<-": "@owner.content"}
+            }
         },
 
         "gameLabel": {
@@ -28,7 +34,17 @@
                 "element": {"#": "gameLabel"}
             },
             "bindings": {
-                "value": {"<-": "@repetition.objectAtCurrentIteration.gameLabel"}
+                "value": {"<-": "@repetition:iteration.object.gameLabel"}
+            }
+        },
+        
+        "currentAudience": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "currentAudience"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner._currentAudience.gameLabel"}
             }
         },
         
@@ -55,13 +71,15 @@
 </head>
 <body>
     <div data-montage-id="audiences" class="Audiences">
+        <span hidden data-montage-id="currentAudience">
+        </span>
         <select data-montage-id="select">
         </select>
-        <div data-montage-id="repetition">
+        <div hidden data-montage-id="repetition">
             <span data-montage-id="gameLabel">
             </span>
         </div>
-        <span data-montage-id="log">
+        <span hidden data-montage-id="log">
         </span>
     </div>
 </body>

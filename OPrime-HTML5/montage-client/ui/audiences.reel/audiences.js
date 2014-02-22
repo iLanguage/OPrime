@@ -40,7 +40,8 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 				"gameLabel": "Debug",
 				"text": "Debug",
 				"experimentLabel": "Debug",
-				"key": "debug"
+				"key": "debug",
+				"selected": true
 			}, {
 				"gameLabel": "Default",
 				"text": "Default",
@@ -50,27 +51,40 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 		}
 	},
 
-	templateDidLoad: {
-		value: function() {
-			var rangeController = this.templateObjects.rangeController;
-			rangeController.content = this.content;
-			rangeController.select(this.content[5]);
+	enterDocument: {
+		value: function(firstTime) {
+			this.super(firstTime);
 
-			//Observe the selection for changes
-			rangeController.addRangeAtPathChangeListener(
-				"selection", this, "handleSelectionChange");
+			if (firstTime) {
+				var rangeController = this.templateObjects.rangeController;
+				//Observe the selection for changes
+
+				// rangeController.content = this.content;
+				var self = this;
+				if (this.content) {
+					this.content.map(function(audience) {
+						if (audience.selected) {
+							self.templateObjects.select.value = audience;
+							self.handleChange();
+						}
+					});
+				}
+			}
+			this.element.addEventListener("change", this, false);
 		}
 	},
 
-	handleSelectionChange: {
-		value: function(plus, minus) {
-			this.message = "Selection changed from: " + (minus[0] ? minus[0].gameLabel : "nothing") + " -> " + (plus[0] ? plus[0].gameLabel : "nothing");
-			this._currentAudience = plus[0];
+	handleChange: {
+		value: function() {
+			// console.log("handleChange", this.templateObjects.select.value);
+			if (this._currentAudience !== this.templateObjects.select.value) {
+				this._currentAudience = this.templateObjects.select.value;
+			}
+			console.log("Audiences handleChange", this._currentAudience);
 		}
 	},
 
 	_currentAudience: {
 		value: null
 	}
-
 });

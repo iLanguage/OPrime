@@ -18,10 +18,21 @@ TestPageLoader.queueTest("audiences-test", function(testPage) {
 			it("it should do something", function() {
 				expect(audiences).toBeDefined();
 			});
+
 			it("it should accept a selected value", function() {
 				expect(audiences._currentAudience.gameLabel).toBe("Debug");
 			});
 
+			xit("it should set the _currentAudience value", function() {
+				expect(audiences._currentAudience.gameLabel).toBe("Debug");
+				audiences.templateObjects.select.value = {
+					"gameLabel": "SLP",
+					"text": "SLP",
+					"experimentLabel": "Administrator",
+					"key": "experimentAdministratorSpecialist"
+				};
+				expect(audiences._currentAudience.experimentLabel).toBe("Administrator");
+			});
 		});
 	});
 });
