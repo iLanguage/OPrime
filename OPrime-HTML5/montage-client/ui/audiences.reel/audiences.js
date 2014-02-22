@@ -79,6 +79,7 @@ exports.Audiences = Component.specialize( /** @lends Audiences# */ {
 			// console.log("handleChange", this.templateObjects.select.value);
 			if (this._currentAudience !== this.templateObjects.select.value) {
 				this._currentAudience = this.templateObjects.select.value;
+				this.application.currentAudience = this._currentAudience;
 			}
 			console.log("Audiences handleChange", this._currentAudience);
 		}
