@@ -88,6 +88,36 @@
     z-index: 250;
 }
 
+/* creates a transparent overlay which talks about the experiment, useful for tutorial mode */
+.Experiment-ExperimenterButtons {
+    opacity: .8;
+    position: absolute;
+    background-color: #fff;
+    color: #333;
+    top: 0;
+    right: 0;
+    height: 100%;
+    text-align: center;
+    padding: 2em;
+    z-index: 240;
+}
+
+.Experiment-ExperimenterButtons button {
+    margin-top:1em;
+}
+
+.txtUpsideDown {
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2 );
+    /* IE6,IE7 */
+    ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+    /* IE8 */
+    -moz-transform: rotate(-180deg); /* FF3.5+ */
+    -o-transform: rotate(-180deg); /* Opera 10.5 */
+    -webkit-transform: rotate(-180deg); /* Safari 3.1+, Chrome */
+    transform: rotate(-180deg); /* FF3.5+ */
+}
+
+
 .Experiment-start-pause-button {
     position: absolute;
     top: 35%;

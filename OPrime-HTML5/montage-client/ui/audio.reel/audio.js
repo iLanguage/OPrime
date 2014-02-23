@@ -82,6 +82,8 @@ exports.Audio = Component.specialize( /** @lends Audio# */ {
 			if (optionalSource) {
 				this.src = optionalSource;
 			}
+			console.log("Requested play of audio file " + optionalSource);
+
 			if (this._audioElement) {
 				if (!this._audioElement.src || this._audioElement.src !== this.src) {
 					this._audioElement.src = this.src;

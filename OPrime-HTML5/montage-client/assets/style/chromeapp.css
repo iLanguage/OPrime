@@ -22,3 +22,7 @@ body {
 .montage-invisible{
   display: none;
 }
+
+.montage--disabled{
+  opacity: .5;
+}

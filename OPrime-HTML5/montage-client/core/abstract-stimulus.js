@@ -124,6 +124,62 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 		}
 	},
 
+	addOralResponse: {
+		value: function(choice) {
+			var reactionTimeEnd = Date.now();
+			var audioDuration = this.application.audioPlayer.getDuration(this.audioFile) || 0;
+			if (audioDuration) {
+				audioDuration = audioDuration * 1000;
+			} else {
+				console.log("The audio has no duration.. This is strange.");
+			}
+			if (this.pauseAudioWhenConfirmingResponse) {
+				this.pauseAudio();
+			}
+
+			var self = this;
+			var confirmChoicePrompt = this.confirmResponseChoiceMessage;
+			var continueToNextStimulus = Promise.defer();
+			if (confirmChoicePrompt) {
+				var options = {
+					iconSrc: self.ownerComponent.iconSrc,
+					message: confirmChoicePrompt,
+					okLabel: "Yes",
+					cancelLabel: "No"
+				};
+				Confirm.show(options, function() {
+					continueToNextStimulus.resolve();
+				}, function() {
+					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));
+				});
+			} else {
+				continueToNextStimulus.resolve();
+			}
+			continueToNextStimulus.promise.then(function() {
+				self.stopAudio();
+				self.ownerComponent.nextStimulus();
+			}, function(reason) {
+				console.log("Not continuing to next stimulus");
+				if (this.pauseAudioWhenConfirmingResponse) {
+					self.playAudio();
+				}
+			});
+			
+			var response = {
+				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
+				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
+				"x": 0,
+				"y": 0,
+				"pageX": 0,
+				"pageY": 0,
+				"choice": choice,
+				"score": choice.score
+			};
+			this.responses.push(response);
+			console.log("Recorded response", JSON.stringify(response));
+		}
+	},
+
 	scoreResponse: {
 		value: function(expectedResponse, actualResponse) {
 			if (!actualResponse.orthographic) {
