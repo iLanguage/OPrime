@@ -144,12 +144,6 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		}
 	},
 
-	draw: {
-		value: function() {
-			this.super();
-		}
-	},
-
 	toggleTutorialArea: {
 		value: function() {
 			this.tutorialMode = !this.tutorialMode;
