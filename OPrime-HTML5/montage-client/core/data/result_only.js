@@ -24,9 +24,10 @@ exports.map = function(doc) {
                         stimulusToScore.response = stimulusToScore.responses[stimulusToScore.responses.length - 1];
                         stimulusToScore.score = stimulusToScore.responses[stimulusToScore.responses.length - 1].score;
                         results.push({
-                            prime: stimulusToScore.prime.phonemic,
-                            target: stimulusToScore.target.phonemic,
-                            response: stimulusToScore.response.choice.phonemic,
+                            prime: stimulusToScore.prime ? stimulusToScore.prime.phonemic : null,
+                            stimulus: stimulusToScore.stimulus ? stimulusToScore.stimulus.phonemic : null,
+                            target: stimulusToScore.target ? stimulusToScore.target.phonemic : null,
+                            response: stimulusToScore.response.choice ? stimulusToScore.response.choice.phonemic : null,
                             score: stimulusToScore.score
                         });
                         subexperiment.scoreSubTotal += stimulusToScore.score;
