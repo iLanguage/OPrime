@@ -125,7 +125,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	},
 
 	addOralResponse: {
-		value: function(choice) {
+		value: function(choice, dontAutoAdvance) {
 			var reactionTimeEnd = Date.now();
 			var audioDuration = this.application.audioPlayer.getDuration(this.audioFile) || 0;
 			if (audioDuration) {
@@ -153,7 +153,9 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));
 				});
 			} else {
-				continueToNextStimulus.resolve();
+				if(!dontAutoAdvance){
+					continueToNextStimulus.resolve();
+				}
 			}
 			continueToNextStimulus.promise.then(function() {
 				self.stopAudio();
