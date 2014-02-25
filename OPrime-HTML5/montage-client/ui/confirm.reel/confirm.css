@@ -1,6 +1,5 @@
 
 .Confirm {
-
 }
 .Confirm-header{
 	display: none;
@@ -12,6 +11,7 @@
 	font-size: 1.3em;
 	text-align: center;
 	padding: 3em;
+	max-width: 20em;
 }
 .Confirm-actions {
 	text-align: center;

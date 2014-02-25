@@ -1,0 +1,19 @@
+.Tutorial {
+
+}
+
+.Tutorial-Description {
+    font-size: 1.5em;
+    padding-bottom: 2em;
+}
+
+.Tutorial-Instructions {
+    top: 50%;
+    position: absolute;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.Tutorial-Instructions p {
+    font-size: 1.2em;
+}

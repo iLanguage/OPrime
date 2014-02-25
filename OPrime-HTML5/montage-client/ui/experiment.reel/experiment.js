@@ -101,9 +101,9 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			if (confirmChoicePrompt) {
 				var options = {
 					iconSrc: this.iconSrc,
-					message: confirmChoicePrompt,
-					okLabel: "Yes",
-					cancelLabel: "No"
+					message: confirmChoicePrompt
+					// okLabel: "OK",
+					// cancelLabel: "Annuler"
 				};
 				Confirm.show(options, function() {
 					promiseForConfirm.resolve();
@@ -165,6 +165,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this._currentStimulus.audioAssetsPath = this.experimentalDesign.audioAssetsPath;
 			// this.templateObjects.currentStimulus.templateObjects.reinforcement = this.templateObjects.reinforcement;
 			this.loadTestBlock(0);
+
+			this.templateObjects.tutorial.playInstructions();
 		}
 	},
 
@@ -290,7 +292,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this._currentStimulusIndex = -1;
 			this.templateObjects.reinforcement.showFirst();
 			if (this._currentTestBlock.promptUserBeforeContinuing) {
-				this.confirm(this._currentTestBlock.promptUserBeforeContinuing.text).then(function() {
+				this.confirm(this.contextualizer.localize(this._currentTestBlock.promptUserBeforeContinuing.text)).then(function() {
 					self.nextStimulus();
 				}).fail(function(reason) {
 					console.log("TODO add a button for resume?");
@@ -312,7 +314,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			this.currentlyPlaying = false;
 
-			this.confirm(this.experimentalDesign.end_instructions.for_child).then(function() {
+			this.confirm(this.contextualizer.localize(this.experimentalDesign.end_instructions.for_child)).then(function() {
 				console.log("Experiment is complete.");
 				self.showResultReport();
 			}, function(reason) {
@@ -403,6 +405,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			}
 
 			var localized = this.contextualizer.localize(contextualizedKey);
+			if (key === "instructions") {
+				this.instructionsAudioDetails = this.contextualizer.audio(contextualizedKey);
+				this.instructionsAudioDetails.path = this.experimentalDesign.audioAssetsPath;
+			}
 			this[key] = localized;
 			return localized;
 		}
