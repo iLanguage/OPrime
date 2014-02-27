@@ -64,8 +64,11 @@
                 "element": {"#": "results"}
             },
             "bindings": {
-                "contentController": {"<-": "@owner.stimuliResponsesController"}
-            }
+                "contentController": {"<-": "@owner.stimuliResponsesController"},
+                "classList.has('montage-invisible')": {
+                    "<-": "@owner.application.currentAudience.key == 'participant'"
+                }
+            } 
         }
     }
     </script>
