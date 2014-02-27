@@ -9,7 +9,7 @@ var CORS = {
     },
     bug: function(message) {
         console.warn(message);
-        throw message;
+        // throw message;
     }
 };
 
