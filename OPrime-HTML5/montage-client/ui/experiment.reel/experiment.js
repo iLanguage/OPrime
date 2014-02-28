@@ -153,20 +153,28 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 	run: {
 		value: function() {
-			this.currentlyPlaying = true;
 			console.log("currentlyPlaying: " + this.currentlyPlaying);
 
 			this.experimentalDesign.jsonType = "experiment";
 			this.experimentalDesign.experimentType = this.experimentType;
-			this.experimentalDesign.timestamp = Date.now();
+			var self = this;
+			this.confirm(this.application.contextualizer.localize("plug_in_headphones")).then(function() {
 
-			this._currentStimulus = this.templateObjects.currentStimulus;
-			this._currentStimulus.imageAssetsPath = this.experimentalDesign.imageAssetsPath;
-			this._currentStimulus.audioAssetsPath = this.experimentalDesign.audioAssetsPath;
-			// this.templateObjects.currentStimulus.templateObjects.reinforcement = this.templateObjects.reinforcement;
-			this.loadTestBlock(0);
+				self.currentlyPlaying = true;
+				self.experimentalDesign.timestamp = Date.now();
 
-			this.templateObjects.tutorial.playInstructions();
+				self._currentStimulus = self.templateObjects.currentStimulus;
+				self._currentStimulus.imageAssetsPath = self.experimentalDesign.imageAssetsPath;
+				self._currentStimulus.audioAssetsPath = self.experimentalDesign.audioAssetsPath;
+				// self.templateObjects.currentStimulus.templateObjects.reinforcement = self.templateObjects.reinforcement;
+				self.loadTestBlock(0);
+
+				self.templateObjects.tutorial.playInstructions();
+
+			}, function(reason) {
+				console.log("Waiting for user to plug in head phones");
+			});
+
 		}
 	},
 
