@@ -20,7 +20,7 @@ exports.Tutorial = Component.specialize( /** @lends Tutorial# */ {
 			this.playAudioOnLoad = false;
 			if (this.audio && this.audio.delay >= 0 && this.audio.audioFiles) {
 				this.playAudioOnLoad = true;
-				this.currentAudioFile = 0;
+				this.currentAudioFile = -1;
 				this.application.addEventListener("playInstructionsAudioFile", this);
 				// Play the first audio
 				this.handlePlayInstructionsAudioFile();
