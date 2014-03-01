@@ -50,13 +50,17 @@ exports.Dialects = Component.specialize( /** @lends Dialects# */ {
 			if (this.value !== this.templateObjects.select.value) {
 				this.value = this.templateObjects.select.value;
 				if (this.globalKey) {
-					this.application[this.globalKey] = this.value;
+
+					this.application[this.globalKey].iso = this.value.iso;
+					this.application[this.globalKey].name = this.value.name;
+					this.application[this.globalKey].nativeName = this.value.nativeName;
+
 					var changeDialectEvent = document.createEvent("CustomEvent");
 					changeDialectEvent.initCustomEvent("change" + this.globalKey, true, true, null);
 					this.dispatchEvent(changeDialectEvent);
 				}
 			}
-			console.log("StimuliDialects handleChange", this.value);
+			console.log("Dialects handleChange", this.value);
 		}
 	},
 
