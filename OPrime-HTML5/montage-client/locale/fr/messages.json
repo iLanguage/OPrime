@@ -19,5 +19,8 @@
 	},
 	"confirm_choice": {
 		"message": "Es-tu sûr de ta réponse?"
+	},
+	"prompt_show_tutorial":{
+		"message": "Est-ce que tu veux voir un tutoriel?"
 	}
 }
