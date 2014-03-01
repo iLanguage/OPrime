@@ -77,7 +77,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			window.setTimeout(function() {
 				/* hack to make the tutorial mode seem like its working */
 				if (!self.currentlyPlaying) {
-					self.confirm("Do you want to have a tutorial?").then(function() {
+					self.confirm(this.application.contextualizer.localize("prompt_show_tutorial")).then(function() {
 						console.log("Showing tutorial mode");
 						self.toggleTutorialArea();
 					}, function(reason) {
@@ -102,8 +102,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				var options = {
 					iconSrc: this.iconSrc,
 					message: confirmChoicePrompt
-					// okLabel: "OK",
-					// cancelLabel: "Annuler"
+					// okLabel: "Continue",
+					// cancelLabel: "Pause"
 				};
 				Confirm.show(options, function() {
 					promiseForConfirm.resolve();
@@ -300,7 +300,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this._currentStimulusIndex = -1;
 			this.templateObjects.reinforcement.showFirst();
 			if (this._currentTestBlock.promptUserBeforeContinuing) {
-				this.confirm(this.contextualizer.localize(this._currentTestBlock.promptUserBeforeContinuing.text)).then(function() {
+				this.confirm(this.application.contextualizer.localize(this._currentTestBlock.promptUserBeforeContinuing.text)).then(function() {
 					self.nextStimulus();
 				}).fail(function(reason) {
 					console.log("TODO add a button for resume?");
@@ -322,7 +322,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			this.currentlyPlaying = false;
 
-			this.confirm(this.contextualizer.localize(this.experimentalDesign.end_instructions.for_child)).then(function() {
+			this.confirm(this.application.contextualizer.localize(this.experimentalDesign.end_instructions.for_child)).then(function() {
 				console.log("Experiment is complete.");
 				self.showResultReport();
 			}, function(reason) {
