@@ -64,14 +64,13 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 
 			var self = this;
-			var confirmChoicePrompt = this.confirmResponseChoiceMessage;
 			var continueToNextStimulus = Promise.defer();
-			if (confirmChoicePrompt) {
+			if (this.confirmResponseChoiceMessage) {
+				this.application.contextualizer.currentLocale = this.application.interfaceLocale.iso;
+				var confirmChoicePrompt = this.application.contextualizer.localize(this.confirmResponseChoiceMessage); 
 				var options = {
 					iconSrc: self.ownerComponent.iconSrc,
-					message: confirmChoicePrompt,
-					okLabel: "Yes",
-					cancelLabel: "No"
+					message: confirmChoicePrompt
 				};
 				Confirm.show(options, function() {
 					continueToNextStimulus.resolve();
@@ -138,14 +137,13 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 
 			var self = this;
-			var confirmChoicePrompt = this.confirmResponseChoiceMessage;
 			var continueToNextStimulus = Promise.defer();
-			if (confirmChoicePrompt) {
+			if (this.confirmResponseChoiceMessage) {
+				this.application.contextualizer.currentLocale = this.application.interfaceLocale.iso;
+				var confirmChoicePrompt = this.application.contextualizer.localize(this.confirmResponseChoiceMessage); 
 				var options = {
 					iconSrc: self.ownerComponent.iconSrc,
-					message: confirmChoicePrompt,
-					okLabel: "Yes",
-					cancelLabel: "No"
+					message: confirmChoicePrompt
 				};
 				Confirm.show(options, function() {
 					continueToNextStimulus.resolve();
