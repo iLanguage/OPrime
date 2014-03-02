@@ -36,7 +36,6 @@ exports.ReinforcementCounter = Component.specialize( /** @lends ReinforcementCou
                 this.content[this.currentItem].status = "after";
             }
             this.currentItem++;
-
         }
     },
 
@@ -65,7 +64,6 @@ exports.ReinforcementCounter = Component.specialize( /** @lends ReinforcementCou
                 this.content[item].status = "before";
             }
             this.currentItem = 0;
-            this.setDoubleColumn();
         }
     },
 
@@ -85,13 +83,6 @@ exports.ReinforcementCounter = Component.specialize( /** @lends ReinforcementCou
 
     doubleColumn: {
         value: null
-    },
-
-    willDraw: {
-        value: function() {
-            this.setDoubleColumn();
-            this.super();
-        }
     },
 
     setDoubleColumn: {
