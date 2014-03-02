@@ -73,6 +73,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					message: confirmChoicePrompt
 				};
 				Confirm.show(options, function() {
+					self.ownerComponent.templateObjects.reinforcement.next();
 					continueToNextStimulus.resolve();
 				}, function() {
 					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));
@@ -146,6 +147,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					message: confirmChoicePrompt
 				};
 				Confirm.show(options, function() {
+					self.ownerComponent.templateObjects.reinforcement.next();
 					continueToNextStimulus.resolve();
 				}, function() {
 					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));

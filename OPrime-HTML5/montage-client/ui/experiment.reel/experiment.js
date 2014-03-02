@@ -67,6 +67,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this.autoPlaySlideshowOfStimuli = false;
 			// this.application.audioPlayer.play("assets/gammatone.wav");
 
+
 		}
 	},
 
@@ -221,8 +222,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				console.warn("Something is wrong, there was no stimulus.");
 				return;
 			}
-
-			this.templateObjects.reinforcement.next();
+			
 			this._currentTestBlock.trials[this._currentStimulusIndex].id = this._currentTestBlock.label + "_" + this._currentStimulusIndex;
 			this._currentStimulus.load(this._currentTestBlock.trials[this._currentStimulusIndex]);
 
@@ -298,7 +298,18 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			var self = this;
 
 			this._currentStimulusIndex = -1;
+
+			if (this._currentTestBlock.reinforcementCounter) {
+				this.reinforcementCounter = [];
+				for (var stimulus = 0; stimulus < this._currentTestBlock.trials.length; stimulus++) {
+					this.reinforcementCounter.push({
+						beforeImageFile: "../../../" + this.experimentalDesign.imageAssetsPath + "/" + this._currentTestBlock.reinforcementCounter.before,
+						afterImageFile: "../../../" + this.experimentalDesign.imageAssetsPath + "/" + this._currentTestBlock.reinforcementCounter.after
+					});
+				}
+			}
 			this.templateObjects.reinforcement.showFirst();
+
 			if (this._currentTestBlock.promptUserBeforeContinuing) {
 				this.confirm(this.application.contextualizer.localize(this._currentTestBlock.promptUserBeforeContinuing.text)).then(function() {
 					self.nextStimulus();
