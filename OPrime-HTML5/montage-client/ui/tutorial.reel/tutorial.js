@@ -32,14 +32,17 @@ exports.Tutorial = Component.specialize( /** @lends Tutorial# */ {
 
 	handlePlayInstructionsAudioFile: {
 		value: function() {
-			if (!this.playAudioOnLoad || this.currentAudioFile >= this.audio.audioFiles.length) {
+			if (!this.playAudioOnLoad) {
+				return;
+			}
+			if (this.currentAudioFile >= this.audio.audioFiles.length -1) {
 				return;
 			}
 			this.currentAudioFile++;
 			var audioFilePath = this.audio.path + "/" + this.audio.audioFiles[this.currentAudioFile];
 			this.application.audioPlayer.addEvent("playInstructionsAudioFile:::" + this.audio.audioFiles[this.currentAudioFile], "end");
 
-			console.log("Play instructions audio", audioFilePath);
+			console.log("Play instructions audio " + this.currentAudioFile, audioFilePath);
 			this.application.audioPlayer.play(audioFilePath);
 
 		}
