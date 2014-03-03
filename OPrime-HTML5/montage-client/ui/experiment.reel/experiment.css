@@ -21,7 +21,14 @@
     width: 40%;
 }
 
-.Experiment-next-button button , .Experiment-previous-button  button{
+.Experiment-replay-button {
+    float: left;
+    text-align: center;
+    margin: 10px;
+    width: 15%;
+}
+
+.Experiment-next-button button , .Experiment-replay-button button, .Experiment-previous-button  button {
     font-weight: 900;
     font-size: 1.8em;
     margin-top: 10px;

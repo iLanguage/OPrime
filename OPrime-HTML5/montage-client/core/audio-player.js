@@ -20,6 +20,18 @@ exports.AudioPlayer = Component.specialize( /** @lends AudioPlayer# */ {
 		}
 	},
 
+	isPlaying: {
+		get: function() {
+			return this.mediaController.isPlaying;
+		}
+	},
+
+	isPaused: {
+		get: function() {
+			return this.mediaController.isPaused;
+		}
+	},
+
 	isCordova: {
 		get: function() {
 			try {
@@ -97,6 +109,21 @@ exports.AudioPlayer = Component.specialize( /** @lends AudioPlayer# */ {
 		value: function() {
 			if (this.mediaController) {
 				this.mediaController.pause();
+			}
+		}
+	},
+
+	togglePause: {
+		value: function() {
+			console.log("togglePause");
+			if (this.mediaController) {
+				if (this.mediaController.isPaused) {
+					console.log("   playing");
+					this.mediaController.play();
+				} else {
+					console.log("   paused");
+					this.mediaController.pause();
+				}
 			}
 		}
 	},

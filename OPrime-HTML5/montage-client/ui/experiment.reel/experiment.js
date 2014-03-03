@@ -235,6 +235,22 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		}
 	},
 
+	replayStimulus: {
+		value: function() {
+			console.log("Replaying stimulus");
+			// this.application.audioPlayer.play();
+			this._currentStimulus.load(this._currentTestBlock.trials[this._currentStimulusIndex]);
+		}
+	},
+
+	pauseStimulus: {
+		value: function() {
+			console.log("Pausing stimulus");
+			// this.templateObjects.currentStimulus.pauseAudio();
+			this.application.audioPlayer.togglePause();
+		}
+	},
+
 	previousStimulus: {
 		value: function() {
 
