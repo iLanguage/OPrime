@@ -17,7 +17,7 @@
                 "crossOrigin": null
             },
             "bindings": {
-                "src": {"<-": "(@owner.json.status == 'after') ? @owner.json.afterImageFile : @owner.json.beforeImageFile"}
+                "src": {"<-": "(@owner.json.status == 'completed') ? @owner.json.completedImageFile : @owner.json.incompleteImageFile"}
             }
         }
     }

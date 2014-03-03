@@ -73,7 +73,6 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					message: confirmChoicePrompt
 				};
 				Confirm.show(options, function() {
-					self.ownerComponent.templateObjects.reinforcement.next();
 					continueToNextStimulus.resolve();
 				}, function() {
 					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));
@@ -82,6 +81,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				continueToNextStimulus.resolve();
 			}
 			continueToNextStimulus.promise.then(function() {
+				self.templateObjects.reinforcement.next();
 				self.stopAudio();
 				self.ownerComponent.nextStimulus();
 			}, function(reason) {
@@ -147,7 +147,6 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					message: confirmChoicePrompt
 				};
 				Confirm.show(options, function() {
-					self.ownerComponent.templateObjects.reinforcement.next();
 					continueToNextStimulus.resolve();
 				}, function() {
 					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));
@@ -158,6 +157,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			}
 			continueToNextStimulus.promise.then(function() {
+				self.templateObjects.reinforcement.next();
 				self.stopAudio();
 				self.ownerComponent.nextStimulus();
 			}, function(reason) {
@@ -177,6 +177,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"choice": choice,
 				"score": choice.score
 			};
+			this.responses = this.responses || [];
 			this.responses.push(response);
 			console.log("Recorded response", JSON.stringify(response));
 		}
@@ -211,6 +212,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"chosenVisualStimulus": "none",
 				"responseScore": -1
 			};
+			this.responses = this.responses || [];
 			this.nonResponses.push(response);
 			console.log("Recorded non-response, the user is confused or not playing the game.", JSON.stringify(response));
 		}
