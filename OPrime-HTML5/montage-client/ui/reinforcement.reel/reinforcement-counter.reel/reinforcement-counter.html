@@ -11,16 +11,6 @@
             }
         },
 
-        "reinforcementItemsController": {
-            "prototype": "montage/core/range-controller",
-            "properties": {
-                "selection": []
-            },
-            "bindings": {
-                "content": {"<-": "@owner.content"}
-            }
-        },
-
         "reinforcementItem": {
             "prototype": "ui/reinforcement.reel/reinforcement-item.reel",
             "properties": {
@@ -30,12 +20,18 @@
                 "json": {"<-": "@reinforcementItemsList:iteration.object"}
             }
         },
+        
+        "reinforcementItemsController": {
+            "prototype": "montage/core/range-controller",
+            "bindings": {
+                "content": {"<->": "@owner.counter"}
+            }
+        },
 
         "reinforcementItemsList": {
             "prototype": "montage/ui/repetition.reel",
             "properties": {
-                "element": {"#": "reinforcementItemsList"},
-                "isSelectionEnabled": true
+                "element": {"#": "reinforcementItemsList"}
             },
             "bindings": {
                 "contentController": {"<-": "@reinforcementItemsController"},

@@ -1,83 +1,41 @@
 /**
  * @module ui/reinforcement-counter.reel
- * @requires montage/ui/component
+ * @requires ui/reinforcement.reel
  */
-var Component = require("montage/ui/component").Component;
+var Reinforcement = require("ui/reinforcement.reel").Reinforcement;
 
 /**
  * @class ReinforcementCounter
- * @extends Component
+ * @extends Reinforcement
  */
-exports.ReinforcementCounter = Component.specialize( /** @lends ReinforcementCounter# */ {
+exports.ReinforcementCounter = Reinforcement.specialize( /** @lends ReinforcementCounter# */ {
     constructor: {
         value: function ReinforcementCounter() {
             this.super();
         }
     },
 
-    content: {
-        value: null
-    },
-
-    currentItem: {
-        value: null
-    },
-
     next: {
         value: function() {
-            if (!this.content) {
-                return;
-            }
-            if (this.currentItem === null) {
-                this.currentItem = 0;
-            }
-            console.log("next reinforcement" + this.currentItem);
-            if (this.content.length > this.currentItem) {
-                this.content[this.currentItem].status = "after";
-            }
-            this.currentItem++;
+            this.super()
         }
     },
 
     previous: {
         value: function() {
-            if (!this.content) {
-                return;
-            }
-            if (this.currentItem === null) {
-                this.currentItem = 0;
-            }
-            console.log("previous reinforcement" + this.currentItem);
-            if (this.currentItem >= 0) {
-                this.content[this.currentItem].status = "before";
-            }
-            this.currentItem--;
+            this.super();
         }
     },
 
     showFirst: {
         value: function() {
-            if (!this.content) {
-                return;
-            }
-            for (var item = 0; item < this.content.length; item++) {
-                this.content[item].status = "before";
-            }
-            this.currentItem = 0;
+            this.super();
         }
     },
 
     showLast: {
         value: function() {
-            if (this.content && this.content.length) {
-                this.currentItem = this.content.length - 1;
-            }
-            if (!this.content) {
-                return;
-            }
-            for (var item = 0; item < this.content.length; item++) {
-                this.content[item].status = "after";
-            }
+            this.super();
         }
     },
 
@@ -87,7 +45,7 @@ exports.ReinforcementCounter = Component.specialize( /** @lends ReinforcementCou
 
     setDoubleColumn: {
         value: function() {
-            if ((this.content && this.content.length > 3)) {
+            if ((this.counter && this.counter.length > 3)) {
                 this.doubleColumn = true;
                 this.singleColumn = false;
 

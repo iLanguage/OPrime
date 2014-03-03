@@ -1,6 +1,6 @@
 /**
  * @module ui/reinforcement-animation.reel
- * @requires montage/ui/component
+ * @requires ui/reinforcement.reel
  */
 var Reinforcement = require("ui/reinforcement.reel").Reinforcement;
 
