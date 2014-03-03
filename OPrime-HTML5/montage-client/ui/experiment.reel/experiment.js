@@ -109,12 +109,12 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				Confirm.show(options, function() {
 					promiseForConfirm.resolve();
 				}, function() {
+					console.log("The user clicked cancel.");
 
-					// promiseForConfirm.reject("The user clicked cancel.");
+					promiseForConfirm.reject("The user clicked cancel.");
 					// [Q] Unhandled rejection reasons (should be empty): ["(no stack) The user clicked cancel."] 
 					// https://github.com/kriskowal/q/issues/292
 					// https://github.com/kriskowal/q/issues/238 TODO seems to be nothing i can do about it...
-					console.log("The user clicked cancel.");
 				});
 			} else {
 				Promise.nextTick(function() {
@@ -203,6 +203,9 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	 */
 	nextStimulus: {
 		value: function() {
+			if (this.canBeResumed) {
+				this.currentlyPlaying = true;
+			}
 			var self = this;
 
 			if (!this._currentTestBlock || !this._currentTestBlock.trials || !this._currentTestBlock.trials.length) {
@@ -313,6 +316,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 		value: function(finalIndex) {
 			var self = this;
 			console.log("experimentBlockLoaded");
+			
 			if (finalIndex) {
 				this._currentStimulusIndex = this._currentTestBlock.trials.length - 1;
 			} else {
@@ -347,10 +351,19 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 					self.nextStimulus();
 				}).fail(function(reason) {
 					console.log("TODO add a button for resume?");
+					self.currentlyPlaying = false;
+					self.canBeResumed = true;
+					self.application.audioPlayer.stop();
 				});
 			} else {
 				this.nextStimulus();
 			}
+		}
+	},
+
+	resumePreviousGame:{
+		value: function(){
+			console.log("TODO show a list of previous games, let the user select one, then go through the game design, find the stimulus that wasnt completed, and display all the trials and stimuli to the test administarator so they can choose where to resume.");
 		}
 	},
 
@@ -366,6 +379,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			this.confirm(this.application.contextualizer.localize(this.experimentalDesign.end_instructions.for_child)).then(function() {
 				console.log("Experiment is complete.");
+				self.canBeResumed = false;
 				self.showResultReport();
 			}, function(reason) {
 				console.log("TODO add a button for resume?");

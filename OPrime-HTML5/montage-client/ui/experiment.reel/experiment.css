@@ -30,7 +30,7 @@
 
 .Experiment-next-button button , .Experiment-replay-button button, .Experiment-previous-button  button {
     font-weight: 900;
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-top: 10px;
 }
 
@@ -43,11 +43,11 @@
 /* creates space for an overlay header with experiment controls */
 .Experiment header {
     position: absolute;
-    top: 0;
+    top: -8em;
     width: 100%;
     text-align: center;
     /*background: #cccccc;*/
-    height: 10%;
+    height: 8em;
     opacity: .5;
     z-index: 200;
 }
@@ -109,7 +109,7 @@
 }
 
 .Experiment-ExperimenterButtons button {
-    margin-top:1em;
+    margin-top: 1em;
 }
 
 .txtUpsideDown {
@@ -124,11 +124,12 @@
 }
 
 
-.Experiment-start-pause-button {
+.Experiment-start-pause-button-area {
     position: absolute;
+    text-align: center;
     top: 35%;
-    left: 45%;
-    width: 10%;
+    left: 0;
+    width: 100%;
     min-width: 2em;
 }
 
