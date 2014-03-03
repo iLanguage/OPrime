@@ -375,10 +375,10 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			Database.databaseUrl = this.experimentalDesign.database;
 			Database.set(this.experimentalDesign.experimentType + this.experimentalDesign.timestamp, this.experimentalDesign);
 
-			this.currentlyPlaying = false;
 
 			this.confirm(this.application.contextualizer.localize(this.experimentalDesign.end_instructions.for_child)).then(function() {
 				console.log("Experiment is complete.");
+				self.currentlyPlaying = false;
 				self.canBeResumed = false;
 				self.showResultReport();
 			}, function(reason) {
