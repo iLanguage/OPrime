@@ -81,7 +81,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				continueToNextStimulus.resolve();
 			}
 			continueToNextStimulus.promise.then(function() {
-				self.templateObjects.reinforcement.next();
+				// self.ownerComponent.templateObjects.reinforcement.next();
 				self.stopAudio();
 				self.ownerComponent.nextStimulus();
 			}, function(reason) {
@@ -157,7 +157,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			}
 			continueToNextStimulus.promise.then(function() {
-				self.templateObjects.reinforcement.next();
+				// self.ownerComponent.templateObjects.reinforcement.next();
 				self.stopAudio();
 				self.ownerComponent.nextStimulus();
 			}, function(reason) {

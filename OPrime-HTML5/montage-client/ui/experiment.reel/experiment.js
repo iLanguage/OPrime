@@ -222,7 +222,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				console.warn("Something is wrong, there was no stimulus.");
 				return;
 			}
-
+			this.templateObjects.reinforcement.next();
 			this._currentTestBlock.trials[this._currentStimulusIndex].id = this._currentTestBlock.label + "_" + this._currentStimulusIndex;
 			this._currentStimulus.load(this._currentTestBlock.trials[this._currentStimulusIndex]);
 
@@ -242,8 +242,8 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 				console.warn("Something is wrong, there are no stimuli so I can't go to the next. ");
 				return;
 			}
-			if (this._currentStimulusIndex > 0) {
-				this.loadTestBlock(this._currentTestBlockIndex - 1);
+			if (this._currentStimulusIndex === 0) {
+				this.loadTestBlock(this._currentTestBlockIndex - 1, "finalIndex");
 				return;
 			}
 
@@ -256,7 +256,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	},
 
 	loadTestBlock: {
-		value: function(blockIndexToLoad) {
+		value: function(blockIndexToLoad, finalIndex) {
 
 			if (!this.experimentalDesign || !this.experimentalDesign.subexperiments || blockIndexToLoad === undefined) {
 				console.warn("Something is wrong, there are no subexperiments so I can't go to the next. ");
@@ -282,7 +282,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 			this._currentTestBlockIndex = blockIndexToLoad;
 			this._currentTestBlock = this.experimentalDesign.subexperiments[blockIndexToLoad];
 			console.log("Loaded block " + blockIndexToLoad);
-			this.experimentBlockLoaded();
+			this.experimentBlockLoaded(finalIndex);
 		}
 	},
 
@@ -294,10 +294,14 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 	 * This can be customized by experiements by overriding the experimentBlockLoaded function.
 	 */
 	experimentBlockLoaded: {
-		value: function() {
+		value: function(finalIndex) {
 			var self = this;
-
-			this._currentStimulusIndex = -1;
+			console.log("experimentBlockLoaded");
+			if (finalIndex) {
+				this._currentStimulusIndex = this._currentTestBlock.trials.length - 1;
+			} else {
+				this._currentStimulusIndex = -1;
+			}
 
 			if (this._currentTestBlock.reinforcementCounter) {
 				this.reinforcementCounter = [];

@@ -22,7 +22,7 @@
             "bindings": {
                 "src": {"<-": "'../../../../../'+ @owner.firstImageSrc ?? '../../../assets/img/blank.png'"},
                 "classList.has('montage-invisible')": {
-                    "<-": "!@owner.showFirst"
+                    "<-": "!@owner.shouldShowFirst"
                 }
             }
         },
@@ -36,7 +36,7 @@
             "bindings": {
                 "src": {"<-": "'../../../../../'+ @owner.lastImageSrc ?? '../../../assets/img/blank.png'"},
                 "classList.has('montage-invisible')": {
-                    "<-": "!@owner.showLast"
+                    "<-": "!@owner.shouldShowLast"
                 }
             }
         },
@@ -75,7 +75,7 @@
                     "<-": "@owner.doubleColumn"
                 },
                 "classList.has('montage-invisible')": {
-                    "<-": "@owner.showFirst || @owner.showLast"
+                    "<-": "@owner.shouldShowFirst || @owner.shouldShowLast"
                 }
             }
         }

@@ -13,5 +13,12 @@ exports.ReinforcementItem = Component.specialize( /** @lends ReinforcementItem# 
 		value: function ReinforcementItem() {
 			this.super();
 		}
+	},
+
+	json: {
+		value: {
+			"incompleteImageFile": "../../../assets/img/blank.png",
+			"completedImageFile" : "../../../assets/img/blank.png"
+		}
 	}
 });
