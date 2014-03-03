@@ -15,59 +15,71 @@ exports.Reinforcement = Component.specialize( /** @lends Reinforcement# */ {
         }
     },
 
-    images: {
+    counter: {
         value: null
     },
 
-    currentImage: {
-        value: null
+    currentItem: {
+        value: 0
     },
 
     next: {
         value: function() {
-            if (!this.images) {
+            if (!this.counter) {
                 return;
             }
-            if (this.currentImage === null) {
-                this.currentImage = 0;
+            var previousIndex = this.currentItem - 1;
+            if (previousIndex >= 0 && this.counter[previousIndex]) {
+                this.counter[previousIndex].status = "completed";
             }
-            console.log("next reinforcement" + this.currentImage);
-            if (this.images.length > this.currentImage) {
-                this.currentImageSrc = this.images[this.currentImage];
+            if (this.currentItem >= 0 && this.counter[this.currentItem]) {
+                this.counter[this.currentItem].status = "current";
             }
-            this.currentImage++;
+            console.log("next reinforcement current " + this.currentItem);
         }
     },
 
     previous: {
         value: function() {
-            if (!this.images) {
+            if (!this.counter) {
                 return;
             }
-            if (this.currentImage === null) {
-                this.currentImage = 0;
+            var followingIndex = this.currentItem + 1;
+            if (followingIndex >= 0 && this.counter[followingIndex]) {
+                this.counter[followingIndex].status = "incomplete";
             }
-            console.log("previous reinforcement" + this.currentImage);
-            if (this.currentImage >= 0) {
-                this.currentImageSrc = this.images[this.currentImage];
+            if (this.currentItem >= 0 && this.counter[this.currentItem]) {
+                this.counter[this.currentItem].status = "current";
             }
-            this.currentImage--;
+            console.log("previous reinforcement current " + this.currentItem);
         }
     },
 
     showFirst: {
         value: function() {
-            this.currentImage = 0;
-            this.currentImageSrc = this.firstImageSrc;
+            console.log("shouldShowFirst reinforcement");
+
+            if (!this.counter) {
+                return;
+            }
+            console.log("reinforcement" + this.currentItem);
+
+            for (var item = 1; item < this.counter.length; item++) {
+                this.counter[item].status = "incomplete";
+            }
+            this.counter[0].status = "current";
         }
     },
 
     showLast: {
         value: function() {
-            if (this.images && this.images.length) {
-                this.currentImage = this.images.length - 1;
+            console.log("shouldShowLast reinforcement");
+            if (!this.counter) {
+                return;
             }
-            this.currentImageSrc = this.lastImageSrc;
+            for (var item = 0; item < this.counter.length; item++) {
+                this.counter[item].status = "completed";
+            }
         }
     }
 });
