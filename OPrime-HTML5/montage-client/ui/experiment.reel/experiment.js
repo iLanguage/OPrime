@@ -57,7 +57,7 @@ exports.Experiment = ContextualizableComponent.specialize( /** @lends Experiment
 
 			self.iconSrc = self.experimentalDesign.iconSrc;
 			console.log("iconSrc" + self.iconSrc);
-
+			this.experimentalDesign.congratulationsImageSrc = this.experimentalDesign.imageAssetsPath + "/" +this.experimentalDesign.congratulationsImageSrc;
 			this.gamify = true;
 			this.tutorialMode = false;
 			this.currentlyPlaying = false;

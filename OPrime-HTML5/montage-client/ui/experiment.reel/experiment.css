@@ -86,13 +86,13 @@
 .Experiment-results {
     opacity: 1;
     position: absolute;
-    background-color: #ffffff;
-    color: #333;
+    /*background-color: #ffffff;
+    color: #333;*/
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    padding: 2em;
+    padding: 1em;
     z-index: 250;
 }
 

@@ -134,7 +134,7 @@ h4 {
 
 .bluebody {
 	background-color: #0176A0;
-	color: #fff;
+	color: #fff !important;
 	background-image: -moz-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
 	background-image: -webkit-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
 	background-image: -o-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
