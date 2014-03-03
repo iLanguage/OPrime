@@ -18,11 +18,11 @@
 }
 
 .ReportCertificate-star{
-	font-size: 15em;
+	font-size: 12em;
 	opacity: .5;
 	z-index:  252;
 	color: #FFFF99;
-	top: 1em;
+	top: 1.2em;
 	left: .25em;
 	position: absolute;
 	text-shadow: 0 1px 0 #333;
@@ -31,6 +31,10 @@
 .ReportCertificate-Congratulations-Image {
 	width: 49%;
 	float: left;
+}
+
+.ReportCertificate-Congratulations-Image img{
+	width: 100%;
 }
 
 .ReportCertificate-content {
