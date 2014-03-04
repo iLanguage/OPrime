@@ -18,3 +18,11 @@ body {
    height: 100%;
    width: 100%;
 }
+
+.montage-invisible{
+  display: none;
+}
+
+.montage--disabled{
+  opacity: .5;
+}

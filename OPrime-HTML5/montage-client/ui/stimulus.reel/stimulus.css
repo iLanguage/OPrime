@@ -63,14 +63,14 @@
 @-webkit-keyframes Introduce-target-image /* Safari and Chrome */
 {
   0%   {
-    width: 49%; 
+    width: 48%; 
   }
   50%  {
-    width: 51%;
+    width: 49%;
     opacity: .9;
   }
   100%   {
-    width: 49%;
+    width: 48%;
   }
 }
 

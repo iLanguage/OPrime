@@ -9,12 +9,77 @@
             "properties": {
                 "element": {"#": "participantReport"}
             }
+        },
+        "firstname": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "firstname"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.firstname ?? 'Anony'"}
+            }
+        },
+        "lastname": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "lastname"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.lastname ?? 'Mouse'"}
+            }
+        },
+        "userid": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "userid"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.userid ?? '999999999999'"}
+            }
         }
     }
     </script>
 </head>
 <body>
     <div data-montage-id="participantReport" class="ParticipantReport">
+       <div class="well span6">
+        <h3>Child info</h3>
+        <ul class="unstyled">
+            <li>First Name: <span class="child_specific_results" data-montage-id="firstname" contenteditable="true">A</span>
+            </li>
+            <li>Last Name: <span class="child_specific_results" data-montage-id="lastname" contenteditable="true">M</span>
+            </li>
+            <li>Date of Birth: <span class="child_specific_results" contenteditable="true">July 1 2008</span>
+            </li>
+            <li>ParticipantId: <span class="" data-montage-id="userid" contenteditable="true">22222</span>
+            </li>
+            <li><span contenteditable="true">Add new:</span><span class="child_specific_results" contenteditable="true">another
+                field here</span>
+            </li>
+        </ul>
     </div>
+    <div class="well span6">
+        <h3><span contenteditable="true">School/Clinic</span> info</h3>
+        <ul class="unstyled">
+            <li><address>
+                <strong><span contenteditable="true">St. Marie's
+                    Elementary School</span></strong><br> <span contenteditable="true">
+                    1 Main St</span><br> <span contenteditable="true">
+                    Montreal QC H3G 1M8</span><br> <abbr title="Phone">P:</abbr><span contenteditable="true"> (123) 456-7890</span>
+                </address>
+            </li>
+            <li>Contact Person:<br>
+                <address>
+                    <strong><span contenteditable="true">Julie Smith</span></strong><br>
+                    <a href="mailto:#"><span contenteditable="true">j_smith@stmaries.ca</span></a>
+                </address>
+            </li>
+            <li>TesterId: <span contenteditable="true">122293780</span>
+            </li>
+            <li><span contenteditable="true">Add new:</span><span contenteditable="true">another field here</span>
+            </li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>

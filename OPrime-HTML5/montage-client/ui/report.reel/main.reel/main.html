@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Main</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="../report.css">
+
+    <script type="text/montage-serialization">
+    {
+
+        "owner": {
+            "properties": {
+                "element": {"#": "main"}
+            }
+        },
+
+        "participants": {
+            "prototype": "ui/participant.reel/participants.reel",
+            "properties": {
+                "element": {"#": "participants"}
+            }
+        },
+
+        "participantReport": {
+            "prototype": "ui/report.reel/participant-report.reel",
+            "properties": {
+                "element": {"#": "participantReport"}
+            },
+            "bindings": {
+                "json": {"<->": "@participants.selectedParticipant"}
+            }
+        },
+
+        "experimentsList": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "experimentsList"},
+                "isSelectionEnabled": true,
+                "contentController": {"@": "experimentsController"}
+            }
+        },
+
+        "experimentsController": {
+            "prototype": "montage/core/range-controller",
+            "properties": {
+                "selection": []
+            },
+            "bindings": {
+                "content": {"<-": "@participantReport.json.experiments"}
+            }
+        },
+
+        "experimentReport": {
+            "prototype": "ui/report.reel/experiment-report.reel",
+            "properties": {
+                "element": {"#": "experimentReport"}
+            },
+            "bindings": {
+                "experimentId": {"<-": "@experimentsList:iteration.object"}
+            }
+        },
+
+        "montageVersion": {
+            "prototype": "ui/version.reel",
+            "properties": {
+                "element": {"#": "montageVersion"}
+            }
+        },
+
+        "chooseLanguage": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "chooseLanguage"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.contextualizer.localize('change_language')"}
+            }
+        },
+
+        "localesController": {
+            "prototype": "montage/core/range-controller",
+            "bindings": {
+                "content": {"<-": "@owner.locales"}
+            }
+        },
+
+        "locales": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "locales"},
+                "contentController": {"@": "localesController"},
+                "labelPropertyName": "label"
+            },
+            "listeners": [{
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "owner"}
+            }]
+        },
+
+        "locale": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "locale"}
+            },
+            "bindings": {
+                "value": {"<-": "@locales.value.iso"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="main" data-montage-skin="light" class="Main orangebody">
+        <div data-montage-id="montageVersion" class="version"></div>
+        <span class="chooseLocale">
+            <span data-montage-id="chooseLanguage"></span>
+            <select data-montage-id="locales" ></select>
+            <span data-montage-id="locale"></span>
+        </span>
+        
+        <div class="row orangebody">
+            <div class="span3 results_sidebar">
+                <ul class="">
+                    <li data-montage-id="participants">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="well span9">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <a href="http://ilanguage.ca/phophlo">
+                            <img src="../../../../../assets/img/phophlo.png" height="128"/>
+                        </a>
+                    </div>
+                    <div class="span6">
+                        <p class="lead" contenteditable="true">
+                            PhoPhlo is a screening
+                            test for early indications of reading troubles, before kids learn
+                            to read.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div data-montage-id="participantReport">
+                    </div>
+                </div>
+                <h3>
+                    Results <small>Oct 22, 2012</small>
+                </h3>
+                <ul class="row-fluid" data-montage-id="experimentsList">
+                    <li class="well span6" data-montage-id="experimentReport">
+                    </li>
+                </ul>
+
+                <div class="credits">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

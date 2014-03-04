@@ -9,14 +9,24 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %>\n' + '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' + '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' + ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
         // Task configuration.
         exec: {
+            normalizeAudio: {
+                cmd: function() {
+                    return "cd assets/stimuli/audio/ && for f in *; do ffmpeg -i $f -c:a pcm_s16le ${f%.*}.wav; done; && for f in *.wav; do  normalize $f; done; &&  for f in *.wav; do ffmpeg -i $f -ac 1 -ar 22050 ${f%.*}.mp3; done;";
+                }
+            },
             reduceImageSize: {
                 cmd: function() {
-                    return "cd assets/stimuli/image/ && mogrify -filter lanczos2 -resize '400x400>' *.png";
+                    return "cd assets/stimuli/image/ && mogrify -filter lanczos2 -resize '400x300>' *.png";
                 }
             },
             optimizeImages: {
                 cmd: function() {
-                    return 'optipng assets/stimuli/image/*.png';
+                    return 'for f in *.jpg; do convert $f ${f%.*}.png; done; && optipng assets/stimuli/image/*.png';
+                }
+            },
+            renameFilesToBeWebFriendly: {
+                cmd: function() {
+                    return 'for f in *; do short=`echo $f | sed "s/(/_/g" | sed "s/[ )(]//g" | sed "s/\.wav//g" | sed "s/É/E/g" | sed "s/é/e/g" | sed "s/é/e/g"`; mv  "$f" "$short" ; done;';
                 }
             },
             echoHelp: {

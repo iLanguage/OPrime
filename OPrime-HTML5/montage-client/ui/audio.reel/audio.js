@@ -9,171 +9,227 @@ var Component = require("montage/ui/component").Component;
  * @extends Component
  */
 exports.Audio = Component.specialize( /** @lends Audio# */ {
-	constructor: {
-		value: function Audio() {
-			this.super();
-		}
-	},
+    constructor: {
+        value: function Audio() {
+            this.super();
+        }
+    },
 
-	_src: {
-		value: null
-	},
+    _src: {
+        value: null
+    },
 
-	/**
-	 * @type {string}
-	 * @default null
-	 */
-	src: {
-		get: function() {
-			return this._src;
-		},
-		set: function(value) {
-			if (value && value.trim() && value.trim() === this._src) {
-				return;
-			}
-			this._src = value;
-			console.log("Changed audio source" + value);
-		}
-	},
+    /**
+     * @type {string}
+     * @default null
+     */
+    src: {
+        get: function() {
+            return this._src;
+        },
+        set: function(value) {
+            if (value && value.trim() && value.trim() === this._src) {
+                return;
+            }
+            this._src = value;
+            console.log("Changed audio source" + value);
+            // this.endAudioEvents = [];
+            // this.audioEvents = [];
+        }
+    },
 
-	enterDocument: {
-		value: function(firstTime) {
-			this.super(firstTime);
+    matchesSource: {
+        value: function(value) {
+            return this._src.indexOf(value) > -1;
+        }
+    },
 
-			if (firstTime) {
-				this.addOwnPropertyChangeListener("src", this);
-				this._audioElement = this.templateObjects.owner.element;
-				this._audioElement.src = this.src;
-				this.addAudioEventAtTimePeriod();
-			}
-		}
-	},
+    enterDocument: {
+        value: function(firstTime) {
+            this.super(firstTime);
 
-	handleSrcChange: {
-		value: function(oldValue, newValue) {
-			console.log("Handle audio source change ", oldValue, newValue);
-		}
-	},
+            if (firstTime) {
+                this.addOwnPropertyChangeListener("src", this);
+                this._audioElement = this.templateObjects.owner.element;
+                this._audioElement.src = this.src;
+                // this.addAudioEventAtTimePeriod();
+            }
+        }
+    },
 
-	duration: {
-		get: function() {
-			if (this._audioElement && this._audioElement.duration) {
-				return this._audioElement.duration;
-			} else {
-				return 0;
-			}
-		}
-	},
+    handleSrcChange: {
+        value: function(oldValue, newValue) {
+            console.log("Handle audio source change ", oldValue, newValue);
+        }
+    },
 
-	_audioElement: {
-		value: null
-	},
+    duration: {
+        get: function() {
+            if (this._audioElement && this._audioElement.duration) {
+                return this._audioElement.duration;
+            } else {
+                return 0;
+            }
+        }
+    },
 
-	play: {
-		value: function(optionalSource, delay) {
-			if (optionalSource) {
-				this.src = optionalSource;
-			}
-			if (this._audioElement) {
-				if (!this._audioElement.src || this._audioElement.src !== this.src) {
-					this._audioElement.src = this.src;
-				}
+    _audioElement: {
+        value: null
+    },
 
-				var self = this,
-					startTime = Date.now(),
-					audioElementToPlay = this._audioElement;
+    isPlaying: {
+        value: null
+    },
 
-				audioElementToPlay.removeEventListener('ended', window.audioEndListener);
-				audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+    isPaused: {
+        value: null
+    },
 
-				var audiourl = audioElementToPlay.src;
-				window.audioEndListener = function() {
-					audioElementToPlay.removeEventListener('ended', window.audioEndListener);
-					console.log("audiourl is done " + audiourl);
-				};
+    play: {
+        value: function(optionalSource, delay) {
+            if (optionalSource) {
+                this.src = optionalSource;
+            }
+            console.log("Requested play of audio file " + optionalSource);
 
-				window.actuallyPlayAudio = function() {
-					audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
+            if (this._audioElement) {
+                if(this._audioElement.src === this.src && this.isPaused){
+                    this._audioElement.play();
+                    this.isPaused = false;
+                    this.isPlaying = true;
+                    return;
+                }
+                if (!this._audioElement.src || this._audioElement.src !== this.src) {
+                    this._audioElement.src = this.src;
+                }
 
-					if (!delay) {
-						self._audioElement.play();
-						self.audioPlayStarted = Date.now();
-					} else {
-						var timeToPrepareAudio = Date.now() - startTime;
-						var newDelay = delay - timeToPrepareAudio;
-						if (newDelay > 0) {
-							window.setTimeout(function() {
-								self._audioElement.play();
-								self.audioPlayStarted = Date.now();
-							}, newDelay);
-						} else {
-							console.warn("Audio was " + newDelay + " late.");
-							self._audioElement.play();
-							self.audioPlayStarted = Date.now();
-						}
-					}
-				};
-				console.log("Requested play of audio file " + audioElementToPlay.src);
-				audioElementToPlay.addEventListener('ended', window.audioEndListener);
-				audioElementToPlay.addEventListener('canplaythrough', window.actuallyPlayAudio);
+                var self = this,
+                    startTime = Date.now(),
+                    audioElementToPlay = this._audioElement;
 
-			}
-		}
-	},
+                audioElementToPlay.removeEventListener('ended', window.audioEndListener);
+                audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
 
-	pause: {
-		value: function() {
-			if (this._audioElement) {
-				this._audioElement.pause();
-			}
-		}
-	},
+                var audiourl = audioElementToPlay.src;
+                window.audioEndListener = function() {
+                    audioElementToPlay.removeEventListener('ended', window.audioEndListener);
+                    console.log("audiourl is done " + audiourl);
+                    self.isPlaying = false;
+                    self.isPaused = false;
+                    for (var i = 0; i < self.endAudioEvents.length; i++) {
+                        // self.endAudioEvents[i].whatShouldHappen.call();
+                        var eventName = self.endAudioEvents[i].whatShouldHappen;
+                        if (self.matchesSource(self.endAudioEvents[i].audioFile)) {
+                            console.log("Dispatching " + eventName);
+                            self.application.dispatchEventNamed(eventName, true, false);
+                        }
+                    }
+                };
 
-	stop: {
-		value: function() {
-			if (this._audioElement) {
-				this._audioElement.pause();
-				this._audioElement.currentTime = 0;
-			}
-		}
-	},
+                window.actuallyPlayAudio = function() {
+                    audioElementToPlay.removeEventListener('canplaythrough', window.actuallyPlayAudio);
 
-	audioEvents: {
-		value: []
-	},
+                    if (!delay) {
+                        self._audioElement.play();
+                        self.isPlaying = true;
+                        self.isPaused = false;
+                        self.audioPlayStarted = Date.now();
+                    } else {
+                        var timeToPrepareAudio = Date.now() - startTime;
+                        var newDelay = delay - timeToPrepareAudio;
+                        if (newDelay > 0) {
+                            window.setTimeout(function() {
+                                self._audioElement.play();
+                                self.isPlaying = true;
+                                self.isPaused = false;
+                                self.audioPlayStarted = Date.now();
+                            }, newDelay);
+                        } else {
+                            console.warn("Audio was " + newDelay + " late.");
+                            self._audioElement.play();
+                            self.isPlaying = true;
+                            self.isPaused = false;
+                            self.audioPlayStarted = Date.now();
+                        }
+                    }
+                };
+                console.log("Requested play of audio file " + audioElementToPlay.src);
+                audioElementToPlay.addEventListener('ended', window.audioEndListener);
+                audioElementToPlay.addEventListener('canplaythrough', window.actuallyPlayAudio);
 
-	audioTimeUpdateFunction: {
-		value: function() {
-			console.log(this.currentTime);
-			if (!this.audioEvents) {
-				return;
-			}
-			for (var i = 0; i < this.audioEvents.length; i++) {
-				if (this.currentTime > this.audioEvents[i].startTime - 0.15 && this.currentTime < this.audioEvents[i].endTime) {
-					this.audioEvents[i].whatShouldHappen.call();
-				}
-			}
-		}
-	},
+            } else {
+                console.warn("there was no audio element to play");
+            }
+        }
+    },
 
-	addAudioEventAtTimePeriod: {
-		value: function(whatShouldHappen, startTime, endTime) {
-			if (this._audioElement) {
-				this._audioElement.removeEventListener("timeupdate", this.audioTimeUpdateFunction);
-			}
+    pause: {
+        value: function() {
+            if (this._audioElement) {
+                this._audioElement.pause();
+                this.isPaused = true;
+            }
+        }
+    },
 
-			if (!endTime) {
-				endTime = startTime + 1000;
-			}
-			this.audioEvents.push({
-				startTime: startTime,
-				endTime: endTime,
-				whatShouldHappen: whatShouldHappen
-			});
+    stop: {
+        value: function() {
+            if (this._audioElement) {
+                this._audioElement.pause();
+                this._audioElement.currentTime = 0;
+            }
+        }
+    },
 
-			if (this._audioElement) {
-				this._audioElement.addEventListener("timeupdate", this.audioTimeUpdateFunction);
-			}
-		}
-	}
+    audioEvents: {
+        value: []
+    },
+    endAudioEvents: {
+        value: []
+    },
+
+    audioTimeUpdateFunction: {
+        value: function() {
+            console.log(this.currentTime);
+            if (!this.audioEvents) {
+                return;
+            }
+            for (var i = 0; i < this.audioEvents.length; i++) {
+                if (this.currentTime > this.audioEvents[i].startTime - 0.15 && this.currentTime < this.audioEvents[i].endTime) {
+                    this.audioEvents[i].whatShouldHappen.call();
+                }
+            }
+        }
+    },
+
+    addAudioEventAtTimePeriod: {
+        value: function(whatShouldHappen, startTime, endTime) {
+            if (this._audioElement) {
+                this._audioElement.removeEventListener("timeupdate", this.audioTimeUpdateFunction);
+            }
+
+            if (!endTime) {
+                endTime = startTime + 1000;
+            }
+            var audioFile = whatShouldHappen.substring(whatShouldHappen.indexOf(":::")).replace(":::", "");
+            whatShouldHappen = whatShouldHappen.replace(":::" + audioFile, "");
+            if (startTime === "end") {
+                this.endAudioEvents.push({
+                    whatShouldHappen: whatShouldHappen,
+                    audioFile: audioFile
+                });
+            } else {
+                this.audioEvents.push({
+                    startTime: startTime,
+                    endTime: endTime,
+                    whatShouldHappen: whatShouldHappen,
+                    audioFile: audioFile
+                });
+            }
+
+            if (this._audioElement) {
+                this._audioElement.addEventListener("timeupdate", this.audioTimeUpdateFunction);
+            }
+        }
+    }
 });

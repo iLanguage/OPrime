@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="audiences.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "audiences"}
+            }
+        },
+        "repetition": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "repetition"},
+                "isSelectionEnabled": true,
+                "contentController": {"@": "rangeController"}
+            }
+        },
+        "rangeController": {
+            "prototype": "montage/core/range-controller",
+            "properties": {
+                "selection": []
+            },
+            "bindings": {
+                "content": {"<-": "@owner.content"}
+            }
+        },
+
+        "gameLabel": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "gameLabel"}
+            },
+            "bindings": {
+                "value": {"<-": "@repetition:iteration.object.gameLabel"}
+            }
+        },
+        
+        "currentAudience": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "currentAudience"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner._currentAudience.gameLabel"}
+            }
+        },
+        
+        "select": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "select"},
+                "contentController": {"@": "rangeController"},
+                "labelPropertyName": "gameLabel"
+            }
+        },
+        
+        "log": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "log"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.message"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="audiences" class="Audiences">
+        <span hidden data-montage-id="currentAudience">
+        </span>
+        <select data-montage-id="select">
+        </select>
+        <div hidden data-montage-id="repetition">
+            <span data-montage-id="gameLabel">
+            </span>
+        </div>
+        <span hidden data-montage-id="log">
+        </span>
+    </div>
+</body>
+</html>

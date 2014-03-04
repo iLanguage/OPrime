@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="report-certificate.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "reportCertificate"}
+            }
+        },
+        "congratulationsImage": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "congratulationsImage"},
+                "enabled": true
+            },
+            "bindings": {
+                "src": {"<-": "'../../../' + @owner.experimentalDesign.congratulationsImageSrc ?? '../../../assets/img/blank.png'"}
+            }
+        },
+        "save": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "save"},
+                "enabled": true
+            },
+            "listeners": [{
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "owner"}
+            }]
+        },
+        "noThanks": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "noThanks"},
+                "enabled": true
+            },
+            "listeners": [{
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "owner"}
+            }]
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="reportCertificate" class="ReportCertificate">
+        <div class="ReportCertificate-inner-border">
+            <div class="ReportCertificate-star">
+                <i class="fa fa-certificate"></i>
+            </div>
+            <div class="ReportCertificate-Congratulations-Image">
+                <img data-montage-id="congratulationsImage" src="../../../assets/img/blank.png"/>
+            </div>
+            <div class="ReportCertificate-content">
+                <h4>Congratulations!!!</h4>
+                <div class="form-search">
+                    <h3>Do you want to save your score?</h3><br>
+                    <input type="text" placeholder="Nickname"><br>
+                    <input type="text" placeholder="First name"><br>
+                    <input type="text" placeholder="Last name"><br><br>
+                    <button data-montage-id="save"><i class="fa fa-white fa-ok"></i>&nbsp;Save my score</button>
+                    <button data-montage-id="noThanks"><i class="fa fa-white fa-remove"></i>&nbsp;No thanks</button>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

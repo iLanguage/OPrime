@@ -1,0 +1,11 @@
+.StimulusReport {
+
+}
+
+.StimulusReport-correct {
+	color: #009900;
+}
+
+.StimulusReport-incorrect {
+	color: #990000;
+}

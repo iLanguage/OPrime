@@ -1,17 +1,21 @@
-
 .Confirm {
-
 }
 .Confirm-header{
-	display: none;
+	text-align: center;
+	min-height: 3em;
 }
+.Confirm-header img{
+	padding: 1em 1em;
+}	
 .matte-Confirm-dialog {
 	min-width: 300px;
 }
 .Confirm-content {
 	font-size: 1.3em;
 	text-align: center;
-	padding: 3em;
+	padding: 1em;
+	max-width: 40em;
+	min-height: 3em;
 }
 .Confirm-actions {
 	text-align: center;

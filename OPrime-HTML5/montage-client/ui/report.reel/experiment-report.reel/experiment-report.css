@@ -1,3 +1,8 @@
 .ExperimentReport {
+	min-width: 20em;
+}
 
+.ExperimentReport-json{
+	min-height: 10em;
+	width: 100%;
 }

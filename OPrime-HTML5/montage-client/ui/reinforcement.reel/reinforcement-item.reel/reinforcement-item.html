@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="reinforcement-item.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "reinforcementItem"}
+            }
+        },
+        "image": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "image"},
+                "crossOrigin": null
+            },
+            "bindings": {
+                "src": {"<-": "(@owner.json.status == 'completed') ? @owner.json.completedImageFile : @owner.json.incompleteImageFile"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="reinforcementItem" class="ReinforcementItem">
+        <img data-montage-id="image" src="../../../assets/img/blank.png"/> 
+    </div>
+</body>
+</html>

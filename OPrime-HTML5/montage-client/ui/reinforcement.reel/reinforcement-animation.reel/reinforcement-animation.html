@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../reinforcement.css">
+    <link rel="stylesheet" type="text/css" href="reinforcement-animation.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "reinforcementAnimation"}
+            }
+        },
+
+        "firstImage": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "firstImage"},
+                "crossOrigin": null
+            },
+            "bindings": {
+                "src": {"<-": "'../../../../../'+ @owner.firstImageSrc ?? '../../../assets/img/blank.png'"},
+                "classList.has('montage-invisible')": {
+                    "<-": "!@owner.shouldShowFirst"
+                }
+            }
+        },
+
+        "lastImage": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "lastImage"},
+                "crossOrigin": null
+            },
+            "bindings": {
+                "src": {"<-": "'../../../../../'+ @owner.lastImageSrc ?? '../../../assets/img/blank.png'"},
+                "classList.has('montage-invisible')": {
+                    "<-": "!@owner.shouldShowLast"
+                }
+            }
+        },
+
+        "reinforcementItem": {
+            "prototype": "ui/reinforcement.reel/reinforcement-item.reel",
+            "properties": {
+                "element": {"#": "reinforcementItem"}
+            },
+            "bindings": {
+                "json": {"<-": "@reinforcementItemsList:iteration.object"},
+                "classList.has('montage-invisible')": {
+                    "<-": "@reinforcementItemsList:iteration.object.status != 'current'"
+                }
+            }
+        },
+        
+        "reinforcementItemsController": {
+            "prototype": "montage/core/range-controller",
+            "bindings": {
+                "content": {"<-": "@owner.counter"}
+            }
+        },
+
+        "reinforcementItemsList": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "reinforcementItemsList"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@reinforcementItemsController"},
+                "classList.has('ReinforcementCounter-SingleColumn')": {
+                    "<-": "@owner.singleColumn"
+                },
+                "classList.has('ReinforcementCounter-DoubleColumn')": {
+                    "<-": "@owner.doubleColumn"
+                },
+                "classList.has('montage-invisible')": {
+                    "<-": "@owner.shouldShowFirst || @owner.shouldShowLast"
+                }
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="reinforcementAnimation" class="ReinforcementAnimation">
+        <img data-montage-id="firstImage" src="../../../assets/img/blank.png"/> 
+        <div data-montage-id="reinforcementItemsList" class="Reinforcement-image-area">
+            <span data-montage-id="reinforcementItem"></span>
+        </div>
+        <img data-montage-id="lastImage" src="../../../assets/img/blank.png"/> 
+    </div>
+</body>
+</html>

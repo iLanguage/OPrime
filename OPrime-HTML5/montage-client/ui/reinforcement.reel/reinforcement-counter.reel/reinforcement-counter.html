@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="reinforcement-counter.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "reinforcementCounter"}
+            }
+        },
+
+        "reinforcementItem": {
+            "prototype": "ui/reinforcement.reel/reinforcement-item.reel",
+            "properties": {
+                "element": {"#": "reinforcementItem"}
+            },
+            "bindings": {
+                "json": {"<-": "@reinforcementItemsList:iteration.object"}
+            }
+        },
+        
+        "reinforcementItemsController": {
+            "prototype": "montage/core/range-controller",
+            "bindings": {
+                "content": {"<->": "@owner.counter"}
+            }
+        },
+
+        "reinforcementItemsList": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "reinforcementItemsList"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@reinforcementItemsController"},
+                "classList.has('ReinforcementCounter-SingleColumn')": {
+                    "<-": "@owner.singleColumn"
+                },
+                "classList.has('ReinforcementCounter-DoubleColumn')": {
+                    "<-": "@owner.doubleColumn"
+                }
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="reinforcementCounter" class="ReinforcementCounter">
+        <div data-montage-id="reinforcementItemsList">
+            <span data-montage-id="reinforcementItem"></span>
+        </div>
+    </div>
+</body>
+</html>

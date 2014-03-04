@@ -17,7 +17,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	constructor: {
 		value: function Stimulus() {
 			this.super();
-			this.responses = [{}];
+			this.responses = [];
 
 		}
 	},
@@ -36,7 +36,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 	//        }
 	//    },
 
-	rangeController: {
+	responsesController: {
 		value: null
 	},
 
@@ -64,14 +64,13 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 			}
 
 			var self = this;
-			var confirmChoicePrompt = this.confirmResponseChoiceMessage;
 			var continueToNextStimulus = Promise.defer();
-			if (confirmChoicePrompt) {
+			if (this.confirmResponseChoiceMessage) {
+				this.application.contextualizer.currentLocale = this.application.interfaceLocale.iso;
+				var confirmChoicePrompt = this.application.contextualizer.localize(this.confirmResponseChoiceMessage); 
 				var options = {
 					iconSrc: self.ownerComponent.iconSrc,
-					message: confirmChoicePrompt,
-					okLabel: "Yes",
-					cancelLabel: "No"
+					message: confirmChoicePrompt
 				};
 				Confirm.show(options, function() {
 					continueToNextStimulus.resolve();
@@ -82,6 +81,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				continueToNextStimulus.resolve();
 			}
 			continueToNextStimulus.promise.then(function() {
+				// self.ownerComponent.templateObjects.reinforcement.next();
 				self.stopAudio();
 				self.ownerComponent.nextStimulus();
 			}, function(reason) {
@@ -90,7 +90,19 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 					self.playAudio();
 				}
 			});
-
+			var choice = "";
+			if (stimulusId) {
+				choice = this[stimulusId].substring(this[stimulusId].lastIndexOf("/") + 1).replace(/\..+$/, "").replace(/\d+_/, "");
+				if (choice === this.target.orthographic) {
+					choice = this.target;
+				} else {
+					this.distractors.map(function(distractor) {
+						if (choice === distractor.orthographic) {
+							choice = distractor;
+						}
+					});
+				}
+			}
 			var response = {
 				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
 				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
@@ -98,13 +110,89 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"y": responseEvent.y,
 				"pageX": responseEvent.pageX,
 				"pageY": responseEvent.pageY,
-				"chosenVisualStimulus": stimulusId,
-				"responseScore": 1
+				// "prime": {
+				// 	phonemic: this.prime.phonemic,
+				// 	orthographic: this.prime.orthographic,
+				// 	imageFile: this.prime.imageFile
+				// },
+				"choice": choice,
+				// "target": this.target,
+				"score": this.scoreResponse(this.target, choice)
 			};
 			this.responses.push(response);
 			console.log("Recorded response", JSON.stringify(response));
+		}
+	},
 
+	addOralResponse: {
+		value: function(choice, dontAutoAdvance) {
+			var reactionTimeEnd = Date.now();
+			var audioDuration = this.application.audioPlayer.getDuration(this.audioFile) || 0;
+			if (audioDuration) {
+				audioDuration = audioDuration * 1000;
+			} else {
+				console.log("The audio has no duration.. This is strange.");
+			}
+			if (this.pauseAudioWhenConfirmingResponse) {
+				this.pauseAudio();
+			}
 
+			var self = this;
+			var continueToNextStimulus = Promise.defer();
+			if (this.confirmResponseChoiceMessage) {
+				this.application.contextualizer.currentLocale = this.application.interfaceLocale.iso;
+				var confirmChoicePrompt = this.application.contextualizer.localize(this.confirmResponseChoiceMessage); 
+				var options = {
+					iconSrc: self.ownerComponent.iconSrc,
+					message: confirmChoicePrompt
+				};
+				Confirm.show(options, function() {
+					continueToNextStimulus.resolve();
+				}, function() {
+					continueToNextStimulus.reject(new Error("The x prevented the cancel?"));
+				});
+			} else {
+				if(!dontAutoAdvance){
+					continueToNextStimulus.resolve();
+				}
+			}
+			continueToNextStimulus.promise.then(function() {
+				// self.ownerComponent.templateObjects.reinforcement.next();
+				self.stopAudio();
+				self.ownerComponent.nextStimulus();
+			}, function(reason) {
+				console.log("Not continuing to next stimulus");
+				if (this.pauseAudioWhenConfirmingResponse) {
+					self.playAudio();
+				}
+			});
+			
+			var response = {
+				"reactionTimeAudioOffset": reactionTimeEnd - this.reactionTimeStart - audioDuration,
+				"reactionTimeAudioOnset": reactionTimeEnd - this.reactionTimeStart,
+				"x": 0,
+				"y": 0,
+				"pageX": 0,
+				"pageY": 0,
+				"choice": choice,
+				"score": choice.score
+			};
+			this.responses = this.responses || [];
+			this.responses.push(response);
+			console.log("Recorded response", JSON.stringify(response));
+		}
+	},
+
+	scoreResponse: {
+		value: function(expectedResponse, actualResponse) {
+			if (!actualResponse.orthographic) {
+				return "error";
+			}
+			if (actualResponse.orthographic === expectedResponse.orthographic) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 	},
 
@@ -124,6 +212,7 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				"chosenVisualStimulus": "none",
 				"responseScore": -1
 			};
+			this.responses = this.responses || [];
 			this.nonResponses.push(response);
 			console.log("Recorded non-response, the user is confused or not playing the game.", JSON.stringify(response));
 		}
@@ -149,8 +238,8 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 
 	handlePress: {
 		value: function(touchEvent) {
-			console.log("event " + JSON.stringify(touchEvent.event));
-			console.log("targetElement " + JSON.stringify(touchEvent.targetElement));
+			// console.log("event " + JSON.stringify(touchEvent.event));
+			// console.log("targetElement " + JSON.stringify(touchEvent.targetElement));
 			console.log("The stimulus has been pressed: ");
 			if (touchEvent && touchEvent.targetElement && touchEvent.targetElement.dataset && touchEvent.targetElement.dataset.montageId && touchEvent.targetElement.classList.contains("Stimulus-record-touch-response")) {
 				this.addResponse(touchEvent.event, touchEvent.targetElement.dataset.montageId);
@@ -246,15 +335,16 @@ exports.AbstractStimulus = Component.specialize( /** @lends Stimulus# */ {
 				}
 			}
 			if (this.responses === null) {
-				this.responses = [{}];
+				this.responses = [];
 			}
 			if (this.nonResponses === null) {
 				this.nonResponses = [];
 			}
 			this.nonResponses = [];
-			// this.rangeController = new RangeController().initWithContent({"hi":"there"});
+			this.responsesController = new RangeController().initWithContent(this.responses);
 
-			this.playAudio(2000);
+			// Not playing audio by default, child must call it.
+			// this.playAudio(2000);
 		}
 	}
 });

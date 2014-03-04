@@ -1,8 +1,26 @@
 {
-    "change_language": "Change UI Language",
-    "begin": "Begin",
-    "exit": "Exit",
-    "view_as_child": "View as Child",
-    "view_as_parent": "View as Parent",
-    "results": "Results"
+	"change_language": {
+		"message": "Changer la langue"
+	},
+	"okay": {
+		"message": "OK"
+	},
+	"cancel": {
+		"message": "Annuler"
+	},
+	"yes": {
+		"message": "Oui"
+	},
+	"no": {
+		"message": "Non"
+	},
+	"plug_in_headphones": {
+		"message": "S'il vous plaît, connecter des écouteurs afin de continuer le jeu."
+	},
+	"confirm_choice": {
+		"message": "Es-tu sûr de ta réponse?"
+	},
+	"prompt_show_tutorial":{
+		"message": "Est-ce que tu veux voir un tutoriel?"
+	}
 }

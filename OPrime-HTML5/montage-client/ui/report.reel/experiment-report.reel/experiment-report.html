@@ -3,11 +3,115 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="experiment-report.css">
+    <link rel="stylesheet" type="text/css" href="../report.css">
+
     <script type="text/montage-serialization">
     {
         "owner": {
             "properties": {
                 "element": {"#": "experimentReport"}
+            }
+        },
+        "icon": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "icon"},
+                "enabled": true
+            },
+            "bindings": {
+                "src": {"<-": "'../../../' + @owner.experimentalDesign.iconSrc ?? '../../../assets/img/blank.png'"}
+            }
+        },
+        "simpleScoreAsText": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "simpleScoreAsText"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.scoreAsText * 100"}
+            }
+        },
+        "certificate": {
+            "prototype": "ui/report.reel/report-certificate.reel",
+            "properties": {
+                "element": {"#": "certificate"}
+            },
+            "bindings": {
+                "score": {"<-": "@owner.scoreAsText * 100"},
+                "experimentalDesign": {"<-": "@owner.experimentalDesign"},
+                "classList.has('montage-invisible')": {
+                    "<-": "@owner.application.currentAudience.key != 'participant'"
+                }
+            }
+        },
+        "showAdministratorReport": {
+            "prototype": "montage/ui/condition.reel",
+            "properties": {
+                "element": {"#": "showAdministratorReport"},
+                "removalStrategy": "hide"
+            },
+            "bindings": {
+                "condition": {"<-": "@owner.application.currentAudience.key != 'participant'"}
+            }
+        },
+        "scoreComparedToNorms": {
+            "prototype": "ui/report.reel/norm-visualization.reel",
+            "properties": {
+                "element": {"#": "scoreComparedToNorms"}
+            },
+            "bindings": {
+                "score": {"<-": "@owner.scoreAsText * 100"}
+            }
+        },
+        "resultjson": {
+            "prototype": "digit/ui/text-area.reel",
+            "properties": {
+                "element": {"#": "resultjson"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.resultjson"}
+            }
+        },
+        "result": {
+            "prototype": "ui/report.reel/stimulus-report.reel",
+            "properties": {
+                "element": {"#": "result"}
+            },
+            "bindings": {
+                "json": {"<-": "@results:iteration.object"}
+            }
+        },
+        "results": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "results"}
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.stimuliResponsesController"},
+                "classList.has('montage-invisible')": {
+                    "<-": "@owner.application.currentAudience.key == 'parent'"
+                }
+            } 
+        },
+
+        "description": {
+            "prototype": "digit/ui/text.reel",
+            "properties": {
+                "element": {"#": "description"},
+                "value": "Text"
+            },
+            "bindings": {
+                "value": {"<-": "@owner.description"}
+            }
+        },
+
+        "title": {
+            "prototype": "digit/ui/title.reel",
+            "properties": {
+                "element": {"#": "title"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.title"}
             }
         }
     }
@@ -15,6 +119,47 @@
 </head>
 <body>
     <div data-montage-id="experimentReport" class="ExperimentReport">
+        <div class="well">
+            <h2>
+                <img data-montage-id="icon" src="../../../assets/img/blank.png"/>
+                <span data-montage-id="title"></span>
+                <small></small>
+            </h2>
+            <div data-montage-id="certificate"></div>
+            <div data-montage-id="showAdministratorReport">
+                <h4>
+                    Result:
+                    <small>
+                        <span data-montage-id="simpleScoreAsText"></span>%
+                    </small>
+                </h4>
+                <span data-montage-id="scoreComparedToNorms"></span>
+                <p>
+                    <label> Description: </label>
+                    <span data-montage-id="description" class="experiment_description" contenteditable="true">
+                        SAILS is designed to measure perception of speech errors produced by
+                        other children. Performance on the SAILs has been shown to be an
+                        indicator of potential reading problems.
+                    </span> 
+                </p>
+                <p>
+                    Discussion: 
+                    <span data-montage-id="discussion" class="child_specific_results experiment_results_discussion" contenteditable="true">
+                        Susie performed above normal, she
+                        did very well with the /r/ sound.
+                    </span> 
+                </p>
+                
+
+                <ul data-montage-id="results" class="">
+                    <li data-montage-id="result" class=""></li>
+                </ul>
+
+                <div hidden data-montage-id="resultjson" class="ExperimentReport-json">
+                </div>
+            </div> 
+            
+        </div>
     </div>
 </body>
 </html>

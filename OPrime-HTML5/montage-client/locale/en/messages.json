@@ -1,8 +1,26 @@
 {
-    "change_language": "Change UI Language",
-    "begin": "Begin",
-    "exit": "Exit",
-    "view_as_child": "View as Child",
-    "view_as_parent": "View as Parent",
-    "results": "Results"
+	"change_language": {
+		"message": "Change Language"
+	},
+	"okay": {
+		"message": "OK"
+	},
+	"cancel": {
+		"message": "Cancel"
+	},
+	"yes": {
+		"message": "Yes"
+	},
+	"no": {
+		"message": "No"
+	},
+	"plug_in_headphones": {
+		"message": "Please plug in headphones to continue."
+	},
+	"confirm_choice": {
+		"message": "Are you sure?"
+	},
+	"prompt_show_tutorial":{
+		"message": "Do you want to have a tutorial?"
+	}
 }

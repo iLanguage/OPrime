@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="dialects.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "dialects"}
+            }
+        },
+        "repetition": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "repetition"},
+                "isSelectionEnabled": true,
+                "contentController": {"@": "rangeController"}
+            }
+        },
+        "rangeController": {
+            "prototype": "montage/core/range-controller",
+            "properties": {
+                "selection": []
+            },
+            "bindings": {
+                "content": {"<-": "@owner.content"}
+            }
+        },
+
+        "iso": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "iso"}
+            },
+            "bindings": {
+                "value": {"<-": "@repetition:iteration.object.iso"}
+            }
+        },
+        
+        "currentAudience": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "currentAudience"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner._currentAudience.iso"}
+            }
+        },
+        
+        "select": {
+            "prototype": "digit/ui/select.reel",
+            "properties": {
+                "element": {"#": "select"},
+                "contentController": {"@": "rangeController"},
+                "labelPropertyName": "nativeName"
+            }
+        },
+        
+        "log": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "log"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.message"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="dialects" class="Dialects">
+        <span hidden data-montage-id="currentAudience">
+        </span>
+        <select data-montage-id="select">
+        </select>
+        <div hidden data-montage-id="repetition">
+            <span data-montage-id="iso">
+            </span>
+        </div>
+        <span hidden data-montage-id="log">
+        </span>
+    </div>
+</body>
+</html>

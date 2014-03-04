@@ -1,0 +1,21 @@
+.ReinforcementCounter{
+	text-align: center;
+}
+
+.ReinforcementCounter-SingleColumn {
+
+}
+
+.ReinforcementCounter-SingleColumn .ReinforcementItem {
+	width: 100%;
+	text-align: center;
+}
+
+.ReinforcementCounter-DoubleColumn {
+	clear: both;
+}
+
+.ReinforcementCounter-DoubleColumn .ReinforcementItem {
+	width: 48%;
+	float: left;
+}

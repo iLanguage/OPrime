@@ -1,3 +1,182 @@
 .Report {
 
 }
+
+@font-face {
+	font-family: 'Finger Paint';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../../assets/fonts/FingerPaint-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'Chalkboard';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../../assets/fonts/chalkboard.ttf');
+}
+
+.control-label {
+	font-family: 'Chalkboard';
+	font-size: 1.6em;
+}
+
+legend {
+	font-family: 'Chalkboard';
+	font-size: 2em;
+}
+
+a:link {
+	color: #000099;
+} /* unvisited link */
+a:visited {
+	color: #000099;
+} /* visited link */
+a:hover {
+	color: #000099;
+} /* mouse over link */
+a:active {
+	color: #000099;
+} /* selected link */
+a:link.backgroundlink {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a:visited.backgroundlink {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a:hover.backgroundlink {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a:active.backgroundlink {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+h1,h2,h3,h4 {
+	font-family: 'Finger Paint', cursive;
+}
+
+h2 {
+	color: #99ffff;
+}
+
+h4 {
+	font-size: 2em;
+}
+
+.lead {
+	font-family: 'Finger Paint', cursive;
+}
+
+.report {
+	font-family: 'Verdana';
+	font-size: 1.08em;
+}
+
+.well {
+	color: #000000;
+	background-color: rgba(255, 255, 255, 0.3);
+	font-size: 1.08em;
+}
+
+.participant_glimpse {
+	color: #ccc;
+	font-size: 0.7em;
+}
+
+.experimenter_glimpse {
+	color: #ccc;
+	font-size: 0.7em;
+}
+
+.child_specific_results {
+	font-family: 'Finger Paint', cursive;
+}
+
+.box {
+	border: 1px solid #E5E5E5;
+}
+
+.credits p {
+	text-align: center;
+	width: 80%;
+	margin: auto;
+}
+.gravatar {
+	height: 3em;
+}
+
+
+.border-left {
+	border-left: 1px solid #E5E5E5;
+}
+
+.bordered {
+	border: 1px solid #E5E5E5;
+}
+
+
+.orangebody {
+	background-color: #f6e6b4;
+	background-image: -moz-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: -webkit-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: -o-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: -ms-radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	background-image: radial-gradient(center, ellipse cover, #f6e6b4 0%, #ed9017 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr= '#f6e6b4', endColorstr='#ed9017', GradientType= 0); 
+}
+
+.bluebody {
+	background-color: #0176A0;
+	color: #fff !important;
+	background-image: -moz-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: -webkit-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: -o-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: -ms-radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	background-image: radial-gradient(center, ellipse cover, #029CC9 0%, #005077 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#029CC9', endColorstr='#005077', GradientType=0 ); 
+}
+
+.span6 {
+	width: 49%;
+	float: left;
+}
+
+.span9 {
+	width: 69%;
+	float: left;
+}
+
+.span3 {
+	width: 29%;
+	float: left;
+}
+
+.row, .row-fluid {
+	clear: both;
+}
+
+@media print {
+	.exec_summary {
+		display: none !important;
+	}
+	.navbar {
+		display: none !important;
+	}
+	.results_sidebar {
+		display: none !important;
+	}
+	.well {
+		border: 0px !important;
+		box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.05) !important;
+	}
+	.pdfSpacer {
+		padding: 11em;
+	}
+}

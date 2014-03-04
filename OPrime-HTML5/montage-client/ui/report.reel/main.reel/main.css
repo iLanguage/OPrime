@@ -1,0 +1,24 @@
+.Main {
+	position: absolute;
+	left: 0;
+	right: 0;
+	overflow: auto !important;
+	height: 100% !important;
+	width: 100%;
+}
+
+.chooseLocale {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	opacity: .5;
+	z-index: 1600;
+}
+
+.version {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	opacity: .5;
+	z-index: -1;
+}

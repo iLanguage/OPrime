@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="participants.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "participants"}
+            }
+        },
+
+        "participant": {
+            "prototype": "ui/participant.reel",
+            "properties": {
+                "element": {"#": "participant"}
+            },
+            "bindings": {
+                "json": {"<-": "@participantsList:iteration.object"}
+            }
+        },
+
+        "participantsList": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "participantsList"},
+                "isSelectionEnabled": true
+            },
+            "bindings": {
+                "contentController": {"<-": "@owner.participantsController"}
+            }
+        },
+
+        "participantsWithResultsJSON": {
+            "prototype": "digit/ui/text-area.reel",
+            "properties": {
+                "element": {"#": "participantsWithResultsJSON"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.participantsWithResultsJSON"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="participants" class="Participants">
+        List of participants:
+        <ul data-montage-id="participantsList">
+            <li data-montage-id="participant"></li>
+        </ul>
+        <textarea hidden data-montage-id="participantsWithResultsJSON"></textarea>
+    </div>
+</body>
+</html>

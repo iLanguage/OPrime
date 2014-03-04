@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="tutorial.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "tutorial"}
+            }
+        },
+
+        "description": {
+            "prototype": "digit/ui/text.reel",
+            "properties": {
+                "element": {"#": "description"},
+                "value": "Text"
+            },
+            "bindings": {
+                "value": {"<-": "@owner.description"}
+            }
+        },
+
+        "instructions": {
+            "prototype": "digit/ui/text.reel",
+            "properties": {
+                "element": {"#": "instructions"},
+                "value": "Text"
+            },
+            "bindings": {
+                "value": {"<-": "@owner.instructions"}
+            }
+        },
+
+        "instructionsAudioFile": {
+            "prototype": "digit/ui/button.reel",
+            "properties": {
+                "element": {"#": "instructionsAudioFile"}
+            },
+            "bindings": {
+                "filename": {"<-": "@instructionsAudioFilesList:iteration.object"}
+            },
+            "listeners": [{
+                "type": "action",
+                "useCapture": false,
+                "listener": {"@": "owner"}
+            }]
+        },
+
+        "instructionsAudioFilesList": {
+            "prototype": "montage/ui/repetition.reel",
+            "properties": {
+                "element": {"#": "instructionsAudioFilesList"},
+                "contentController": {"@": "instructionsAudioFilesController"}
+            }
+        },
+
+        "instructionsAudioFilesController": {
+            "prototype": "montage/core/range-controller",
+            "bindings": {
+                "content": {"<-": "@owner.audio.audioFiles"}
+            }
+        },
+
+        "icon": {
+            "prototype": "digit/ui/image.reel",
+            "properties": {
+                "element": {"#": "gameIcon"},
+                "enabled": true
+            },
+            "bindings": {
+                "src": {"<-": "'../../' + @owner.iconSrc ?? '../../../assets/img/blank.png'"}
+            }
+        },
+
+        "title": {
+            "prototype": "digit/ui/title.reel",
+            "properties": {
+                "element": {"#": "title"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.title"}
+            }
+        }
+
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="tutorial" class="Tutorial">
+        <h1><img data-montage-id="gameIcon" src="../../assets/img/blank.png"/><span data-montage-id="title"></span><small></small></h1>
+        <i data-montage-id="description" class="Tutorial-Description"></i>
+        <br/>
+        <div class="Tutorial-Instructions">
+            <h3>Instructions: 
+                <span data-montage-id="instructionsAudioFilesList">
+                    <button data-montage-id="instructionsAudioFile">
+                        <i class="fa fa-bullhorn"></i>
+                    </button>
+                </span>
+            </h3>
+            <p data-montage-id="instructions"></p>
+        </div>
+    </div>
+</body>
+</html>

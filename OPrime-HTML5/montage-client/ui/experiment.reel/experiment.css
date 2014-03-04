@@ -21,9 +21,16 @@
     width: 40%;
 }
 
-.Experiment-next-button button , .Experiment-previous-button  button{
+.Experiment-replay-button {
+    float: left;
+    text-align: center;
+    margin: 10px;
+    width: 15%;
+}
+
+.Experiment-next-button button , .Experiment-replay-button button, .Experiment-previous-button  button {
     font-weight: 900;
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-top: 10px;
 }
 
@@ -36,11 +43,11 @@
 /* creates space for an overlay header with experiment controls */
 .Experiment header {
     position: absolute;
-    top: 0;
+    top: -8em;
     width: 100%;
     text-align: center;
     /*background: #cccccc;*/
-    height: 10%;
+    height: 8em;
     opacity: .5;
     z-index: 200;
 }
@@ -65,7 +72,7 @@
 .Experiment-details {
     opacity: .8;
     position: absolute;
-    background-color: #fff;
+    background-color: #fafafa;
     color: #333;
     top: 0;
     right: 0;
@@ -76,11 +83,53 @@
     z-index: 300;
 }
 
-.Experiment-start-pause-button {
+.Experiment-results {
+    opacity: 1;
     position: absolute;
+    /*background-color: #ffffff;
+    color: #333;*/
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 1em;
+    z-index: 250;
+}
+
+/* creates a transparent overlay which talks about the experiment, useful for tutorial mode */
+.Experiment-ExperimenterButtons {
+    opacity: .8;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    text-align: center;
+    padding: 2em;
+    z-index: 240;
+}
+
+.Experiment-ExperimenterButtons button {
+    margin-top: 1em;
+}
+
+.txtUpsideDown {
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2 );
+    /* IE6,IE7 */
+    ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+    /* IE8 */
+    -moz-transform: rotate(-180deg); /* FF3.5+ */
+    -o-transform: rotate(-180deg); /* Opera 10.5 */
+    -webkit-transform: rotate(-180deg); /* Safari 3.1+, Chrome */
+    transform: rotate(-180deg); /* FF3.5+ */
+}
+
+
+.Experiment-start-pause-button-area {
+    position: absolute;
+    text-align: center;
     top: 35%;
-    left: 45%;
-    width: 10%;
+    left: 0;
+    width: 100%;
     min-width: 2em;
 }
 

@@ -1,0 +1,43 @@
+.ReportCertificate {
+	background-color: whitesmoke;
+	border: double 12px #FFFFcc;
+	height: 100%;
+	margin: auto;
+	width: 90%;
+	padding: 1em;
+}
+
+.ReportCertificate-inner-border {
+	border: double 1px #CCCCCC;
+	height: 100%;
+	width: 90%;
+	margin: auto;
+	padding: 1em;
+	display: block;
+	overflow: auto;
+}
+
+.ReportCertificate-star{
+	font-size: 12em;
+	opacity: .5;
+	z-index:  252;
+	color: #FFFF99;
+	top: 1.2em;
+	left: .25em;
+	position: absolute;
+	text-shadow: 0 1px 0 #333;
+}
+
+.ReportCertificate-Congratulations-Image {
+	width: 49%;
+	float: left;
+}
+
+.ReportCertificate-Congratulations-Image img{
+	width: 100%;
+}
+
+.ReportCertificate-content {
+	width: 49%;
+	float: right;
+}

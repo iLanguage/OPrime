@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="stimulus-report.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "stimulusReport"}
+            }
+        },
+        "prime": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "prime"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.prime"},
+                "classList.has('StimulusReport-incorrect')": {
+                    "<-": "@owner.json.score==0"
+                }
+            }
+        },
+        "target": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "target"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.target"}
+            }
+        },
+        "response": {
+            "prototype": "montage/ui/text.reel",
+            "properties": {
+                "element": {"#": "response"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.json.response"},
+                "classList.has('StimulusReport-correct')": {
+                    "<-": "@owner.json.score"
+                },
+                "classList.has('StimulusReport-incorrect')": {
+                    "<-": "@owner.json.score==0"
+                }
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="stimulusReport" class="StimulusReport">
+        <span data-montage-id="prime"></span>
+        <span data-montage-id="target"></span>
+        : /<span data-montage-id="response"></span>/
+        
+    </div>
+</body>
+</html>

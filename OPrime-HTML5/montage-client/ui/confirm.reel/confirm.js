@@ -107,7 +107,7 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
         }
     },
 
-    handleOkLongAction:{
+    handleOkLongAction: {
         value: function(evt) {
             this.handleOkAction(evt);
         }
@@ -131,7 +131,7 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
         }
     },
 
-    handleCancelLongAction:{
+    handleCancelLongAction: {
         value: function(evt) {
             this.handleCancelAction(evt);
         }
@@ -181,15 +181,22 @@ var Confirm = exports.Confirm = Component.specialize( /** @lends module:"matte/u
 
             confirm = popup.content;
 
+            if (this.application.contextualizer) {
+                this.application.contextualizer.currentLocale = this.application.interfaceLocale.iso;
+                this.okLabel = this.application.contextualizer.localize("okay");
+                this.cancelLabel = this.application.contextualizer.localize("cancel");
+            } else {
+                console.log("Not localizing the confirm buttons");
+            }
             if (typeof(options) === "string") {
                 confirm.msg = options;
-                confirm.okLabel = "OK";
-                confirm.cancelLabel = "Cancel";
+                confirm.okLabel = this.okLabel;
+                confirm.cancelLabel = this.cancelLabel;
             } else {
                 confirm.iconSrc = options.iconSrc;
                 confirm.msg = options.message;
-                confirm.okLabel = options.okLabel || "OK";
-                confirm.cancelLabel = options.cancelLabel || "Cancel";
+                confirm.okLabel = options.okLabel || this.okLabel;
+                confirm.cancelLabel = options.cancelLabel || this.cancelLabel;
             }
 
             confirm.okCallback = okCallback || null;

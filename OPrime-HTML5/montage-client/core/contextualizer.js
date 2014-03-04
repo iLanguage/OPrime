@@ -23,7 +23,7 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 
 	localize: {
 		value: function(message) {
-			console.log("Resolving localization ");
+			console.log("Resolving localization in "+ this.currentLocale);
 			var result = message;
 			if (!this.data) {
 				console.warn("No localizations available, resolving the key itself: ", result);
@@ -43,6 +43,27 @@ exports.Contextualizer = Montage.specialize( /** @lends Contextualizer# */ {
 		}
 	},
 
+	audio: {
+		value: function(key) {
+			console.log("Resolving localization in "+ this.currentLocale);
+			var result = {};
+			if (!this.data) {
+				console.warn("No localizations available, resolving empty audio details");
+				return result;
+			}
+
+			if (this.data[this.currentLocale] && this.data[this.currentLocale][key] && this.data[this.currentLocale][key].audio !== undefined && this.data[this.currentLocale][key].audio) {
+				result = this.data[this.currentLocale][key].audio;
+				console.log("Resolving localization audio using requested language: ", result);
+			} else {
+				if (this.data[this.defaultLocale] && this.data[this.defaultLocale][key] && this.data[this.defaultLocale][key].audio !== undefined && this.data[this.defaultLocale][key].audio) {
+					result = this.data[this.defaultLocale][key].audio;
+					console.warn("Resolving localization audio using default: ", result);
+				}
+			}
+			return result;
+		}
+	},
 	/*
 	TODO this doesnt work in a chrome app sandbox, so use the addMessagesToContextualizedStrings instead
 	 */
