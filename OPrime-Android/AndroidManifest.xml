@@ -112,6 +112,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <provider
+            android:name="ca.ilanguage.oprime.database.UserContentProvider"
+            android:authorities="ca.ilanguage.oprime.user"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>
