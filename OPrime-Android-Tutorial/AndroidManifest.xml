@@ -30,7 +30,7 @@
         android:required="false" />
 
     <application
-        android:icon="@drawable/ic_oprime"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
             android:name="ca.ilanguage.oprime.tutorial.OPrimeStorybookExperimentTutorial"

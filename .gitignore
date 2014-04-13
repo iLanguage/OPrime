@@ -4,7 +4,7 @@ assets/analytics_website_script.html
 assets/index.html
 assets/libs/bootstrap
 *nonpublic*
-
+local.properties
 
 # Stimuli #
 ##########
