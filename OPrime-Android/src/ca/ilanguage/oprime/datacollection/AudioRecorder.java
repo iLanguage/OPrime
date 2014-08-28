@@ -1,4 +1,4 @@
-package ca.ilanguage.oprime.datacollection;
+    package ca.ilanguage.oprime.datacollection;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,11 +15,12 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.media.MediaRecorder;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import ca.ilanguage.oprime.Config;
 import ca.ilanguage.oprime.R;
-import ca.ilanguage.oprime.ui.OPrimeLib;
 
 @SuppressLint({ "NewApi" })
 public class AudioRecorder extends Service {
@@ -34,7 +35,7 @@ public class AudioRecorder extends Service {
 
   protected static String     TAG               = "OPrime";
   private RecordingReceiver   mAudioFileUpdateReceiver;
-  private int                 mAuBlogIconId     = R.drawable.ic_oprime;
+  private int                 mAuBlogIconId     = android.R.drawable.ic_btn_speak_now;
   private String              mAudioResultsFile = "";
   private PendingIntent       mContentIntent;
 
@@ -75,7 +76,7 @@ public class AudioRecorder extends Service {
       Notification.Builder builder = new Notification.Builder(this.getApplicationContext());
 
       builder.setContentIntent(this.mContentIntent).setSmallIcon(this.mAuBlogIconId)
-          .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_oprime))
+          .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_launcher))
           .setTicker(res.getString(R.string.app_name)).setWhen(System.currentTimeMillis()).setAutoCancel(true)
           .setContentTitle(res.getString(R.string.app_name)).setContentText(res.getString(R.string.app_name));
       this.mNotification = builder.getNotification();
@@ -114,6 +115,11 @@ public class AudioRecorder extends Service {
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
 
+    String state = Environment.getExternalStorageState();
+    if (!Environment.MEDIA_MOUNTED.equals(state)) {
+      Log.d(Config.TAG, "SDCARD was not mounted: " + state);
+//      return 0;
+    }
     this.startForeground(startId, this.mNotification);
     /*
      * get data from extras bundle, store it in the member variables
@@ -126,11 +132,16 @@ public class AudioRecorder extends Service {
       // "Error "+e,Toast.LENGTH_LONG).show();
     }
     if (this.mAudioResultsFile == null) {
-      this.mAudioResultsFile = Config.DEFAULT_OUTPUT_DIRECTORY + "/audio/" + System.currentTimeMillis() + ".mp3";
+      this.mAudioResultsFile = Config.DEFAULT_OUTPUT_DIRECTORY + "/audio/" + System.currentTimeMillis() +  Config.DEFAULT_AUDIO_EXTENSION;
     }
-    this.mAudioResultsFile = this.mAudioResultsFile.replace("3gp", "mp3");
+    this.mAudioResultsFile = this.mAudioResultsFile.replace(Config.DEFAULT_VIDEO_EXTENSION, Config.DEFAULT_AUDIO_EXTENSION);
     
-    (new File(mAudioResultsFile).getParentFile()).mkdirs();
+    Uri uri = Uri.parse(mAudioResultsFile);
+    String fileName = uri.getLastPathSegment();
+    if(fileName != null){
+    	String parentDir = mAudioResultsFile.replaceAll(fileName+"$", "");
+    	(new File(parentDir)).mkdirs();
+    }
     /*
      * turn on the recorder
      */
@@ -157,10 +168,17 @@ public class AudioRecorder extends Service {
       this.mRecorder.prepare();
       this.mRecorder.start();
     } catch (IllegalStateException e) {
-      Log.d(TAG, "IllegalStateException in audio recorder");
+      Log.d(TAG, "IllegalStateException in starting audio recorder");
     } catch (IOException e) {
-      Log.d(TAG, "IOException in audio recorder");
-    }
+       Log.d(TAG, "IOException in starting audio recorder");
+       e.printStackTrace();
+    } catch (RuntimeException e) {
+       Log.d(TAG, "RuntimeException in starting audio recorder");
+       e.printStackTrace();
+    } catch (Exception e) {
+        Log.d(TAG, "Exception in starting audio recorder");
+        e.printStackTrace();
+     }
 
     // autofilled by eclipsereturn super.onStartCommand(intent, flags, startId);
     // We want this service to continue running until it is explicitly
