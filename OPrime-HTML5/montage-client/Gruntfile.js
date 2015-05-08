@@ -14,6 +14,11 @@ module.exports = function(grunt) {
                     return "cd assets/stimuli/audio/ && for f in *; do ffmpeg -i $f -c:a pcm_s16le ${f%.*}.wav; done; && for f in *.wav; do  normalize $f; done; &&  for f in *.wav; do ffmpeg -i $f -ac 1 -ar 22050 ${f%.*}.mp3; done;";
                 }
             },
+            convertAmrAudio: {
+                cmd: function() {
+                    return "cd assets/stimuli/audio/ && for f in *.mp3; do mv $f ${f%.*}.amr; done; for f in *.amr; do ffmpeg  -y -i  $f  ${f%.*}.wav; done; ";
+                }
+            },
             reduceImageSize: {
                 cmd: function() {
                     return "cd assets/stimuli/image/ && mogrify -filter lanczos2 -resize '400x300>' *.png";
